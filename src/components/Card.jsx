@@ -1,12 +1,9 @@
 import { Link } from 'react-router-dom';
-import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { useState } from 'react';
 
 function Card(props) {
   // const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
-  const [imageLoaded, setImageLoaded] = useState(false);
   const getReleaseYear = (date) => (date != undefined ? date.split('-')[0] : 'Unknown');
 
   const imageSrc =

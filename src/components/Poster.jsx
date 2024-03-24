@@ -26,7 +26,7 @@ function Poster(props) {
 
   return (
     <>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 rounded-md border border-slate-700 bg-slate-800 p-2">
         <img src={imageBaseUrl + props.data.file_path} alt="" style={posterStyles} />
         {
           <div className="grid grid-cols-2 place-self-center">
@@ -48,7 +48,7 @@ function Poster(props) {
                 Download
               </button>
             </a>
-          </div> 
+          </div>
         }
       </div>
     </>

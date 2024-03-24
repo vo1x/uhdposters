@@ -1,44 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 // Icon component
 const Icon = ({ isOpen }) => {
   return <FiChevronDown className={isOpen ? ' rotate-180' : ''} />;
 };
 
-// CloseIcon component
-const CloseIcon = () => {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width="14"
-      height="14"
-      stroke="#fff"
-      strokeWidth="2"
-      fill="none"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    </svg>
-  );
-};
-
 // CustomSelect component
-const CustomSelect = ({ placeHolder, options, onChange, align }) => {
+const CustomSelect = ({ placeHolder, options, onChange }) => {
   // State variables using React hooks
   const [showMenu, setShowMenu] = useState(false); // Controls the visibility of the dropdown menu
-  const [selectedValue, setSelectedValue] = useState(options[0]); // Stores the selected value(s)
-  const [searchValue, setSearchValue] = useState(''); // Stores the value entered in the search input
-  const searchRef = useRef(); // Reference to the search input element
+  const [selectedValue, setSelectedValue] = useState(null); // Stores the selected value(s)
   const inputRef = useRef(); // Reference to the custom select input element
-
-  useEffect(() => {
-    setSearchValue('');
-    if (showMenu && searchRef.current) {
-      searchRef.current.focus();
-    }
-  }, [showMenu]);
 
   useEffect(() => {
     const handler = (e) => {
@@ -65,17 +37,6 @@ const CustomSelect = ({ placeHolder, options, onChange, align }) => {
     return selectedValue.label;
   };
 
-  const removeOption = (option) => {
-    return selectedValue.filter((o) => o.value !== option.value);
-  };
-
-  const onTagRemove = (e, option) => {
-    e.stopPropagation();
-    const newValue = removeOption(option);
-    setSelectedValue(newValue);
-    onChange(newValue);
-  };
-
   const onItemClick = (option) => {
     setSelectedValue(option);
     onChange(option);
@@ -89,18 +50,8 @@ const CustomSelect = ({ placeHolder, options, onChange, align }) => {
     return showMenu && selectedValue.value === option.value;
   };
 
-  const onSearch = (e) => {
-    setSearchValue(e.target.value);
-  };
-
   const getOptions = () => {
-    if (!searchValue) {
-      return options;
-    }
-
-    return options.filter(
-      (option) => option.label.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0
-    );
+    return options;
   };
 
   return (

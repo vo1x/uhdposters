@@ -3,10 +3,7 @@ import Card from './Card';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Header from './Header';
-import SearchBar from './SearchBar';
 import Topbar from './Topbar';
 
 function Search() {
@@ -14,7 +11,6 @@ function Search() {
 
   const apiKey = import.meta.env.VITE_TMDB_API_KEY;
   const tmdbBaseUrl = 'https://api.themoviedb.org/3';
-  const [inputValue, setInputValue] = useState('');
   const [searchResults, setSearchResults] = useState(null);
 
   const navigate = useNavigate();
@@ -34,13 +30,6 @@ function Search() {
     searchTerm == '' ? setSearchResults(null) : fetchInfo();
   }, [searchTerm]);
 
-  const handleClick = () => {
-    if (inputValue == '') {
-      toast.error('Please provide a keyword!', { theme: 'colored', autoClose: 2000 });
-    } else {
-      navigate(`/search/${inputValue}`);
-    }
-  };
   return (
     <>
       <div className="flex min-h-screen flex-col gap-10 bg-slate-900 pb-5 pt-1">
