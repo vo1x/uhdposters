@@ -1,38 +1,12 @@
 import { Link } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { useState } from 'react';
 
 function Card(props) {
-  const movieCardStyle = {
-    width: '250px',
-    height: 'auto',
-    border: '2px solid #333',
-    borderRadius: '5px',
-    overflow: 'hidden',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease-in-out'
-  };
-
-  const posterStyle = {
-    maxWidth: '250px',
-    width: 'max-content',
-    height: 'auto',
-    objectFit: 'cover'
-  };
-
-  const movieDetailStyles = {
-    padding: '10px',
-    textAlign: 'left',
-    fontSize: '1rem',
-    fontWeight: 'bold'
-  };
-
-  const cardDetailStyles = {
-    color: '#999',
-    fontSize: '14px'
-  };
-
   // const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
-
+  const [imageLoaded, setImageLoaded] = useState(false);
   const getReleaseYear = (date) => (date != undefined ? date.split('-')[0] : 'Unknown');
 
   const imageSrc =

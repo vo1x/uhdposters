@@ -12,7 +12,7 @@ function SearchBar() {
       toast.error('Please provide a keyword!', {
         theme: 'colored',
         autoClose: 2000,
-        position:"bottom-right"
+        position: 'bottom-right'
       });
     } else {
       navigate(`/search/${inputValue}`);
@@ -22,6 +22,7 @@ function SearchBar() {
   const [inputValue, setInputValue] = useState('');
   const [inputActive, setInputActive] = useState(false);
 
+ 
   return (
     <div>
       <div
