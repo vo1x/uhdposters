@@ -10,8 +10,7 @@ import { FaRegCopy } from 'react-icons/fa';
 import Tooltip from './Tooltip';
 import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
 import Trailer from './Trailer';
-
-
+import CustomSelect from './Select';
 
 function DetailsPage() {
   const { mediaType, id } = useParams();
@@ -314,6 +313,7 @@ function DetailsPage() {
   };
 
   const [imdbID, setImdbID] = useState(null);
+  const [secondLang, setSecondLang] = useState('en');
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const handleTabClick = useCallback(() => setActiveTabIndex((prev) => 1 - prev));
@@ -328,6 +328,7 @@ function DetailsPage() {
         const info = await response.json();
         setMediaInfo(info);
         setSeasonsInfo(info.seasons);
+        setSecondLang(info.original_language);
         fetchExternalID();
         fetchPosters(info);
         fetchTrailers();
@@ -433,10 +434,27 @@ function DetailsPage() {
     }
   };
 
+  const selectOptions = [
+    {
+      value: 0,
+      label: 'English'
+    },
+    {
+      value: 1,
+      label: `${langCodes[secondLang]}`
+    }
+  ];
+
+  const [selectedOption, setSelectedOption] = useState({
+    value: 0,
+    label: 'English'
+  });
+  console.log(selectedOption);
   return (
     <>
       <div>
         <Topbar></Topbar>
+
         <div className="min-h-screen bg-slate-900 pb-5 text-slate-100">
           <div className="flex gap-5 p-10">
             <div>
@@ -593,8 +611,37 @@ function DetailsPage() {
               </Tab>
             </TabList>
 
-            <TabPanel>
-              <Tabs className="flex  flex-col items-center gap-5">
+            <TabPanel className="flex flex-col items-center gap-3">
+              <div className="flex items-center">
+                Poster Language:
+                <CustomSelect
+                  options={selectOptions}
+                  onChange={setSelectedOption}
+                  placeHolder={selectedOption.label}
+                />
+              </div>
+              {selectedOption.value === 0 ? (
+                <div className="flex flex-wrap content-center justify-center gap-10">
+                  {posters &&
+                    posters
+                      .filter((poster) => {
+                        return poster.iso_639_1 === 'en';
+                      })
+                      .map((poster, index) => <Poster key={index} data={poster} />)}
+                </div>
+              ) : (
+                <div className="flex flex-wrap content-center justify-center gap-10">
+                  {posters
+                    .filter((poster) => {
+                      return poster.iso_639_1 === mediaInfo.original_language;
+                    })
+                    .map((poster, index) => (
+                      <Poster key={index} data={poster} />
+                    ))}
+                </div>
+              )}
+
+              {/* <Tabs className="flex  flex-col items-center gap-5">
                 <div className="flex flex-col items-center gap-2">
                   <span className="text-lg font-bold">Poster language</span>
 
@@ -615,30 +662,9 @@ function DetailsPage() {
                     ) : null}
                   </TabList>
                 </div>
-                <TabPanel>
-                  <div className="flex flex-wrap content-center justify-center gap-10">
-                    {posters &&
-                      posters
-                        .filter((poster) => {
-                          return poster.iso_639_1 === 'en';
-                        })
-                        .map((poster, index) => <Poster key={index} data={poster} />)}
-                  </div>
-                </TabPanel>
-                {mediaInfo.original_language != 'en' ? (
-                  <TabPanel>
-                    <div className="flex flex-wrap content-center justify-center gap-10">
-                      {posters
-                        .filter((poster) => {
-                          return poster.iso_639_1 === mediaInfo.original_language;
-                        })
-                        .map((poster, index) => (
-                          <Poster key={index} data={poster} />
-                        ))}
-                    </div>
-                  </TabPanel>
-                ) : null}
-              </Tabs>
+                <TabPanel></TabPanel>
+                {mediaInfo.original_language != 'en' ? <TabPanel></TabPanel> : null}
+              </Tabs> */}
             </TabPanel>
             <TabPanel className="flex flex-wrap place-content-center gap-x-2 gap-y-5">
               {trailers && trailers.map((trailer, index) => <Trailer data={trailer} key={index} />)}
