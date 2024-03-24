@@ -434,16 +434,23 @@ function DetailsPage() {
     }
   };
 
-  const selectOptions = [
-    {
-      value: 0,
-      label: 'English'
-    },
-    {
-      value: 1,
-      label: `${langCodes[secondLang]}`
-    }
-  ];
+  const selectOptions = langCodes[secondLang != 'en']
+    ? [
+        {
+          value: 0,
+          label: 'English'
+        },
+        {
+          value: 1,
+          label: `${langCodes[secondLang]}`
+        }
+      ]
+    : [
+        {
+          value: 0,
+          label: 'English'
+        }
+      ];
 
   const [selectedOption, setSelectedOption] = useState({
     value: 0,
