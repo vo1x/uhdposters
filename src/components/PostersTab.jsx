@@ -4,7 +4,7 @@ import { useState } from 'react';
 import langCodes from './langCodes.json';
 
 function PostersTab(props) {
-  const { posters, secondLang } = props;
+  const { posters, fileName, secondLang } = props;
   const selectOptions =
     secondLang != 'en'
       ? [
@@ -46,7 +46,7 @@ function PostersTab(props) {
                 .filter((poster) => {
                   return poster.iso_639_1 === 'en';
                 })
-                .map((poster, index) => <Poster key={index} data={poster} />)}
+                .map((poster, index) => <Poster key={index} data={poster} fileName={fileName} />)}
           </div>
         ) : (
           <div className="flex flex-wrap content-center justify-center gap-10">

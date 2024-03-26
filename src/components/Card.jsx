@@ -12,10 +12,10 @@ function Card(props) {
   return (
     <>
       <Link to={`/details/${props.data.media_type}/${props.data.id}`}>
-        <div className="max-w-64 rounded-md bg-slate-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+        <div className="max-w-48 rounded-md bg-slate-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
           <img className="rounded-md object-cover" src={imageSrc} alt="Media Backdrop" />
           <div className="px-3 py-2 font-bold text-slate-100">
-            <span className="flex flex-col pb-1 text-xl">
+            <span className="flex flex-col pb-1 text-sm">
               {props.data['title'] || props.data['name']}
               {(props.data['original_title'] || props.data['original_name']) != undefined &&
               props.data['original_language'] != 'en' ? (

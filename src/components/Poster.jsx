@@ -10,6 +10,25 @@ function Poster(props) {
     margin: '0'
   };
 
+  const uploadImage = () => {
+    const data = new FormData();
+    data.append('file', imageBaseUrl + props.data.file_path);
+    data.append('upload_preset', 'uhdposters');
+    data.append('cloud_name', 'dqvyyissy');
+
+    fetch('https://api.cloudinary.com/v1_1/dqvyyissy/image/upload', {
+      method: 'POST',
+      body: data
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        const fileID = data.secure_url.split('/').pop();
+        const finalURL = `https://res.cloudinary.com/dqvyyissy/image/upload/fl_attachment:${props.fileName}/v${Date.now()}/${fileID}`;
+        window.location.href = finalURL;
+      })
+      .catch((err) => console.log(err));
+  };
+
   const [isCopySuccess, setIsCopySuccess] = useState(false);
 
   const handleCopyAction = () => {
@@ -39,15 +58,14 @@ function Poster(props) {
             >
               {isCopySuccess ? 'Copied' : 'Copy Link'}
             </button>
-            <a href={imageBaseUrl + props.data.file_path} target="_blank">
-              <button
-                className={
-                  'w-max rounded-md border border-sky-500 bg-sky-500 px-2 py-1 text-sm font-bold'
-                }
-              >
-                Download
-              </button>
-            </a>
+            <button
+              onClick={uploadImage}
+              className={
+                'w-max rounded-md border border-sky-500 bg-sky-500 px-2 py-1 text-sm font-bold'
+              }
+            >
+              Download
+            </button>
           </div>
         }
       </div>

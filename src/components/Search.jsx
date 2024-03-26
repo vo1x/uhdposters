@@ -38,7 +38,7 @@ function Search() {
           <div className="mb-7 border-b border-b-slate-700 pb-3 text-3xl font-bold text-slate-300">
             Showing results for "{searchTerm}"
           </div>
-          <div className="grid grid-cols-4 gap-10 place-self-center">
+          <div className="grid-cols-6 grid gap-10 place-self-center">
             {searchResults && searchResults.length > 0 ? (
               searchResults.map((result) => <Card key={result.id} data={result} />)
             ) : (

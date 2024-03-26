@@ -118,7 +118,11 @@ function DetailsPage() {
             </TabList>
 
             <TabPanel>
-              <PostersTab posters={posters} secondLang={secondLang}></PostersTab>
+              <PostersTab
+                posters={posters}
+                fileName={mediaInfo.title || mediaInfo.name}
+                secondLang={secondLang}
+              ></PostersTab>
             </TabPanel>
             <TabPanel className="flex flex-wrap place-content-center gap-x-2 gap-y-5">
               {trailers && trailers.map((trailer, index) => <Trailer data={trailer} key={index} />)}
