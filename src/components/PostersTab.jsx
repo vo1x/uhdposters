@@ -55,7 +55,7 @@ function PostersTab(props) {
                 return poster.iso_639_1 === secondLang;
               })
               .map((poster, index) => (
-                <Poster key={index} data={poster} />
+                <Poster key={index} data={poster} fileName={fileName} />
               ))}
           </div>
         )}
