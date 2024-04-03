@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom';
 import { FiExternalLink } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { FiCopy } from 'react-icons/fi';
+import { FaExpandArrowsAlt } from 'react-icons/fa';
+import { useState } from 'react';
 
 function DetailsPane(props) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
   const { mediaInfo, imdbID, seasonsInfo, mediaType } = props;
-
+  const [isHovered, setIsHovered] = useState(false);
   const handleItemCopy = (item, type) => {
     try {
       navigator.clipboard.writeText(item).then(() => {
@@ -22,13 +24,24 @@ function DetailsPane(props) {
   return (
     <>
       <div className="flex gap-5 p-10 text-slate-100">
-        <div>
+        <div
+          className="relative ring-2"
+          onMouseOver={() => setIsHovered(true)}
+          onMouseOut={() => setIsHovered(false)}
+        >
           <img
             src={imageBaseUrl + mediaInfo.poster_path}
             alt="cover img"
-            className="h-auto w-full min-w-52 max-w-52 rounded-md ring-2"
+            className={`h-auto w-full min-w-52 max-w-52 rounded-md  transition-opacity ${isHovered ? 'opacity-10' : ''} duration-300`}
           />
+          {isHovered && (
+            <FaExpandArrowsAlt
+              className="absolute bottom-0 left-0 right-0 top-0 m-auto text-3xl"
+              style={{ opacity: 1 }} // Set opacity to 1 to ensure it's always fully visible
+            />
+          )}
         </div>
+
         <div>
           <div className="flex flex-col gap-2">
             <div className="flex content-center gap-2 text-5xl font-bold ">
