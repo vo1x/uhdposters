@@ -6,13 +6,13 @@ import Home from './components/Home';
 function App() {
   return (
     <>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/search/:searchTerm" element={<Search />} />
-            <Route path="/details/:mediaType/:id" element={<DetailsPage />} />
-          </Routes>
-        </Router>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/search/:searchTerm" element={<Search />} />
+          <Route path="/details/:mediaType/:id" element={<DetailsPage />} />
+        </Routes>
+      </Router>
     </>
   );
 }
