@@ -4,7 +4,7 @@ const Icon = ({ isOpen }) => {
   return <FiChevronDown className={isOpen ? ' rotate-180' : ''} />;
 };
 
-const CustomSelect = ({ placeHolder, options, onChange }) => {
+const CustomSelect = ({ placeHolder, options, onChange, isDisabled }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState(null);
   const inputRef = useRef();
@@ -52,7 +52,7 @@ const CustomSelect = ({ placeHolder, options, onChange }) => {
   };
 
   return (
-    <div className=" rounded-md p-2">
+    <div className="z-50 rounded-md">
       <div
         ref={inputRef}
         onClick={handleInputClick}
