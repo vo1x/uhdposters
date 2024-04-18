@@ -1,45 +1,33 @@
 import { Link } from 'react-router-dom';
 import { FiExternalLink } from 'react-icons/fi';
-import { toast } from 'react-toastify';
 import { FiCopy } from 'react-icons/fi';
-import { FaExpandArrowsAlt } from 'react-icons/fa';
+// import { FaExpandArrowsAlt } from 'react-icons/fa';
 import { useState } from 'react';
-
+import useClipboard from '../hooks/useClipboard';
 function DetailsPane(props) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
   const { mediaInfo, imdbID, seasonsInfo, mediaType } = props;
-  const [isHovered, setIsHovered] = useState(false);
-  const handleItemCopy = (item, type) => {
-    try {
-      navigator.clipboard.writeText(item).then(() => {
-        const notify = () => {
-          toast.success(`${type} copied successfully!`, { theme: 'colored', autoClose: 2000 });
-        };
-        notify();
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const [isHovered, setIsHovered] = useState(false);
+  const [handleItemCopy] = useClipboard();
   return (
     <>
       <div className="flex gap-5 p-10 text-slate-100">
         <div
-          className="relative ring-2"
+          className="relative h-max rounded-md ring-2"
           onMouseOver={() => setIsHovered(true)}
           onMouseOut={() => setIsHovered(false)}
         >
           <img
             src={imageBaseUrl + mediaInfo.poster_path}
             alt="cover img"
-            className={`h-auto w-full min-w-52 max-w-52 rounded-md  transition-opacity ${isHovered ? 'opacity-10' : ''} duration-300`}
+            className={`h-auto w-full min-w-52 max-w-52 rounded-md  transition-opacity duration-300`}
           />
-          {isHovered && (
+          {/* {isHovered && (
             <FaExpandArrowsAlt
               className="absolute bottom-0 left-0 right-0 top-0 m-auto text-3xl"
               style={{ opacity: 1 }} // Set opacity to 1 to ensure it's always fully visible
             />
-          )}
+          )} */}
         </div>
 
         <div>

@@ -1,16 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
-// Icon component
 const Icon = ({ isOpen }) => {
   return <FiChevronDown className={isOpen ? ' rotate-180' : ''} />;
 };
 
-// CustomSelect component
 const CustomSelect = ({ placeHolder, options, onChange }) => {
-  // State variables using React hooks
-  const [showMenu, setShowMenu] = useState(false); // Controls the visibility of the dropdown menu
-  const [selectedValue, setSelectedValue] = useState(null); // Stores the selected value(s)
-  const inputRef = useRef(); // Reference to the custom select input element
+  const [showMenu, setShowMenu] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(null);
+  const inputRef = useRef();
 
   useEffect(() => {
     const handler = (e) => {
