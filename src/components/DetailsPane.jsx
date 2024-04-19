@@ -47,14 +47,12 @@ function DetailsPane(props) {
           {mediaInfo && (
             <span
               className="cursor-pointer text-slate-300 hover:text-sky-300"
-              onClick={(e) =>
-                handleItemCopy(
-                  e.target.innerText,
-                  'Name & Date String'
-                )
-              }
-            >{`${mediaInfo.name||mediaInfo.title} (${mediaType === 'tv' && mediaInfo.first_air_date ? mediaInfo.first_air_date.split('-')[0] : mediaInfo.release_date.split('-')[0]})`}</span>
+              onClick={(e) => handleItemCopy(e.target.innerText, 'Name & Date String')}
+            >
+              {`${mediaInfo.name || mediaInfo.title} (${mediaType === 'tv' && mediaInfo.first_air_date ? mediaInfo.first_air_date.split('-')[0] : mediaInfo.release_date ? mediaInfo.release_date.split('-')[0] : ''})`}
+            </span>
           )}
+
           {/* {isHovered && (
             <FaExpandArrowsAlt
               className="absolute bottom-0 left-0 right-0 top-0 m-auto text-3xl"
