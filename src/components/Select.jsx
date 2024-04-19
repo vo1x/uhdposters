@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 const Icon = ({ isOpen }) => {
-  return <FiChevronDown className={isOpen ? ' rotate-180' : ''} />;
+  return <FiChevronDown className={isOpen ? ' rotate-180' : 'text-slate-400 text-lg'} />;
 };
 
 const CustomSelect = ({ placeHolder, options, onChange, isDisabled }) => {
@@ -56,7 +56,7 @@ const CustomSelect = ({ placeHolder, options, onChange, isDisabled }) => {
       <div
         ref={inputRef}
         onClick={handleInputClick}
-        className={`flex w-40 border-2 border-slate-700 ${showMenu ? 'border-blue-700' : ''} items-center justify-between rounded-md bg-slate-800 p-2`}
+        className={`flex w-40 shadow-md shadow-slate-950/25 ${showMenu ? 'border-blue-700' : ''} items-center justify-between rounded-md bg-slate-800 p-2`}
       >
         <div className="text-slate-400">{getDisplay()}</div>
         <div className="dropdown-tools ">
@@ -68,7 +68,7 @@ const CustomSelect = ({ placeHolder, options, onChange, isDisabled }) => {
 
       {showMenu && (
         <div className="">
-          <div className="absolute mt-1 h-max w-40 rounded-md border border-slate-700 bg-slate-800 p-2 drop-shadow-md">
+          <div className="absolute mt-2 shadow-black shadow-md h-max w-40 rounded-md border border-slate-700 bg-slate-800 p-2 drop-shadow-md">
             {getOptions().map((option) => (
               <div
                 onClick={() => onItemClick(option)}

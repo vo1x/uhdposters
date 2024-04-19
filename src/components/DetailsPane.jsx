@@ -2,18 +2,44 @@ import { Link } from 'react-router-dom';
 import { FiExternalLink } from 'react-icons/fi';
 import { FiCopy } from 'react-icons/fi';
 // import { FaExpandArrowsAlt } from 'react-icons/fa';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useClipboard from '../hooks/useClipboard';
 function DetailsPane(props) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
   const { mediaInfo, imdbID, seasonsInfo, mediaType } = props;
   // const [isHovered, setIsHovered] = useState(false);
   const [handleItemCopy] = useClipboard();
+  const [runtime, setRuntime] = useState({
+    hours: 0,
+    minutes: 0
+  });
+  useEffect(() => {
+    const convertToHours = () => {
+      const minutes = mediaInfo?.runtime || mediaInfo?.last_episode_to_air?.runtime;
+      const hours = Math.floor(minutes / 60);
+      const remainingMinutes = minutes % 60;
+
+      setRuntime({ hours: hours, minutes: remainingMinutes });
+    };
+    convertToHours();
+  }, [runtime]);
+
   return (
     <>
-      <div className="flex gap-5 p-10 text-slate-100">
+      <div
+        className={`relative flex h-[500px] items-center gap-5 overflow-hidden p-10 text-slate-100 `}
+      >
+        <div className=" absolute inset-0 -z-10 bg-gradient-to-r from-slate-900 object-cover"></div>
+
+        <div className=" absolute inset-0 -z-10 bg-gradient-to-t from-slate-900 object-cover"></div>
+        <div className=" absolute inset-0 -z-10 bg-gradient-to-b from-slate-900 object-cover"></div>
+        <img
+          src={`${imageBaseUrl + mediaInfo.backdrop_path}`}
+          alt=""
+          className="absolute inset-0 -z-20 w-screen object-cover"
+        />
         <div
-          className="relative h-max rounded-md ring-2"
+          className="relative h-max rounded-md  shadow-2xl shadow-slate-950"
           onMouseOver={() => setIsHovered(true)}
           onMouseOut={() => setIsHovered(false)}
         >
@@ -59,7 +85,7 @@ function DetailsPane(props) {
                 </Link>
               </span>
             </div>
-            <span className="text-lg text-slate-500">
+            <span className="text-lg text-slate-400">
               Relased on{' '}
               <span
                 className="font-bold hover:cursor-pointer hover:text-sky-300"
@@ -76,7 +102,7 @@ function DetailsPane(props) {
           </div>
           <div className="flex flex-col gap-3">
             <div className="mt-3">
-              <span className="text-md font-bold text-slate-400">Genres</span>
+              <span className="text-md font-bold text-slate-300/80">Genres</span>
 
               <div className="flex gap-3">
                 <ul className="flex gap-2">
@@ -106,7 +132,7 @@ function DetailsPane(props) {
 
             <div>
               <p className="flex flex-col">
-                <span className="text-md font-bold text-slate-400">Overview</span>{' '}
+                <span className="text-md font-bold text-slate-300/80">Overview</span>{' '}
                 <span
                   className="text-slate-100 hover:cursor-pointer  hover:text-sky-300"
                   onClick={() => {
@@ -119,7 +145,23 @@ function DetailsPane(props) {
             </div>
             <div style={{ display: 'flex', gap: '1rem' }}>
               <p>
-                <span className="text-md font-bold text-slate-400">IMDB ID:</span>{' '}
+                <span className="text-md font-bold text-slate-300/80">
+                  Runtime {`${mediaType === 'tv' ? '(Avg)' : ''}`}:
+                </span>{' '}
+                <span
+                  className="hover:cursor-pointer hover:text-sky-300"
+                  onClick={() =>
+                    handleItemCopy(
+                      `${runtime.hours === 0 ? `${runtime.hours}h` : ''} ${runtime.minutes}m`,
+                      'Runtime'
+                    )
+                  }
+                >
+                  {`${runtime.hours === 0 ? '' : `${runtime.hours}h`} ${runtime.minutes}m`}
+                </span>
+              </p>
+              <p>
+                <span className="text-md font-bold text-slate-300/80">IMDB ID:</span>{' '}
                 <span
                   className="hover:cursor-pointer hover:text-sky-300"
                   onClick={() => handleItemCopy(imdbID, 'IMDB ID')}
@@ -128,7 +170,7 @@ function DetailsPane(props) {
                 </span>
               </p>
               <p>
-                <span className="text-md font-bold text-slate-400">IMDB URL:</span>{' '}
+                <span className="text-md font-bold text-slate-300/80">IMDB URL:</span>{' '}
                 <span
                   className="hover:cursor-pointer hover:text-sky-300"
                   onClick={() => handleItemCopy(`https://www.imdb.com/title/${imdbID}`, 'IMDB URL')}
@@ -140,7 +182,7 @@ function DetailsPane(props) {
             <div>
               {mediaType == 'tv' ? (
                 <div>
-                  <span className="text-md font-bold text-slate-400">Season Info</span>
+                  <span className="text-md font-bold text-slate-300/80">Season Info</span>
 
                   <div className="flex flex-wrap gap-3">
                     {seasonsInfo &&

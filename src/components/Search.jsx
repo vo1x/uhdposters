@@ -7,7 +7,7 @@ import Topbar from './Topbar';
 import axios from 'axios';
 import { FaTags } from 'react-icons/fa';
 import CustomSelect from './Select';
-import { LuChevronsUpDown } from 'react-icons/lu';
+import { FaSpinner } from 'react-icons/fa';
 function Search() {
   const { searchTerm } = useParams();
 
@@ -77,7 +77,7 @@ function Search() {
     <>
       <div className="flex min-h-screen flex-col gap-10 bg-slate-900 pb-5 pt-1 ">
         <Topbar />
-        <div className="max-w-7xl place-self-center">
+        <div className="max-w-7xl min-w-7xl w-full place-self-center">
           {/* <div className="mb-7 border-b border-b-slate-700 pb-3 text-3xl font-bold text-slate-300">
             Showing results for "{searchTerm}"
           </div> */}

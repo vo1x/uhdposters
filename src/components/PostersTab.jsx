@@ -31,8 +31,8 @@ function PostersTab(props) {
   return (
     <>
       <div className="flex flex-col items-center gap-3">
-        <div className="flex items-center">
-          Poster Language:
+        <div className="items-center flex gap-2">
+          <span className='font-semibold text-base text-slate-400'>Language</span>
           <CustomSelect
             options={selectOptions}
             onChange={setSelectedOption}
