@@ -22,7 +22,7 @@ function DetailsPane(props) {
       setRuntime({ hours: hours, minutes: remainingMinutes });
     };
     convertToHours();
-  }, [runtime]);
+  }, [mediaInfo]);
 
   return (
     <>
@@ -38,11 +38,7 @@ function DetailsPane(props) {
           alt=""
           className="absolute inset-0 -z-20 w-screen object-cover"
         />
-        <div
-          className="relative h-max rounded-md  shadow-2xl shadow-slate-950"
-          onMouseOver={() => setIsHovered(true)}
-          onMouseOut={() => setIsHovered(false)}
-        >
+        <div className="relative h-max rounded-md  shadow-2xl shadow-slate-950">
           <img
             src={imageBaseUrl + mediaInfo.poster_path}
             alt="cover img"
