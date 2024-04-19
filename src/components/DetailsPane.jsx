@@ -38,12 +38,23 @@ function DetailsPane(props) {
           alt=""
           className="absolute inset-0 -z-20 w-screen object-cover"
         />
-        <div className="relative h-max rounded-md  shadow-2xl shadow-slate-950">
+        <div className="relative flex h-max flex-col items-center gap-2">
           <img
             src={imageBaseUrl + mediaInfo.poster_path}
             alt="cover img"
-            className={`h-auto w-full min-w-52 max-w-52 rounded-md  transition-opacity duration-300`}
+            className={`h-auto w-full min-w-52 max-w-52 rounded-md shadow-2xl shadow-slate-950  transition-opacity duration-300`}
           />
+          {mediaInfo && (
+            <span
+              className="cursor-pointer text-slate-300 hover:text-sky-300"
+              onClick={(e) =>
+                handleItemCopy(
+                  e.target.innerText,
+                  'Name & Date String'
+                )
+              }
+            >{`${mediaInfo.name||mediaInfo.title} (${mediaType === 'tv' && mediaInfo.first_air_date ? mediaInfo.first_air_date.split('-')[0] : mediaInfo.release_date.split('-')[0]})`}</span>
+          )}
           {/* {isHovered && (
             <FaExpandArrowsAlt
               className="absolute bottom-0 left-0 right-0 top-0 m-auto text-3xl"
