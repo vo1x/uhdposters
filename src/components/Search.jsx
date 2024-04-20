@@ -118,7 +118,7 @@ function Search() {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-3 place-items-center gap-y-6 md:grid-cols-6 md:gap-10">
+          <div className="grid grid-cols-3 place-items-center md:place-items-start md:place-content-center gap-y-6 md:grid-cols-6 md:gap-10">
             {filteredData && filteredData.length > 0 ? (
               filteredData.map((result, index) => (
                 <Card key={result.id} data={result} index={index} length={searchResults.length} />

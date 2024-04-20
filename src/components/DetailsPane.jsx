@@ -63,7 +63,7 @@ function DetailsPane(props) {
 
         <div>
           <div className="flex flex-col items-center gap-2 md:items-start">
-            <div className="flex items-center gap-2 text-5xl font-bold ">
+            <div className="flex items-center gap-2 text-2xl text-center font-bold md:text-5xl ">
               <span
                 className="hover:cursor-pointer  hover:text-sky-300"
                 onClick={() => handleItemCopy(mediaInfo.title || mediaInfo.name, 'Title')}
@@ -105,7 +105,7 @@ function DetailsPane(props) {
               </span>
             </span>
           </div>
-          <div className="flex w-screen px-2 flex-col gap-3  md:w-full">
+          <div className="flex w-screen flex-col gap-3 px-2  md:w-full">
             <div className="mt-3">
               <span className="text-md font-bold text-slate-300/80">Genres</span>
 
@@ -148,7 +148,7 @@ function DetailsPane(props) {
                 </span>
               </p>
             </div>
-            <div className='flex flex-col gap-2 md:flex-row md:gap-4'>
+            <div className="flex flex-col gap-2 md:flex-row md:gap-4">
               <p>
                 <span className="text-md font-bold text-slate-300/80">
                   Runtime {`${mediaType === 'tv' ? '(Avg)' : ''}`}:
