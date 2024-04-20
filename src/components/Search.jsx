@@ -77,7 +77,7 @@ function Search() {
     <>
       <div className="flex min-h-screen flex-col gap-10 bg-slate-900 pb-5 pt-1 ">
         <Topbar />
-        <div className="max-w-7xl min-w-7xl w-full place-self-center">
+        <div className="min-w-7xl w-full max-w-7xl place-self-center px-2 md:px-0">
           {/* <div className="mb-7 border-b border-b-slate-700 pb-3 text-3xl font-bold text-slate-300">
             Showing results for "{searchTerm}"
           </div> */}
@@ -101,7 +101,7 @@ function Search() {
               {/* <input type="text" className="w-24 rounded-md bg-slate-800 px-2 py-1 outline-none" /> */}
             </div>
           </div>
-          <div className="my-5  flex justify-between">
+          <div className="my-5 flex justify-between">
             <div className="flex items-center gap-2 ">
               <div className="text-xl text-slate-400">
                 <FaTags />
@@ -117,20 +117,14 @@ function Search() {
                 ) : null
               )}
             </div>
-            {/* <button className="flex items-center justify-center p-1 text-lg font-semibold text-slate-400">
-              <span>
-                <LuChevronsUpDown />
-              </span>
-              Year
-            </button> */}
           </div>
-          <div className="grid grid-cols-6 gap-10 place-self-center">
+          <div className="grid grid-cols-3 place-items-center gap-y-6 md:grid-cols-6 md:gap-10">
             {filteredData && filteredData.length > 0 ? (
               filteredData.map((result, index) => (
                 <Card key={result.id} data={result} index={index} length={searchResults.length} />
               ))
             ) : filteredData && filteredData.length === 0 ? (
-              <span className="w-max  text-lg font-bold text-slate-400">
+              <span className="w-max text-lg font-bold text-slate-400">
                 No results found for ' {searchTerm} '
               </span>
             ) : (

@@ -27,16 +27,16 @@ function DetailsPane(props) {
   return (
     <>
       <div
-        className={`relative flex h-[500px] items-center gap-5 overflow-hidden p-10 text-slate-100 `}
+        className={`relative flex flex-col items-center gap-5 overflow-hidden p-10 text-slate-100 md:h-[500px] md:flex-row `}
       >
-        <div className=" absolute inset-0 -z-10 bg-gradient-to-r from-slate-900 object-cover"></div>
+        <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-slate-900 object-cover md:block"></div>
 
-        <div className=" absolute inset-0 -z-10 bg-gradient-to-t from-slate-900 object-cover"></div>
-        <div className=" absolute inset-0 -z-10 bg-gradient-to-b from-slate-900 object-cover"></div>
+        <div className="absolute inset-0 -z-10 hidden bg-gradient-to-t from-slate-900 object-cover md:block"></div>
+        <div className="absolute inset-0 -z-10 hidden bg-gradient-to-b from-slate-900 object-cover md:block"></div>
         <img
           src={`${imageBaseUrl + mediaInfo.backdrop_path}`}
           alt=""
-          className="absolute inset-0 -z-20 w-screen object-cover"
+          className="absolute inset-0 -z-20 hidden w-screen object-cover md:block"
         />
         <div className="relative flex h-max flex-col items-center gap-2">
           <img
@@ -62,8 +62,8 @@ function DetailsPane(props) {
         </div>
 
         <div>
-          <div className="flex flex-col gap-2">
-            <div className="flex content-center gap-2 text-5xl font-bold ">
+          <div className="flex flex-col items-center gap-2 md:items-start">
+            <div className="flex items-center gap-2 text-5xl font-bold ">
               <span
                 className="hover:cursor-pointer  hover:text-sky-300"
                 onClick={() => handleItemCopy(mediaInfo.title || mediaInfo.name, 'Title')}
@@ -105,7 +105,7 @@ function DetailsPane(props) {
               </span>
             </span>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex w-screen px-2 flex-col gap-3  md:w-full">
             <div className="mt-3">
               <span className="text-md font-bold text-slate-300/80">Genres</span>
 
@@ -148,7 +148,7 @@ function DetailsPane(props) {
                 </span>
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '1rem' }}>
+            <div className='flex flex-col gap-2 md:flex-row md:gap-4'>
               <p>
                 <span className="text-md font-bold text-slate-300/80">
                   Runtime {`${mediaType === 'tv' ? '(Avg)' : ''}`}:
