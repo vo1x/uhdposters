@@ -4,12 +4,13 @@ import { FaSearch } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function SearchBar({ defaultValue }) {
+function SearchBar() {
   const navigate = useNavigate();
-  const [inputText, setInputText] = useState(defaultValue);
+
+  const [inputText, setInputText] = useState('');
   const [inputActive, setInputActive] = useState(false);
   const handleClick = () => {
-    if (inputText === '') {
+    if (inputText.trim() === '') {
       toast.error('Please provide a keyword!', {
         theme: 'colored',
         autoClose: 2000,
@@ -20,9 +21,12 @@ function SearchBar({ defaultValue }) {
     }
   };
 
-  useEffect(() => {
-    setInputText(defaultValue);
-  }, [defaultValue]);
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleClick();
+    }
+  };
 
   return (
     <div>
@@ -38,15 +42,12 @@ function SearchBar({ defaultValue }) {
         <input
           type="text"
           placeholder="Search movie or series"
-          defaultValue={inputText}
+          value={inputText}
           onChange={(e) => {
+            console.log(inputText);
             setInputText(e.target.value);
           }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleClick();
-            }
-          }}
+          onKeyDown={(e) => handleKeyDown(e)}
           onFocus={() => setInputActive(true)}
           onBlur={() => setInputActive(false)}
           className="rounded-r-md bg-slate-800 p-2 text-slate-300 placeholder-slate-500 outline-none"

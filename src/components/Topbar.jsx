@@ -1,6 +1,6 @@
 import Header from './Header';
+import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
-
 function Topbar() {
   return (
     <div className="flex justify-between p-5 px-10">
