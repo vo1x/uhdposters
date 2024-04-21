@@ -50,16 +50,17 @@ function Search() {
     { value: 'movie', label: 'Movie' }
   ];
 
-  const [tags, setTags] = useState({ searchTag: `Search: ${searchTerm}`, formatTag: '' });
+  const [tags, setTags] = useState({ searchTag: '', formatTag: '' });
 
   const [selectedFormat, setSelectedFormat] = useState(formatSelectOptions[0]);
   const [selectedYear, setSelectedYear] = useState('xxx');
 
   const [filteredData, setFilteredData] = useState(null);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
-    setTags((prev) => ({ ...prev, searchTag: `Search: ${searchTerm}` }));
-  }, [searchTerm]);
+    setTags((prev) => ({ ...prev, searchTag: `Search: ${inputValue || 'trending'}` }));
+  }, [inputValue]);
 
   useEffect(() => {
     const filterDataByFormat = () => {
@@ -94,7 +95,7 @@ function Search() {
           <div className="items-centers flex gap-5 ">
             <div className="flex flex-col gap-1 text-slate-300">
               <span className="font-semibold">Search</span>
-              <SearchBar defaultValue={searchTerm}></SearchBar>
+              <SearchBar defaultValue={searchTerm} setInputValue={setInputValue}></SearchBar>
             </div>
             <div className="flex flex-col gap-1 text-slate-300">
               <span className="font-semibold">Format</span>

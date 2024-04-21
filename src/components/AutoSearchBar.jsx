@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDebounce } from 'use-debounce';
 
-function SearchBar({ defaultValue }) {
+function SearchBar({ defaultValue, setInputValue }) {
   const navigate = useNavigate();
 
   const [inputText, setInputText] = useState(defaultValue);
@@ -33,6 +33,7 @@ function SearchBar({ defaultValue }) {
           defaultValue={value}
           onChange={(e) => {
             setInputText(e.target.value);
+            setInputValue(e.target.value);
           }}
           onFocus={() => setInputActive(true)}
           onBlur={() => setInputActive(false)}
