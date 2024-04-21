@@ -1,7 +1,7 @@
-import Search from './components/Search';
+import Search from './pages/Search';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import DetailsPage from './components/DeatilsPage';
-import Home from './components/Home';
+import DetailsPage from './pages/DeatilsPage';
+import Home from './pages/Home';
 
 
 

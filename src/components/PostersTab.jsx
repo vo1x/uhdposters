@@ -1,5 +1,5 @@
 import Poster from './Poster';
-import CustomSelect from './Select';
+import Select from './Select';
 import { useState } from 'react';
 import langCodes from './langCodes.json';
 
@@ -31,9 +31,9 @@ function PostersTab(props) {
   return (
     <>
       <div className="flex flex-col items-center gap-3">
-        <div className="items-center flex gap-2">
-          <span className='font-semibold text-base text-slate-400'>Language</span>
-          <CustomSelect
+        <div className="flex items-center gap-2">
+          <span className="text-base font-semibold text-slate-400">Language</span>
+          <Select
             options={selectOptions}
             onChange={setSelectedOption}
             placeHolder={selectedOption.label}

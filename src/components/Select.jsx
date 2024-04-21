@@ -4,7 +4,7 @@ const Icon = ({ isOpen }) => {
   return <FiChevronDown className={isOpen ? ' rotate-180' : 'text-slate-400 text-lg'} />;
 };
 
-const CustomSelect = ({ placeHolder, options, onChange, isDisabled }) => {
+const Select = ({ placeHolder, options, onChange, isDisabled }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState(null);
   const inputRef = useRef();
@@ -85,4 +85,4 @@ const CustomSelect = ({ placeHolder, options, onChange, isDisabled }) => {
   );
 };
 
-export default CustomSelect;
+export default Select;

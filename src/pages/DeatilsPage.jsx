@@ -2,11 +2,11 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Topbar from './Topbar';
+import Topbar from '../components/Topbar';
 import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
-import Trailer from './Trailer';
-import DetailsPane from './DetailsPane';
-import PostersTab from './PostersTab';
+import Trailer from '../components/Trailer';
+import DetailsPane from '../components/DetailsPane';
+import PostersTab from '../components/PostersTab';
 
 function DetailsPage() {
   const { mediaType, id } = useParams();

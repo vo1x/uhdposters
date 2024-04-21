@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import Card from './Card';
+import Card from '../components/Card';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
-import Topbar from './Topbar';
+import Topbar from '../components/Topbar';
 import axios from 'axios';
 import { FaTags } from 'react-icons/fa';
-import CustomSelect from './Select';
+import Select from '../components/Select';
 import { FaSpinner } from 'react-icons/fa';
 function Search() {
   const { searchTerm } = useParams();
@@ -53,13 +53,13 @@ function Search() {
   useEffect(() => {
     const filterDataByFormat = () => {
       if (!searchResults) {
-        setFilteredData(null); // Reset filtered data if search results are null
+        setFilteredData(null); 
 
         return;
       }
 
       if (selectedFormat.value === 'all') {
-        setFilteredData(searchResults); // If all is selected, show all data
+        setFilteredData(searchResults); 
         setTags((prev) => ({ ...prev, formatTag: '' }));
 
         return;
@@ -84,20 +84,20 @@ function Search() {
           <div className="flex gap-5">
             <div className="flex flex-col gap-1 text-slate-300">
               <span className="font-semibold">Format</span>
-              <CustomSelect
+              <Select
                 options={formatSelectOptions}
                 placeHolder={selectedFormat.label}
                 onChange={setSelectedFormat}
-              ></CustomSelect>
+              ></Select>
               {/* <input type="text" className="w-24 rounded-md bg-slate-800 px-2 py-1 outline-none" /> */}
             </div>
             <div className="flex flex-col gap-1 text-slate-300">
               <span className="font-semibold">Year</span>
-              <CustomSelect
+              <Select
                 options={[{ value: 0, label: 'WIP' }]}
                 placeHolder={'xxxx'}
                 onChange={setSelectedYear}
-              ></CustomSelect>
+              ></Select>
               {/* <input type="text" className="w-24 rounded-md bg-slate-800 px-2 py-1 outline-none" /> */}
             </div>
           </div>
