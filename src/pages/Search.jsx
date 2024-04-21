@@ -3,11 +3,12 @@ import Card from '../components/Card';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
-import Topbar from '../components/Topbar';
+// import Topbar from '../components/Topbar';
+import Header from '../components/Header';
 import axios from 'axios';
 import { FaTags } from 'react-icons/fa';
 import Select from '../components/Select';
-import { FaSpinner } from 'react-icons/fa';
+import SearchBar from '../components/AutoSearchBar';
 function Search() {
   const { searchTerm } = useParams();
 
@@ -27,7 +28,22 @@ function Search() {
       }
     };
 
-    searchTerm == '' ? setSearchResults(null) : fetchInfo();
+    const fetchTrending = async () => {
+      try {
+        const { data } = await axios.get(
+          `${tmdbBaseUrl}/trending/all/day?api_key=${apiKey}&query=${searchTerm}`
+        );
+        setSearchResults(data.results);
+      } catch (error) {
+        toast.error(error, { theme: 'colored', autoClose: 2000 });
+      }
+    };
+
+    !searchTerm || searchTerm === ''
+      ? setSearchResults(null)
+      : searchTerm === 'trending'
+        ? fetchTrending()
+        : fetchInfo();
   }, [searchTerm]);
 
   const formatSelectOptions = [
@@ -53,13 +69,13 @@ function Search() {
   useEffect(() => {
     const filterDataByFormat = () => {
       if (!searchResults) {
-        setFilteredData(null); 
+        setFilteredData(null);
 
         return;
       }
 
       if (selectedFormat.value === 'all') {
-        setFilteredData(searchResults); 
+        setFilteredData(searchResults);
         setTags((prev) => ({ ...prev, formatTag: '' }));
 
         return;
@@ -76,12 +92,19 @@ function Search() {
   return (
     <>
       <div className="flex min-h-screen flex-col gap-10 bg-slate-900 pb-5 pt-1 ">
-        <Topbar />
+        <div className="place-self-center pt-2">
+          <Header></Header>
+        </div>
+        {/* <Topbar /> */}
         <div className="min-w-7xl w-full max-w-7xl place-self-center px-2 md:px-0">
           {/* <div className="mb-7 border-b border-b-slate-700 pb-3 text-3xl font-bold text-slate-300">
             Showing results for "{searchTerm}"
           </div> */}
-          <div className="flex gap-5">
+          <div className="items-centers flex gap-5 ">
+            <div className="flex flex-col gap-1 text-slate-300">
+              <span className="font-semibold">Search</span>
+              <SearchBar ></SearchBar>
+            </div>
             <div className="flex flex-col gap-1 text-slate-300">
               <span className="font-semibold">Format</span>
               <Select
@@ -118,7 +141,7 @@ function Search() {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-3 place-items-center md:place-items-start md:place-content-center gap-y-6 md:grid-cols-6 md:gap-10">
+          <div className="grid grid-cols-3 place-items-center gap-y-6 md:grid-cols-6 md:place-content-center md:place-items-start md:gap-10">
             {filteredData && filteredData.length > 0 ? (
               filteredData.map((result, index) => (
                 <Card key={result.id} data={result} index={index} length={searchResults.length} />
