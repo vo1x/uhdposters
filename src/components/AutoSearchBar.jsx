@@ -7,7 +7,6 @@ function SearchBar({ defaultValue, setInputValue }) {
   const navigate = useNavigate();
 
   const [inputText, setInputText] = useState(defaultValue);
-  const [inputActive, setInputActive] = useState(false);
   const [value] = useDebounce(inputText, 1000);
 
   useEffect(() => {
@@ -24,9 +23,7 @@ function SearchBar({ defaultValue, setInputValue }) {
 
   return (
     <div>
-      <div
-        className={'flex items-center justify-center shadow-md shadow-slate-950/25 ' + (inputActive ? 'rounded-md ring-2' : '')}
-      >
+      <div className={'flex items-center justify-center shadow-md shadow-slate-950/25 '}>
         <input
           type="text"
           placeholder="Search movie or series"
@@ -35,8 +32,6 @@ function SearchBar({ defaultValue, setInputValue }) {
             setInputText(e.target.value);
             setInputValue(e.target.value);
           }}
-          onFocus={() => setInputActive(true)}
-          onBlur={() => setInputActive(false)}
           className="rounded-md bg-slate-800 p-2 text-slate-300 placeholder-slate-500 outline-none"
         />
       </div>

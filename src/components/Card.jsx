@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-
 function Card(props) {
   // const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
@@ -39,7 +38,7 @@ function Card(props) {
             )}
 
             {imageLoaded && isHovered && (
-              <div className="absolute bottom-0 hidden w-full justify-center gap-1 bg-gradient-to-t from-black/90 pb-4 pt-72 text-xs text-slate-300 md:flex">
+              <div className="absolute bottom-0 hidden w-full justify-center gap-1 bg-gradient-to-t from-black via-transparent to-transparent pb-4 pt-72 text-xs text-slate-300 md:flex">
                 <span>{props.data['media_type'].toUpperCase()}</span>
                 <span>•</span>
                 <span>

@@ -37,6 +37,7 @@ function PostersTab(props) {
             options={selectOptions}
             onChange={setSelectedOption}
             placeHolder={selectedOption.label}
+            defaultValue={selectOptions[0]}
           />
         </div>
         {selectedOption.value === 0 ? (
