@@ -25,7 +25,7 @@ function SearchBar({ defaultValue, setInputValue }) {
   return (
     <div>
       <div
-        className={'flex items-center justify-center ' + (inputActive ? 'rounded-md ring-2' : '')}
+        className={'flex items-center justify-center shadow-md shadow-slate-950/25 ' + (inputActive ? 'rounded-md ring-2' : '')}
       >
         <input
           type="text"
