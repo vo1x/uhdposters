@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { FiChevronDown } from 'react-icons/fi';
+import { FiChevronDown, FiX } from 'react-icons/fi';
 const Icon = ({ isOpen }) => {
-  return <FiChevronDown className={isOpen ? ' rotate-180' : 'text-slate-400 text-lg'} />;
+  return <FiChevronDown className={isOpen ? ' rotate-180' : 'text-lg text-slate-400'} />;
 };
 
-const Select = ({ placeHolder, options, onChange, isDisabled }) => {
+const Select = ({ placeHolder, options, onChange, defaultValue }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState(defaultValue);
   const inputRef = useRef();
 
   useEffect(() => {
@@ -36,7 +36,16 @@ const Select = ({ placeHolder, options, onChange, isDisabled }) => {
 
   const onItemClick = (option) => {
     setSelectedValue(option);
+    setValSelected(true);
     onChange(option);
+  };
+
+  const [valSelected, setValSelected] = useState(false);
+
+  const onOptionClear = () => {
+    setSelectedValue(defaultValue);
+    setValSelected(false);
+    onChange(defaultValue);
   };
 
   const isSelected = (option) => {
@@ -60,15 +69,21 @@ const Select = ({ placeHolder, options, onChange, isDisabled }) => {
       >
         <div className="text-slate-400">{getDisplay()}</div>
         <div className="dropdown-tools ">
-          <div className="dropdown-tool">
-            <Icon isOpen={showMenu} />
+          <div className="flex items-center justify-between text-slate-400">
+            {valSelected ? (
+              <button onClick={() => onOptionClear()}>
+                <FiX />
+              </button>
+            ) : (
+              <Icon isOpen={showMenu} />
+            )}
           </div>
         </div>
       </div>
 
       {showMenu && (
         <div className="">
-          <div className="absolute mt-2 max-h-96 overflow-auto shadow-black shadow-md h-max w-40 rounded-md border border-slate-700 bg-slate-800 p-2 drop-shadow-md">
+          <div className="absolute mt-2 h-max max-h-96 w-40 overflow-auto rounded-md border border-slate-700 bg-slate-800 p-2 shadow-md shadow-black drop-shadow-md">
             {getOptions().map((option) => (
               <div
                 onClick={() => onItemClick(option)}

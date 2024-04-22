@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Card from '../components/Card';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import axios from 'axios';
@@ -121,6 +120,7 @@ function Search() {
                 options={formatSelectOptions}
                 placeHolder={selectedFormat.label}
                 onChange={setSelectedFormat}
+                defaultValue={formatSelectOptions[0]}
               ></Select>
             </div>
             <div className="flex flex-col gap-1 text-slate-300">
@@ -129,6 +129,7 @@ function Search() {
                 options={yearSelectOptions}
                 placeHolder={selectedYear.label}
                 onChange={setSelectedYear}
+                defaultValue={yearSelectOptions[0]}
               ></Select>
             </div>
           </div>
@@ -164,7 +165,6 @@ function Search() {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 }
