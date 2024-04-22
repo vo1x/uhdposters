@@ -3,7 +3,6 @@ import Card from '../components/Card';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
-// import Topbar from '../components/Topbar';
 import Header from '../components/Header';
 import axios from 'axios';
 import { FaTags } from 'react-icons/fa';
@@ -49,11 +48,19 @@ function Search() {
     },
     { value: 'movie', label: 'Movie' }
   ];
+  const currentYear = new Date().getFullYear();
 
-  const [tags, setTags] = useState({ searchTag: '', formatTag: '' });
+  const yearOptions = Array.from({ length: currentYear - 1939 }, (_, index) => ({
+    value: 1940 + index,
+    label: 1940 + index
+  })).reverse();
+
+  const yearSelectOptions = [{ value: 'all', label: 'Any' }, ...yearOptions];
+
+  const [tags, setTags] = useState({ searchTag: '', formatTag: '', yearTag: '' });
 
   const [selectedFormat, setSelectedFormat] = useState(formatSelectOptions[0]);
-  const [selectedYear, setSelectedYear] = useState('xxx');
+  const [selectedYear, setSelectedYear] = useState(yearSelectOptions[0]);
 
   const [filteredData, setFilteredData] = useState(null);
   const [inputValue, setInputValue] = useState('');
@@ -66,24 +73,35 @@ function Search() {
     const filterDataByFormat = () => {
       if (!searchResults) {
         setFilteredData(null);
-
         return;
       }
 
-      if (selectedFormat.value === 'all') {
-        setFilteredData(searchResults);
+      let filteredResults = [...searchResults];
+
+      if (selectedFormat.value !== 'all') {
+        filteredResults = filteredResults.filter((res) => res.media_type === selectedFormat.value);
+        setTags((prev) => ({ ...prev, formatTag: selectedFormat.label }));
+      } else {
         setTags((prev) => ({ ...prev, formatTag: '' }));
-
-        return;
       }
 
-      const filtered = searchResults.filter((res) => res.media_type === selectedFormat.value);
-      setFilteredData(filtered);
-      setTags((prev) => ({ ...prev, formatTag: selectedFormat.label }));
+      if (selectedYear.value !== 'all') {
+        filteredResults = filteredResults.filter(
+          (res) =>
+            (res.release_date && parseInt(res.release_date.split('-')[0]) === selectedYear.value) ||
+            (res.first_air_date &&
+              parseInt(res.first_air_date.split('-')[0]) === selectedYear.value)
+        );
+        setTags((prev) => ({ ...prev, yearTag: selectedYear.label }));
+      } else {
+        setTags((prev) => ({ ...prev, yearTag: '' }));
+      }
+
+      setFilteredData(filteredResults);
     };
 
     filterDataByFormat();
-  }, [searchResults, selectedFormat.value]);
+  }, [searchResults, selectedFormat.value, selectedYear.value]);
 
   return (
     <>
@@ -108,8 +126,8 @@ function Search() {
             <div className="flex flex-col gap-1 text-slate-300">
               <span className="font-semibold">Year</span>
               <Select
-                options={[{ value: 0, label: 'WIP' }]}
-                placeHolder={'xxxx'}
+                options={yearSelectOptions}
+                placeHolder={selectedYear.label}
                 onChange={setSelectedYear}
               ></Select>
             </div>

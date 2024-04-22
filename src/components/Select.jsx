@@ -68,7 +68,7 @@ const Select = ({ placeHolder, options, onChange, isDisabled }) => {
 
       {showMenu && (
         <div className="">
-          <div className="absolute mt-2 shadow-black shadow-md h-max w-40 rounded-md border border-slate-700 bg-slate-800 p-2 drop-shadow-md">
+          <div className="absolute mt-2 max-h-96 overflow-auto shadow-black shadow-md h-max w-40 rounded-md border border-slate-700 bg-slate-800 p-2 drop-shadow-md">
             {getOptions().map((option) => (
               <div
                 onClick={() => onItemClick(option)}
