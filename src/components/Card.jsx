@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { motion, AnimatePresence } from 'framer-motion';
 function Card(props) {
-  // const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
   const getReleaseYear = (date) => (date != undefined ? date.split('-')[0] : 'Unknown');
   const [isHovered, setIsHovered] = useState(false);
@@ -37,15 +37,22 @@ function Card(props) {
               />
             )}
 
-            {imageLoaded && isHovered && (
-              <div className="absolute bottom-0 hidden w-full justify-center gap-1 bg-gradient-to-t from-black via-transparent to-transparent pb-4 pt-72 text-xs text-slate-300 md:flex">
-                <span>{props.data['media_type'].toUpperCase()}</span>
-                <span>•</span>
-                <span>
-                  {getReleaseYear(props.data['release_date'] || props.data['first_air_date'])}
-                </span>
-              </div>
-            )}
+            <AnimatePresence>
+              {imageLoaded && isHovered && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute bottom-0 hidden w-full justify-center gap-1 bg-gradient-to-t from-black via-transparent to-transparent pb-4 pt-72 text-xs text-slate-300 md:flex"
+                >
+                  <span>{props.data['media_type'].toUpperCase()}</span>
+                  <span>•</span>
+                  <span>
+                    {getReleaseYear(props.data['release_date'] || props.data['first_air_date'])}
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
           {imageLoaded ? (
             <span
