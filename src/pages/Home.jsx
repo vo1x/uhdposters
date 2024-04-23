@@ -7,37 +7,38 @@ import axios from 'axios';
 import { FaTags } from 'react-icons/fa';
 import Select from '../components/Select';
 import SearchBar from '../components/AutoSearchBar';
+import { useQuery } from '@tanstack/react-query';
 function Search() {
   const { searchTerm } = useParams();
-  console.log(searchTerm);
-
   const apiKey = import.meta.env.VITE_TMDB_API_KEY;
   const tmdbBaseUrl = 'https://api.themoviedb.org/3';
-  const [searchResults, setSearchResults] = useState(null);
+  const fetchInfo = async () => {
+    try {
+      const { data } = await axios.get(
+        `${tmdbBaseUrl}/search/multi?api_key=${apiKey}&query=${searchTerm}`
+      );
+      return data.results;
+    } catch (error) {
+      toast.error(error, { theme: 'colored', autoClose: 2000 });
+    }
+  };
 
-  useEffect(() => {
-    const fetchInfo = async () => {
-      try {
-        const { data } = await axios.get(
-          `${tmdbBaseUrl}/search/multi?api_key=${apiKey}&query=${searchTerm}`
-        );
-        setSearchResults(data.results);
-      } catch (error) {
-        toast.error(error, { theme: 'colored', autoClose: 2000 });
-      }
-    };
+  const fetchTrending = async () => {
+    try {
+      const { data } = await axios.get(`${tmdbBaseUrl}/trending/all/day?api_key=${apiKey}`);
+      return data.results;
+    } catch (error) {
+      toast.error(error, { theme: 'colored', autoClose: 2000 });
+    }
+  };
 
-    const fetchTrending = async () => {
-      try {
-        const { data } = await axios.get(`${tmdbBaseUrl}/trending/all/day?api_key=${apiKey}`);
-        setSearchResults(data.results);
-      } catch (error) {
-        toast.error(error, { theme: 'colored', autoClose: 2000 });
-      }
-    };
-
-    !searchTerm || searchTerm === '' ? fetchTrending() : fetchInfo();
-  }, [searchTerm]);
+  const { data: searchResults, isFetched } = useQuery({
+    queryKey: [searchTerm !== '' ? searchTerm : 'trending'],
+    queryFn: () => (searchTerm && searchTerm !== '' ? fetchInfo() : fetchTrending()),
+    enabled: !!searchTerm || searchTerm !== '',
+    staleTime: Infinity,
+    refetchOnWindowFocus: false
+  });
 
   const formatSelectOptions = [
     { value: 'all', label: 'Any' },
@@ -69,19 +70,15 @@ function Search() {
   }, [inputValue]);
 
   useEffect(() => {
-    const filterDataByFormat = () => {
-      if (!searchResults) {
-        setFilteredData(null);
-        return;
-      }
+    if (!searchResults && isFetched) {
+      return;
+    }
 
-      let filteredResults = [...searchResults];
+    const filterDataByFormat = () => {
+      let filteredResults = searchResults ? [...searchResults] : [];
 
       if (selectedFormat.value !== 'all') {
         filteredResults = filteredResults.filter((res) => res.media_type === selectedFormat.value);
-        setTags((prev) => ({ ...prev, formatTag: selectedFormat.label }));
-      } else {
-        setTags((prev) => ({ ...prev, formatTag: '' }));
       }
 
       if (selectedYear.value !== 'all') {
@@ -91,17 +88,13 @@ function Search() {
             (res.first_air_date &&
               parseInt(res.first_air_date.split('-')[0]) === selectedYear.value)
         );
-        setTags((prev) => ({ ...prev, yearTag: selectedYear.label }));
-      } else {
-        setTags((prev) => ({ ...prev, yearTag: '' }));
       }
 
       setFilteredData(filteredResults);
     };
 
     filterDataByFormat();
-  }, [searchResults, selectedFormat.value, selectedYear.value]);
-
+  }, [searchResults, selectedFormat.value, selectedYear.value, isFetched]);
   return (
     <>
       <div className="flex min-h-screen flex-col gap-10 bg-slate-900 pb-5 pt-1 ">
@@ -153,11 +146,11 @@ function Search() {
             </div>
           </div>
           <div className="grid grid-cols-3 place-items-center gap-y-6 md:grid-cols-6 md:place-content-center md:place-items-start md:gap-10">
-            {filteredData && filteredData.length > 0 ? (
+            {searchResults && filteredData && filteredData.length > 0 ? (
               filteredData.map((result, index) => (
                 <Card key={result.id} data={result} index={index} length={searchResults.length} />
               ))
-            ) : filteredData && filteredData.length === 0 ? (
+            ) : searchResults && filteredData && filteredData.length === 0 ? (
               <span className="w-max text-lg font-bold text-slate-400">
                 No results found for ' {searchTerm} '
               </span>
