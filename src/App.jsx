@@ -2,7 +2,7 @@ import Search from './pages/Home';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DetailsPage from './pages/DeatilsPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 const queryClient = new QueryClient();
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
             <Route path="/details/:mediaType/:id" element={<DetailsPage />} />
           </Routes>
         </Router>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </>
   );
