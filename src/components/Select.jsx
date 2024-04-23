@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronDown, FiX } from 'react-icons/fi';
 
-const Select = ({ placeHolder, options, onChange, defaultValue }) => {
+const Select = ({ placeHolder, options, onChange, defaultValue, className }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState(defaultValue);
   const inputRef = useRef();
@@ -59,11 +59,11 @@ const Select = ({ placeHolder, options, onChange, defaultValue }) => {
   };
 
   return (
-    <div className="z-50 rounded-md">
+    <div className={`z-50`}>
       <div
         ref={inputRef}
         onClick={handleInputClick}
-        className={`flex w-40 shadow-md shadow-slate-950/25 ${showMenu ? 'border-blue-700' : ''} items-center justify-between rounded-md bg-slate-800 p-2`}
+        className={`flex cursor-pointer w-40 shadow-md shadow-slate-950/25 ${showMenu ? 'border-blue-700' : ''} items-center justify-between ${className} bg-slate-800 p-2`}
       >
         <div className="text-slate-400">{getDisplay()}</div>
         <div className="dropdown-tools ">

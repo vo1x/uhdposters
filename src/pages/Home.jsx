@@ -121,6 +121,7 @@ function Search() {
                 placeHolder={selectedFormat.label}
                 onChange={setSelectedFormat}
                 defaultValue={formatSelectOptions[0]}
+                className={'rounded-md'}
               ></Select>
             </div>
             <div className="flex flex-col gap-1 text-slate-300">
@@ -130,6 +131,7 @@ function Search() {
                 placeHolder={selectedYear.label}
                 onChange={setSelectedYear}
                 defaultValue={yearSelectOptions[0]}
+                className={'rounded-md'}
               ></Select>
             </div>
           </div>

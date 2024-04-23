@@ -38,6 +38,7 @@ function PostersTab(props) {
             onChange={setSelectedOption}
             placeHolder={selectedOption.label}
             defaultValue={selectOptions[0]}
+            className='rounded-md'
           />
         </div>
         {selectedOption.value === 0 ? (

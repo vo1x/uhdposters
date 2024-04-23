@@ -4,9 +4,11 @@ import { FiCopy } from 'react-icons/fi';
 // import { FaExpandArrowsAlt } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import useClipboard from '../hooks/useClipboard';
+import { motion } from 'framer-motion';
 function DetailsPane(props) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
   const { mediaInfo, imdbID, seasonsInfo, mediaType } = props;
+
   // const [isHovered, setIsHovered] = useState(false);
   const [handleItemCopy] = useClipboard();
   const [runtime, setRuntime] = useState({
@@ -45,12 +47,13 @@ function DetailsPane(props) {
             className={`h-auto w-full min-w-52 max-w-52 rounded-md shadow-2xl shadow-slate-950  transition-opacity duration-300`}
           />
           {mediaInfo && (
-            <span
-              className="cursor-pointer text-slate-300 hover:text-sky-300"
+            <motion.span
+              whileHover={{ color: '#7DD3FC' }}
+              className="cursor-pointer text-slate-300 "
               onClick={(e) => handleItemCopy(e.target.innerText, 'Name & Date String')}
             >
               {`${mediaInfo.name || mediaInfo.title} (${mediaType === 'tv' && mediaInfo.first_air_date ? mediaInfo.first_air_date.split('-')[0] : mediaInfo.release_date ? mediaInfo.release_date.split('-')[0] : ''})`}
-            </span>
+            </motion.span>
           )}
 
           {/* {isHovered && (
@@ -63,13 +66,14 @@ function DetailsPane(props) {
 
         <div>
           <div className="flex flex-col items-center gap-2 md:items-start">
-            <div className="flex items-center gap-2 text-2xl text-center font-bold md:text-5xl ">
-              <span
-                className="hover:cursor-pointer  hover:text-sky-300"
+            <div className="flex items-center gap-2 text-center text-2xl font-bold md:text-5xl ">
+              <motion.div
+                whileHover={{ color: '#7DD3FC' }}
+                className="hover:cursor-pointer  "
                 onClick={() => handleItemCopy(mediaInfo.title || mediaInfo.name, 'Title')}
               >
                 {mediaInfo.title || mediaInfo.name}{' '}
-              </span>
+              </motion.div>
               {(mediaInfo['original_title'] || mediaInfo['original_name']) != undefined &&
               mediaInfo['original_language'] != 'en' ? (
                 <span
@@ -92,8 +96,9 @@ function DetailsPane(props) {
             </div>
             <span className="text-lg text-slate-400">
               Relased on{' '}
-              <span
-                className="font-bold hover:cursor-pointer hover:text-sky-300"
+              <motion.span
+                whileHover={{ color: '#7DD3FC' }}
+                className="font-bold hover:cursor-pointer "
                 onClick={() =>
                   handleItemCopy(
                     mediaInfo.release_date || mediaInfo.first_air_date.split('-')[0],
@@ -102,7 +107,7 @@ function DetailsPane(props) {
                 }
               >
                 {mediaInfo.release_date || mediaInfo.first_air_date}
-              </span>
+              </motion.span>
             </span>
           </div>
           <div className="flex w-screen flex-col gap-3 px-2  md:w-full">
@@ -138,23 +143,25 @@ function DetailsPane(props) {
             <div>
               <p className="flex flex-col">
                 <span className="text-md font-bold text-slate-300/80">Overview</span>{' '}
-                <span
-                  className="text-slate-100 hover:cursor-pointer  hover:text-sky-300"
+                <motion.div
+                  whileHover={{ color: '#7DD3FC' }}
+                  className="text-slate-100 hover:cursor-pointer  "
                   onClick={() => {
                     handleItemCopy(mediaInfo['overview'], 'Overview');
                   }}
                 >
                   {mediaInfo.overview}
-                </span>
+                </motion.div>
               </p>
             </div>
             <div className="flex flex-col gap-2 md:flex-row md:gap-4">
-              <p>
+              <p className="flex gap-1">
                 <span className="text-md font-bold text-slate-300/80">
                   Runtime {`${mediaType === 'tv' ? '(Avg)' : ''}`}:
                 </span>{' '}
-                <span
-                  className="hover:cursor-pointer hover:text-sky-300"
+                <motion.div
+                  whileHover={{ color: '#7DD3FC' }}
+                  className="hover:cursor-pointer "
                   onClick={() =>
                     handleItemCopy(
                       `${runtime.hours === 0 ? `${runtime.hours}h` : ''} ${runtime.minutes}m`,
@@ -163,25 +170,27 @@ function DetailsPane(props) {
                   }
                 >
                   {`${runtime.hours === 0 ? '' : `${runtime.hours}h`} ${runtime.minutes}m`}
-                </span>
+                </motion.div>
               </p>
-              <p>
+              <p className="flex gap-1">
                 <span className="text-md font-bold text-slate-300/80">IMDB ID:</span>{' '}
-                <span
-                  className="hover:cursor-pointer hover:text-sky-300"
+                <motion.div
+                  whileHover={{ color: '#7DD3FC' }}
+                  className="hover:cursor-pointer "
                   onClick={() => handleItemCopy(imdbID, 'IMDB ID')}
                 >
                   {imdbID}
-                </span>
+                </motion.div>
               </p>
-              <p>
+              <p className="flex gap-1">
                 <span className="text-md font-bold text-slate-300/80">IMDB URL:</span>{' '}
-                <span
-                  className="hover:cursor-pointer hover:text-sky-300"
+                <motion.div
+                  whileHover={{ color: '#7DD3FC' }}
+                  className="hover:cursor-pointer "
                   onClick={() => handleItemCopy(`https://www.imdb.com/title/${imdbID}`, 'IMDB URL')}
                 >
                   https://www.imdb.com/title/{imdbID}
-                </span>
+                </motion.div>
               </p>
             </div>
             <div>
