@@ -3,9 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, Download, Loader2, ClipboardCheck } from 'lucide-react';
 import Select from './Select';
 function Poster(props) {
-  //  THIS CODE IS VERY UNOPTIMAL. WILL BE REWRITTEN SOON.
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
-
+  const imagePrevUrl = 'https://image.tmdb.org/t/p/w220_and_h330_face';
   const posterStyles = {
     maxWidth: '250px',
     width: '100%',
@@ -70,7 +69,7 @@ function Poster(props) {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <img src={imageBaseUrl + props.data.file_path} alt="" style={posterStyles} className="" />
+        <img src={imagePrevUrl + props.data.file_path} alt="" className="h-auto w-full max-w-60" />
         <AnimatePresence>
           {
             <motion.div
