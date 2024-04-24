@@ -30,19 +30,19 @@ function PostersTab(props) {
   });
   return (
     <>
-      <div className="flex flex-col items-center gap-3">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col gap-3">
+        <div className="mx-2 flex flex-col gap-2">
           <span className="text-base font-semibold text-slate-400">Language</span>
           <Select
             options={selectOptions}
             onChange={setSelectedOption}
             placeHolder={selectedOption.label}
             defaultValue={selectOptions[0]}
-            className='rounded-md'
+            className="rounded-md"
           />
         </div>
         {selectedOption.value === 0 ? (
-          <div className="flex flex-wrap content-center justify-center gap-10">
+          <div className="flex flex-wrap place-items-start gap-14">
             {posters &&
               posters
                 .filter((poster) => {
@@ -51,7 +51,7 @@ function PostersTab(props) {
                 .map((poster, index) => <Poster key={index} data={poster} fileName={fileName} />)}
           </div>
         ) : (
-          <div className="flex flex-wrap content-center justify-center gap-10">
+          <div className="flex flex-wrap place-items-start gap-14">
             {posters
               .filter((poster) => {
                 return poster.iso_639_1 === secondLang;

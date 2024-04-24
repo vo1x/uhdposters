@@ -109,7 +109,7 @@ function DetailsPage() {
           />
           <div className="mx-10 mt-5 flex w-full max-w-screen-xl gap-3 overflow-hidden rounded-md bg-slate-800 p-5 text-slate-200">
             <div className="flex min-w-96 flex-col gap-2">
-              <span className='col-span-3 font-bold text-2xl'>Details</span>
+              <span className="col-span-3 text-2xl font-bold">Details</span>
               <div className="grid grid-cols-3 gap-5 ">
                 <span className="font-semibold text-slate-300">Release Date</span>
                 <div className="col-span-2">
@@ -146,16 +146,16 @@ function DetailsPage() {
               </div>
             </div>
             <div>
-            <span className='col-span-3 font-bold text-2xl'>Overview</span>
+              <span className="col-span-3 text-2xl font-bold">Overview</span>
 
               <div className="col-span-2 flex gap-2">{mediaInfo?.overview}</div>
             </div>
           </div>
           <div className="min-h-screen bg-slate-900 pb-5 text-slate-100">
-            <Tabs className="  mx-5 flex flex-col items-center gap-5 rounded-md pt-5">
-              <TabList className="flex w-max items-center rounded-md border border-slate-700 bg-slate-800 p-1">
+            <Tabs className="mx-10 my-5 flex flex-col gap-5 rounded-md ">
+              <TabList className="flex  w-max items-center rounded-md p-1">
                 <Tab
-                  className={`relative cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-1 outline-none`}
+                  className={`relative cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-2 outline-none`}
                   onClick={() => {
                     if (activeTabIndex !== 0) {
                       handleTabClick();
@@ -163,7 +163,7 @@ function DetailsPage() {
                   }}
                 >
                   <span
-                    className={`relative z-10 text-lg ${activeTabIndex === 0 ? 'text-white' : 'text-slate-400'}`}
+                    className={`relative z-10 text-base ${activeTabIndex === 0 ? 'text-white' : 'text-slate-400'}`}
                   >
                     Posters
                   </span>
@@ -171,12 +171,12 @@ function DetailsPage() {
                     <motion.div
                       layoutId="indicator"
                       transition={{ type: 'tween' }}
-                      className="absolute inset-0 rounded-[calc(theme(borderRadius.md)-4px)] bg-slate-700"
+                      className="absolute bottom-0 left-0 right-0 h-1 rounded-[calc(theme(borderRadius.md)-4px)] bg-slate-700"
                     ></motion.div>
                   )}
                 </Tab>
                 <Tab
-                  className={`relative cursor-pointer  px-2 py-1 outline-none`}
+                  className={`relative cursor-pointer  px-2 py-2 outline-none`}
                   onClick={() => {
                     if (activeTabIndex !== 1) {
                       handleTabClick();
@@ -184,7 +184,7 @@ function DetailsPage() {
                   }}
                 >
                   <span
-                    className={`relative z-10 text-lg ${activeTabIndex === 1 ? 'text-white' : 'text-slate-400'}`}
+                    className={`relative z-10 text-base ${activeTabIndex === 1 ? 'text-white' : 'text-slate-400'}`}
                   >
                     Trailers
                   </span>
@@ -192,7 +192,7 @@ function DetailsPage() {
                     <motion.div
                       transition={{ type: 'tween' }}
                       layoutId="indicator"
-                      className="absolute inset-0 rounded-[calc(theme(borderRadius.md)-4px)] bg-slate-700"
+                      className="absolute bottom-0 left-0 right-0 h-1 rounded-[calc(theme(borderRadius.md)-4px)] bg-slate-700"
                     ></motion.div>
                   )}
                 </Tab>

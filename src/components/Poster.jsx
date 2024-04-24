@@ -78,7 +78,7 @@ function Poster(props) {
               exit={{}}
               className="flex w-full flex-col items-center gap-2 rounded-md "
             >
-              <div className="flex w-full items-center  justify-between gap-2">
+              <div className="flex w-full items-center justify-center gap-2">
                 <button
                   onClick={handleCopyAction}
                   className={`rounded-md bg-sky-500 p-2 outline-none ${isCopySuccess ? 'bg-green-500' : ''}`}
@@ -92,7 +92,7 @@ function Poster(props) {
                     defaultValue={qualitySelectOptions[0]}
                     onChange={setImageQuality}
                     options={qualitySelectOptions}
-                    className="rounded-l-md"
+                    className="rounded-l-md w-32"
                   />
                   <button
                     onClick={() => uploadImage(imageQuality)}
