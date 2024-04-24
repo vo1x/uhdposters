@@ -8,6 +8,7 @@ import { FaTags } from 'react-icons/fa';
 import Select from '../components/Select';
 import SearchBar from '../components/AutoSearchBar';
 import { useQuery } from '@tanstack/react-query';
+import SearchResults from '../components/SearchResults';
 function Search() {
   const { searchTerm } = useParams();
   const apiKey = import.meta.env.VITE_TMDB_API_KEY;
@@ -32,7 +33,12 @@ function Search() {
     }
   };
 
-  const { data: searchResults, isFetched } = useQuery({
+  const {
+    data: searchResults,
+    isFetched,
+    isFetching,
+    isLoading
+  } = useQuery({
     queryKey: [searchTerm !== '' ? searchTerm : 'trending'],
     queryFn: () => (searchTerm && searchTerm !== '' ? fetchInfo() : fetchTrending()),
     enabled: !!searchTerm || searchTerm !== '',
@@ -62,7 +68,7 @@ function Search() {
   const [selectedFormat, setSelectedFormat] = useState(formatSelectOptions[0]);
   const [selectedYear, setSelectedYear] = useState(yearSelectOptions[0]);
 
-  const [filteredData, setFilteredData] = useState(null);
+  const [filteredData, setFilteredData] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
@@ -145,19 +151,14 @@ function Search() {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-3 place-items-center gap-y-6 md:grid-cols-6 md:place-content-center md:place-items-start md:gap-10">
-            {searchResults && filteredData && filteredData.length > 0 ? (
-              filteredData.map((result, index) => (
-                <Card key={result.id} data={result} index={index} length={searchResults.length} />
-              ))
-            ) : searchResults && filteredData && filteredData.length === 0 ? (
-              <span className="w-max text-lg font-bold text-slate-400">
-                No results found for ' {searchTerm} '
-              </span>
-            ) : (
-              <span className="text-lg text-slate-100">Loading....</span>
-            )}
-          </div>
+          <SearchResults
+            isLoading={isLoading}
+            isFetched={isFetched}
+            filteredData={filteredData}
+            searchResults={searchResults}
+          />
+
+         
         </div>
       </div>
     </>
