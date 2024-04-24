@@ -7,7 +7,7 @@ import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
 import Trailer from '../components/Trailer';
 import DetailsPane from '../components/DetailsPane';
 import PostersTab from '../components/PostersTab';
-
+import { motion, AnimatePresence } from 'framer-motion';
 function DetailsPage() {
   const { mediaType, id } = useParams();
   const [posters, setPosters] = useState([]);
@@ -94,26 +94,46 @@ function DetailsPage() {
         />
         <div className="min-h-screen bg-slate-900 pb-5 text-slate-100">
           <Tabs className="  mx-5 flex flex-col items-center gap-5 rounded-md pt-5">
-            <TabList className="grid grid-flow-col gap-2 rounded-md border-2 border-slate-700 bg-slate-800 p-1 text-xl outline-none">
+            <TabList className="flex w-max items-center rounded-md border border-slate-700 bg-slate-800 p-1">
               <Tab
-                className={` cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] ${activeTabIndex === 0 ? 'bg-slate-700' : ''} p-1 outline-none`}
+                className={`relative cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-1 outline-none`}
                 onClick={() => {
                   if (activeTabIndex !== 0) {
                     handleTabClick();
                   }
                 }}
               >
-                Posters
+                <span
+                  className={`text-lg relative z-10 ${activeTabIndex === 0 ? 'text-white' : 'text-slate-400'}`}
+                >
+                  Posters
+                </span>
+                {activeTabIndex === 0 && (
+                  <motion.div
+                    layoutId="indicator"
+                    className="absolute inset-0 rounded-[calc(theme(borderRadius.md)-4px)] bg-slate-700"
+                  ></motion.div>
+                )}
               </Tab>
               <Tab
-                className={`cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] ${activeTabIndex === 1 ? 'bg-slate-700' : ''} p-1 outline-none`}
+                className={`relative cursor-pointer  px-2 py-1 outline-none`}
                 onClick={() => {
                   if (activeTabIndex !== 1) {
                     handleTabClick();
                   }
                 }}
               >
-                Trailers
+                <span
+                  className={`relative z-10 text-lg ${activeTabIndex === 1 ? 'text-white' : 'text-slate-400'}`}
+                >
+                  Trailers
+                </span>
+                {activeTabIndex === 1 && (
+                  <motion.div
+                    layoutId="indicator"
+                    className="absolute inset-0 rounded-[calc(theme(borderRadius.md)-4px)] bg-slate-700"
+                  ></motion.div>
+                )}
               </Tab>
             </TabList>
 
