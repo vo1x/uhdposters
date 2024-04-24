@@ -175,7 +175,6 @@ function Search() {
             )}
           </div>
           <SearchResults
-            isLoading={isLoading}
             isFetched={isFetched}
             filteredData={filteredData}
             searchResults={searchResults}
