@@ -180,6 +180,7 @@ function Search() {
             filteredData={filteredData}
             searchResults={searchResults}
             searchTerm={searchTerm}
+            isFetching={isFetching}
           />
         </div>
       </div>
