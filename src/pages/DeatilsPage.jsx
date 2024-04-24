@@ -104,13 +104,14 @@ function DetailsPage() {
                 }}
               >
                 <span
-                  className={`text-lg relative z-10 ${activeTabIndex === 0 ? 'text-white' : 'text-slate-400'}`}
+                  className={`relative z-10 text-lg ${activeTabIndex === 0 ? 'text-white' : 'text-slate-400'}`}
                 >
                   Posters
                 </span>
                 {activeTabIndex === 0 && (
                   <motion.div
                     layoutId="indicator"
+                    transition={{ type: 'tween' }}
                     className="absolute inset-0 rounded-[calc(theme(borderRadius.md)-4px)] bg-slate-700"
                   ></motion.div>
                 )}
@@ -130,6 +131,7 @@ function DetailsPage() {
                 </span>
                 {activeTabIndex === 1 && (
                   <motion.div
+                    transition={{ type: 'tween' }}
                     layoutId="indicator"
                     className="absolute inset-0 rounded-[calc(theme(borderRadius.md)-4px)] bg-slate-700"
                   ></motion.div>
