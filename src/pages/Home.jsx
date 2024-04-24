@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaTags } from 'react-icons/fa';
 import Select from '../components/Select';
 import SearchBar from '../components/AutoSearchBar';
@@ -72,8 +73,22 @@ function Search() {
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
-    setTags((prev) => ({ ...prev, searchTag: `Search: ${inputValue || 'trending'}` }));
-  }, [inputValue]);
+    setTags((prev) => ({
+      ...prev,
+      searchTag: `Search: ${inputValue}`
+    }));
+
+    if (selectedFormat.value === 'all') {
+      setTags((prev) => ({ ...prev, formatTag: '' }));
+    } else {
+      setTags((prev) => ({ ...prev, formatTag: selectedFormat.value }));
+    }
+    if (selectedYear.value === 'all') {
+      setTags((prev) => ({ ...prev, yearTag: '' }));
+    } else {
+      setTags((prev) => ({ ...prev, yearTag: selectedYear.value }));
+    }
+  }, [inputValue, selectedFormat.value, selectedYear.value]);
 
   useEffect(() => {
     if (!searchResults && isFetched) {
@@ -134,31 +149,38 @@ function Search() {
               ></Select>
             </div>
           </div>
+
           <div className="my-5 flex justify-between">
-            <div className="flex items-center gap-2 ">
-              <div className="text-xl text-slate-400">
-                <FaTags />
+            {searchTerm && (
+              <div className="flex items-center gap-2 ">
+                <div className="text-xl text-slate-400">
+                  <FaTags />
+                </div>
+                <AnimatePresence>
+                  {Object.entries(tags).map(([key, value]) =>
+                    value !== '' ? (
+                      <motion.div
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0, opacity: 0 }}
+                        key={key}
+                        className="w-max rounded-lg bg-blue-500 p-1 px-2 text-sm font-semibold text-slate-100"
+                      >
+                        {value}
+                      </motion.div>
+                    ) : null
+                  )}
+                </AnimatePresence>
               </div>
-              {Object.entries(tags).map(([key, value]) =>
-                value !== '' ? (
-                  <div
-                    key={key}
-                    className="w-max rounded-lg bg-blue-500 p-1 px-2 text-sm font-semibold text-slate-100"
-                  >
-                    {value}
-                  </div>
-                ) : null
-              )}
-            </div>
+            )}
           </div>
           <SearchResults
             isLoading={isLoading}
             isFetched={isFetched}
             filteredData={filteredData}
             searchResults={searchResults}
+            searchTerm={searchTerm}
           />
-
-         
         </div>
       </div>
     </>

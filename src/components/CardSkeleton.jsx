@@ -6,7 +6,7 @@ export default function CardSkeleton() {
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ scale: 0.9, opacity: 1 }}
+        initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: 'tween' }}
         exit={{ scale: 0, opacity: 0 }}
