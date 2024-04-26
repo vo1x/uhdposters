@@ -11,7 +11,6 @@ export default function Tooltip({ infoText, children }) {
       right: 0,
       transition: {
         type: 'spring',
-        duration: 0.5
       }
     },
     hidden: {

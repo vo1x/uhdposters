@@ -1,5 +1,4 @@
 import Header from './Header';
-import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 function Topbar() {
   return (
