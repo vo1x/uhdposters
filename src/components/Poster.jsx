@@ -79,29 +79,36 @@ function Poster(props) {
               className="flex w-full flex-col items-center gap-2 rounded-md "
             >
               <div className="flex w-full items-center justify-center gap-2">
-                <button
-                  onClick={handleCopyAction}
-                  className={`rounded-md bg-sky-500 p-2 outline-none ${isCopySuccess ? 'bg-green-500' : ''}`}
-                >
-                  {/* {isCopySuccess ? 'Copied' : 'Copy Link'} */}
-                  {isCopySuccess ? <ClipboardCheck size={15} /> : <Link size={15} />}
-                </button>
-                <span className="text-slate-500">or</span>
+                <AnimatePresence initial={false}>
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={handleCopyAction}
+                    initial={{ background: '#0ea5e9' }}
+                    animate={isCopySuccess ? { background: '#22c55e' } : { background: '#0ea5e9' }}
+                    exit={{ background: '#0ea5e9' }}
+                    className={`rounded-md  p-2 outline-none `}
+                  >
+                    {/* {isCopySuccess ? 'Copied' : 'Copy Link'} */}
+                    {isCopySuccess ? <ClipboardCheck size={20} /> : <Link size={20} />}
+                  </motion.button>
+                </AnimatePresence>
+                {/* <span className="text-slate-500">or</span> */}
                 <div className="flex">
                   <Select
                     defaultValue={qualitySelectOptions[0]}
                     onChange={setImageQuality}
                     options={qualitySelectOptions}
-                    className="w-24 rounded-l-md text-sm"
+                    className="w-24 rounded-l-md "
                   />
                   <button
                     onClick={() => uploadImage(imageQuality)}
                     className="rounded-r-md bg-sky-500 px-2"
                   >
                     {loading ? (
-                      <Loader2 className="animate-spin" size={15} />
+                      <Loader2 className="animate-spin" size={20} />
                     ) : (
-                      <Download size={15} />
+                      <Download size={20} />
                     )}
                   </button>
                 </div>

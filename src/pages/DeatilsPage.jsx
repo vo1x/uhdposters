@@ -130,9 +130,7 @@ function DetailsPage() {
   return (
     <>
       <div>
-        <div className="">
           <Topbar></Topbar>
-        </div>
         <div className="flex flex-col pt-0">
           <DetailsPane
             mediaInfo={mediaInfo}
