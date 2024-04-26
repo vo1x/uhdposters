@@ -13,7 +13,7 @@ export default function GradientBackdrop({ url }) {
         <img
           src={`${url}`}
           alt=""
-          className="absolute inset-0 -z-20 mx-auto my-auto block w-screen"
+          className="absolute inset-0 -z-20  block w-screen"
         />
       </div>
     </div>

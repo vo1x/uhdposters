@@ -130,6 +130,9 @@ function DetailsPage() {
   return (
     <>
       <div>
+        <div className="">
+          <Topbar></Topbar>
+        </div>
         <div className="flex flex-col pt-0">
           <DetailsPane
             mediaInfo={mediaInfo}
@@ -228,7 +231,7 @@ function DetailsPage() {
               <div className="sticky top-20 z-50 h-max w-full min-w-60 max-w-60 ">
                 <TabList className=" flex w-full flex-col self-start rounded-md border border-slate-700 bg-slate-800 p-1">
                   <Tab
-                    className={` h-max ${activeTabIndex===0?'bg-sky-500':''} cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-2 outline-none`}
+                    className={` h-max ${activeTabIndex === 0 ? 'bg-sky-500' : ''} cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-2 outline-none`}
                     onClick={() => {
                       if (activeTabIndex !== 0) {
                         handleTabClick();
@@ -242,7 +245,7 @@ function DetailsPage() {
                     </span>
                   </Tab>
                   <Tab
-                    className={`relative cursor-pointer ${activeTabIndex===1?'bg-sky-500':''}  px-2 py-2 outline-none`}
+                    className={`relative cursor-pointer ${activeTabIndex === 1 ? 'bg-sky-500' : ''}  px-2 py-2 outline-none`}
                     onClick={() => {
                       if (activeTabIndex !== 1) {
                         handleTabClick();
