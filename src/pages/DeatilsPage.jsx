@@ -226,9 +226,9 @@ function DetailsPage() {
           <div className="min-h-screen  bg-slate-900 pb-5 text-slate-100">
             <Tabs className="mx-10 my-5 flex gap-5 rounded-md  p-2  ">
               <div className="sticky top-20 z-50 h-max w-full min-w-60 max-w-60 ">
-                <TabList className=" flex w-full  flex-col self-start rounded-md border border-slate-700 bg-slate-800 p-1">
+                <TabList className=" flex w-full flex-col self-start rounded-md border border-slate-700 bg-slate-800 p-1">
                   <Tab
-                    className={`relative cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-2 outline-none`}
+                    className={` h-max ${activeTabIndex===0?'bg-sky-500':''} cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-2 outline-none`}
                     onClick={() => {
                       if (activeTabIndex !== 0) {
                         handleTabClick();
@@ -240,16 +240,9 @@ function DetailsPage() {
                     >
                       Posters
                     </span>
-                    {activeTabIndex === 0 && (
-                      <motion.div
-                        layoutId="indicator"
-                        transition={{ type: 'tween' }}
-                        className="absolute inset-0  h-10 rounded-[calc(theme(borderRadius.md)-4px)] bg-sky-500"
-                      ></motion.div>
-                    )}
                   </Tab>
                   <Tab
-                    className={`relative cursor-pointer  px-2 py-2 outline-none`}
+                    className={`relative cursor-pointer ${activeTabIndex===1?'bg-sky-500':''}  px-2 py-2 outline-none`}
                     onClick={() => {
                       if (activeTabIndex !== 1) {
                         handleTabClick();
@@ -261,13 +254,6 @@ function DetailsPage() {
                     >
                       Trailers
                     </span>
-                    {activeTabIndex === 1 && (
-                      <motion.div
-                        layoutId="indicator"
-                        transition={{ type: 'tween' }}
-                        className="absolute inset-0  h-10 rounded-[calc(theme(borderRadius.md)-4px)] bg-sky-500"
-                      ></motion.div>
-                    )}
                   </Tab>
                 </TabList>
 

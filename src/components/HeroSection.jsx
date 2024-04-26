@@ -71,7 +71,10 @@ function DetailsPane(props) {
                   <FiExternalLink className="" />
                 </button>
               </Link>
-              <button className="flex items-center gap-1 rounded-md bg-slate-100 px-2 py-2 font-semibold text-neutral-900">
+              <button
+                disabled
+                className="flex cursor-not-allowed items-center gap-1 rounded-md bg-slate-100 px-2 py-2 font-semibold text-neutral-900"
+              >
                 <Video size={20}></Video>
                 <span>Trailer</span>
               </button>
