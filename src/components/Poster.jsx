@@ -84,7 +84,7 @@ function Poster(props) {
                   className={`rounded-md bg-sky-500 p-2 outline-none ${isCopySuccess ? 'bg-green-500' : ''}`}
                 >
                   {/* {isCopySuccess ? 'Copied' : 'Copy Link'} */}
-                  {isCopySuccess ? <ClipboardCheck size={20} /> : <Link size={20} />}
+                  {isCopySuccess ? <ClipboardCheck size={15} /> : <Link size={15} />}
                 </button>
                 <span className="text-slate-500">or</span>
                 <div className="flex">
@@ -92,16 +92,16 @@ function Poster(props) {
                     defaultValue={qualitySelectOptions[0]}
                     onChange={setImageQuality}
                     options={qualitySelectOptions}
-                    className="rounded-l-md w-32"
+                    className="w-24 rounded-l-md text-sm"
                   />
                   <button
                     onClick={() => uploadImage(imageQuality)}
                     className="rounded-r-md bg-sky-500 px-2"
                   >
                     {loading ? (
-                      <Loader2 className="animate-spin" size={20} />
+                      <Loader2 className="animate-spin" size={15} />
                     ) : (
-                      <Download size={20} />
+                      <Download size={15} />
                     )}
                   </button>
                 </div>

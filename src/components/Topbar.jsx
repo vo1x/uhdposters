@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 function Topbar() {
   return (
-    <div className="flex justify-between p-5 px-10">
+    <div className="absolute flex justify-between p-5 px-10">
       <Header></Header>
       <SearchBar></SearchBar>
     </div>

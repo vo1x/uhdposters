@@ -5,10 +5,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import Topbar from '../components/Topbar';
 import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
 import Trailer from '../components/Trailer';
-import DetailsPane from '../components/DetailsPane';
+import DetailsPane from '../components/HeroSection';
 import PostersTab from '../components/PostersTab';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiCopy } from 'react-icons/fi';
+import Select from '../components/Select';
+import { Settings2, Languages } from 'lucide-react';
+import useClipboard from '../hooks/useClipboard';
+import langCodes from '../components/langCodes.json';
+
 function DetailsPage() {
   const { mediaType, id } = useParams();
   const [posters, setPosters] = useState([]);
@@ -23,7 +28,7 @@ function DetailsPage() {
   const [imdbID, setImdbID] = useState(null);
   const [secondLang, setSecondLang] = useState('en');
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-
+  const [handleItemCopy] = useClipboard();
   const handleTabClick = useCallback(() => setActiveTabIndex((prev) => 1 - prev), []);
 
   useEffect(() => {
@@ -87,6 +92,31 @@ function DetailsPage() {
     hours: 0,
     minutes: 0
   });
+
+  const selectOptions =
+    secondLang != 'en'
+      ? [
+          {
+            value: 'en',
+            label: 'English'
+          },
+          {
+            value: secondLang,
+            label: `${langCodes[secondLang]}`
+          }
+        ]
+      : [
+          {
+            value: 'en',
+            label: 'English'
+          }
+        ];
+
+  const [selectedOption, setSelectedOption] = useState({
+    value: 'en',
+    label: 'English'
+  });
+
   useEffect(() => {
     const convertToHours = () => {
       const minutes = mediaInfo?.runtime || mediaInfo?.last_episode_to_air?.runtime;
@@ -110,23 +140,47 @@ function DetailsPage() {
           <div className="mx-10 mt-5 flex w-full max-w-screen-xl gap-3 overflow-hidden rounded-md bg-slate-800 p-5 text-slate-200">
             <div className="flex min-w-96 flex-col gap-2">
               <span className="col-span-3 text-2xl font-bold">Details</span>
-              <div className="grid grid-cols-3 gap-5 ">
+              <div className="grid grid-cols-3 gap-5">
                 <span className="font-semibold text-slate-300">Release Date</span>
-                <div className="col-span-2">
+                <motion.div
+                  whileHover={{ color: '#7DD3FC' }}
+                  className="col-span-2 cursor-pointer"
+                  onClick={(e) =>
+                    handleItemCopy(e.target.innerText.trim().split('-')[0], 'Release Date')
+                  }
+                >
                   {mediaInfo?.release_date || mediaInfo?.first_air_date}
-                </div>
+                </motion.div>
               </div>
               <div className="grid grid-cols-3 gap-5 ">
                 <span className="font-semibold text-slate-300">Genres</span>
-                <div className="col-span-2 flex gap-2">
-                  {mediaInfo?.genres && mediaInfo.genres.map((genre) => <span>{genre.name}</span>)}
-                </div>
+                <motion.div
+                  whileHover={{ color: '#7DD3FC' }}
+                  className="col-span-2 flex cursor-pointer gap-2"
+                  onClick={(e) =>
+                    handleItemCopy(
+                      mediaInfo?.genres.map((genre) => genre.name).join(', '),
+                      'Genres'
+                    )
+                  }
+                >
+                  {mediaInfo?.genres &&
+                    mediaInfo.genres.map((genre, index) => (
+                      <span key={index} className="rounded-md bg-slate-700 p-1 text-sm ">
+                        {genre.name}
+                      </span>
+                    ))}
+                </motion.div>
               </div>
               <div className="grid grid-cols-3 gap-5 ">
                 <span className="font-semibold text-slate-300">
                   Runtime{mediaType === 'tv' && <span> (Avg)</span>}
                 </span>
-                <div className="col-span-2 flex gap-2">
+                <motion.div
+                  className="col-span-2 flex cursor-pointer gap-2"
+                  whileHover={{ color: '#7DD3FC' }}
+                  onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'Runtime')}
+                >
                   {runtime.hours > 0 ? (
                     <span>
                       {runtime.hours}h {runtime.minutes}m
@@ -134,70 +188,110 @@ function DetailsPage() {
                   ) : (
                     <span>{runtime.minutes}m</span>
                   )}
-                </div>
+                </motion.div>
               </div>
               <div className="grid grid-cols-3 gap-5 ">
                 <span className="font-semibold text-slate-300">IMDB ID</span>
-                <div className="col-span-2 flex gap-2">{imdbID}</div>
+                <motion.div
+                  className="col-span-2 flex cursor-pointer gap-2"
+                  whileHover={{ color: '#7DD3FC' }}
+                  onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'IMDB ID')}
+                >
+                  {imdbID}
+                </motion.div>
               </div>
               <div className="grid grid-cols-3 gap-5 ">
                 <span className="font-semibold text-slate-300">IMDB URL</span>
-                <div className="col-span-2 flex gap-2">https://imdb.com/title/{imdbID}</div>
+                <motion.div
+                  className="col-span-2 flex cursor-pointer gap-2"
+                  whileHover={{ color: '#7DD3FC' }}
+                  onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'IMDB URL')}
+                >
+                  https://imdb.com/title/{imdbID}
+                </motion.div>
               </div>
             </div>
             <div>
               <span className="col-span-3 text-2xl font-bold">Overview</span>
 
-              <div className="col-span-2 flex gap-2">{mediaInfo?.overview}</div>
+              <motion.div
+                className="col-span-2 flex cursor-pointer gap-2"
+                whileHover={{ color: '#7DD3FC' }}
+                onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'Overview')}
+              >
+                {mediaInfo?.overview}
+              </motion.div>
             </div>
           </div>
-          <div className="min-h-screen bg-slate-900 pb-5 text-slate-100">
-            <Tabs className="mx-10 my-5 flex flex-col gap-5 rounded-md ">
-              <TabList className="flex  w-max items-center rounded-md p-1">
-                <Tab
-                  className={`relative cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-2 outline-none`}
-                  onClick={() => {
-                    if (activeTabIndex !== 0) {
-                      handleTabClick();
-                    }
-                  }}
-                >
-                  <span
-                    className={`relative z-10 text-base ${activeTabIndex === 0 ? 'text-white' : 'text-slate-400'}`}
+          <div className="min-h-screen  bg-slate-900 pb-5 text-slate-100">
+            <Tabs className="mx-10 my-5 flex gap-5 rounded-md  p-2  ">
+              <div className="sticky top-20 z-50 h-max w-full min-w-60 max-w-60 ">
+                <TabList className=" flex w-full  flex-col self-start rounded-md border border-slate-700 bg-slate-800 p-1">
+                  <Tab
+                    className={`relative cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-2 outline-none`}
+                    onClick={() => {
+                      if (activeTabIndex !== 0) {
+                        handleTabClick();
+                      }
+                    }}
                   >
-                    Posters
-                  </span>
-                  {activeTabIndex === 0 && (
-                    <motion.div
-                      layoutId="indicator"
-                      transition={{ type: 'tween' }}
-                      className="absolute bottom-0 left-0 right-0 h-1 rounded-[calc(theme(borderRadius.md)-4px)] bg-slate-700"
-                    ></motion.div>
-                  )}
-                </Tab>
-                <Tab
-                  className={`relative cursor-pointer  px-2 py-2 outline-none`}
-                  onClick={() => {
-                    if (activeTabIndex !== 1) {
-                      handleTabClick();
-                    }
-                  }}
-                >
-                  <span
-                    className={`relative z-10 text-base ${activeTabIndex === 1 ? 'text-white' : 'text-slate-400'}`}
+                    <span
+                      className={`relative z-10 text-base ${activeTabIndex === 0 ? 'text-white' : 'text-slate-400'}`}
+                    >
+                      Posters
+                    </span>
+                    {activeTabIndex === 0 && (
+                      <motion.div
+                        layoutId="indicator"
+                        transition={{ type: 'tween' }}
+                        className="absolute inset-0  h-10 rounded-[calc(theme(borderRadius.md)-4px)] bg-sky-500"
+                      ></motion.div>
+                    )}
+                  </Tab>
+                  <Tab
+                    className={`relative cursor-pointer  px-2 py-2 outline-none`}
+                    onClick={() => {
+                      if (activeTabIndex !== 1) {
+                        handleTabClick();
+                      }
+                    }}
                   >
-                    Trailers
-                  </span>
-                  {activeTabIndex === 1 && (
-                    <motion.div
-                      transition={{ type: 'tween' }}
-                      layoutId="indicator"
-                      className="absolute bottom-0 left-0 right-0 h-1 rounded-[calc(theme(borderRadius.md)-4px)] bg-slate-700"
-                    ></motion.div>
-                  )}
-                </Tab>
-              </TabList>
+                    <span
+                      className={`relative z-10 text-base ${activeTabIndex === 1 ? 'text-white' : 'text-slate-400'}`}
+                    >
+                      Trailers
+                    </span>
+                    {activeTabIndex === 1 && (
+                      <motion.div
+                        layoutId="indicator"
+                        transition={{ type: 'tween' }}
+                        className="absolute inset-0  h-10 rounded-[calc(theme(borderRadius.md)-4px)] bg-sky-500"
+                      ></motion.div>
+                    )}
+                  </Tab>
+                </TabList>
 
+                {activeTabIndex === 0 && (
+                  <div className="mt-5 rounded-md border border-slate-600 bg-slate-800 p-2">
+                    <span className="flex items-center gap-1 text-slate-300">
+                      <Settings2 size={15}></Settings2>
+                      <span>Preferences</span>
+                    </span>
+                    <div className="mt-2 pl-2">
+                      <span className="flex items-center gap-2 text-slate-300">
+                        <Languages size={20}></Languages>
+                        <Select
+                          defaultValue={selectOptions[0]}
+                          options={selectOptions}
+                          onChange={setSelectedOption}
+                          className={`rounded-md bg-slate-600/50`}
+                        ></Select>
+                        {/* <span>Language</span> */}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
               <TabPanel>
                 <PostersTab
                   posters={posters}
@@ -207,7 +301,7 @@ function DetailsPage() {
                         (mediaInfo.title || mediaInfo.name).replace(/[^a-zA-Z0-9\s]/g, '')
                       : ''
                   }
-                  secondLang={secondLang}
+                  language={selectedOption.value}
                 />
               </TabPanel>
               <TabPanel className="flex flex-wrap place-content-center gap-x-2 gap-y-5">

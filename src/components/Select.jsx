@@ -63,12 +63,12 @@ const Select = ({ placeHolder, options, onChange, defaultValue, className }) => 
       <div
         ref={inputRef}
         onClick={handleInputClick}
-        className={`flex cursor-pointer w-40 shadow-md shadow-slate-950/25 ${showMenu ? 'border-blue-700' : ''} items-center justify-between ${className} bg-slate-800 p-2`}
+        className={`flex w-40 cursor-pointer text-slate-400 shadow-md shadow-slate-950/25 ${showMenu ? 'border-blue-700' : ''} items-center justify-between ${className} bg-slate-800 p-2`}
       >
-        <div className="text-slate-400">{getDisplay()}</div>
+        <div className="">{getDisplay()}</div>
         <div className="dropdown-tools ">
-          <div className="flex items-center justify-between text-slate-400">
-            {valSelected ? (
+          <div className="flex items-center justify-between ">
+            {selectedValue.value !== defaultValue.value && valSelected ? (
               <button onClick={() => onOptionClear()}>
                 <FiX />
               </button>
