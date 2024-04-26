@@ -130,7 +130,7 @@ function DetailsPage() {
   return (
     <>
       <div>
-          <Topbar></Topbar>
+        <Topbar></Topbar>
         <div className="flex flex-col pt-0">
           <DetailsPane
             mediaInfo={mediaInfo}
@@ -243,7 +243,7 @@ function DetailsPage() {
                     </span>
                   </Tab>
                   <Tab
-                    className={`relative cursor-pointer ${activeTabIndex === 1 ? 'bg-sky-500' : ''}  px-2 py-2 outline-none`}
+                    className={`relative cursor-pointer ${activeTabIndex === 1 ? 'bg-sky-500' : ''} rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-2 outline-none`}
                     onClick={() => {
                       if (activeTabIndex !== 1) {
                         handleTabClick();
