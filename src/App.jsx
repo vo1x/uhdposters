@@ -1,6 +1,6 @@
 import Search from './pages/Home';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import DetailsPage from './pages/DeatilsPage';
+import DetailsPage from './pages/DetailsPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 const queryClient = new QueryClient();

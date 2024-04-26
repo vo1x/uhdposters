@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Card from '../components/Card';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';

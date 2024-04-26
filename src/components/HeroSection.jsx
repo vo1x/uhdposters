@@ -1,19 +1,13 @@
 import { Link } from 'react-router-dom';
 import { FiExternalLink } from 'react-icons/fi';
-import { FiCopy } from 'react-icons/fi';
-// import { FaExpandArrowsAlt } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
 import useClipboard from '../hooks/useClipboard';
 import { motion } from 'framer-motion';
 import GradientBackdrop from './GradientBackdrop';
 import { Video } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 function DetailsPane(props) {
-  const navigate = useNavigate();
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
   const { mediaInfo, imdbID, seasonsInfo, mediaType } = props;
 
-  // const [isHovered, setIsHovered] = useState(false);
   const [handleItemCopy] = useClipboard();
 
   return (

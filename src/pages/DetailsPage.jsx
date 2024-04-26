@@ -8,7 +8,6 @@ import Trailer from '../components/Trailer';
 import DetailsPane from '../components/HeroSection';
 import PostersTab from '../components/PostersTab';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiCopy } from 'react-icons/fi';
 import Select from '../components/Select';
 import { Settings2, Languages } from 'lucide-react';
 import useClipboard from '../hooks/useClipboard';

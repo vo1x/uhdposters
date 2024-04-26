@@ -11,8 +11,8 @@ export default function useClipboard() {
         notify();
         setIsCopied(true);
         setTimeout(() => {
-          setIsCopied(false); // Update isCopied state here
-        }, 1000); // Update isCopied state here
+          setIsCopied(false); 
+        }, 1000);
       });
     } catch (error) {
       const notify = () => toast.error(`${error}`, { theme: 'colored', autoClose: 2000 });

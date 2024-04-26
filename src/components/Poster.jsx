@@ -5,12 +5,6 @@ import Select from './Select';
 function Poster(props) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
   const imagePrevUrl = 'https://image.tmdb.org/t/p/w220_and_h330_face';
-  const posterStyles = {
-    maxWidth: '250px',
-    width: '100%',
-    height: 'auto',
-    margin: '0'
-  };
 
   const [loading, setLoading] = useState(false);
   const qualitySelectOptions = [
@@ -89,11 +83,9 @@ function Poster(props) {
                     exit={{ background: '#0ea5e9' }}
                     className={`rounded-md  p-2 outline-none `}
                   >
-                    {/* {isCopySuccess ? 'Copied' : 'Copy Link'} */}
                     {isCopySuccess ? <ClipboardCheck size={20} /> : <Link size={20} />}
                   </motion.button>
                 </AnimatePresence>
-                {/* <span className="text-slate-500">or</span> */}
                 <div className="flex">
                   <Select
                     defaultValue={qualitySelectOptions[0]}
