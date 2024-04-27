@@ -12,80 +12,15 @@ import Select from '../components/Select';
 import { Settings2, Languages } from 'lucide-react';
 import useClipboard from '../hooks/useClipboard';
 import langCodes from '../components/langCodes.json';
+import useMediaInfo from '../hooks/useMediaInfo';
 
 function DetailsPage() {
   const { mediaType, id } = useParams();
-  const [posters, setPosters] = useState([]);
-  const [trailers, setTrailers] = useState([]);
-  const [mediaInfo, setMediaInfo] = useState({});
-  const [seasonsInfo, setSeasonsInfo] = useState([]);
-  const apiKey = import.meta.env.VITE_TMDB_API_KEY;
-  const tmdbBaseUrl = 'https://api.themoviedb.org/3';
-  const postersUrl = `${tmdbBaseUrl}/${mediaType}/${id}/images?api_key=${apiKey}&include_image_language=en,`;
-  const trailersURL = `${tmdbBaseUrl}/${mediaType}/${id}/videos?api_key=${apiKey}&language=en-US`;
+  const [mediaDetails] = useMediaInfo(mediaType, id);
 
-  const [imdbID, setImdbID] = useState(null);
-  const [secondLang, setSecondLang] = useState('en');
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [handleItemCopy] = useClipboard();
   const handleTabClick = useCallback(() => setActiveTabIndex((prev) => 1 - prev), []);
-
-  useEffect(() => {
-    const fetchInfo = async () => {
-      try {
-        const response = await fetch(`${tmdbBaseUrl}/${mediaType}/${id}?api_key=${apiKey}`);
-        const info = await response.json();
-        setMediaInfo(info);
-        setSeasonsInfo(info.seasons);
-        setSecondLang(info.original_language);
-        fetchExternalID();
-        fetchPosters(info);
-        fetchTrailers();
-      } catch (error) {
-        error.log('Error occurred: ', error);
-      }
-    };
-    const fetchPosters = async (mediaInfo) => {
-      try {
-        const response = await fetch(postersUrl + (mediaInfo ? mediaInfo.original_language : ''));
-        const data = await response.json();
-        const sortedPosters = data['posters'].sort((a, b) => {
-          return b.width - a.width;
-        });
-        setPosters(sortedPosters);
-      } catch (error) {
-        console.error('Error occurred: ', error);
-      }
-    };
-
-    const fetchExternalID = async () => {
-      try {
-        const response = await fetch(
-          `${tmdbBaseUrl}/${mediaType}/${id}/external_ids?api_key=${apiKey}`
-        );
-        const ids = await response.json();
-        setImdbID(ids.imdb_id);
-      } catch (error) {
-        error.log('Error occured: ', error);
-      }
-    };
-
-    const fetchTrailers = async () => {
-      var embedID = [];
-
-      try {
-        const response = await fetch(trailersURL);
-        const data = await response.json();
-        const filteredTrailers = data['results'].filter((result) => result.type === 'Trailer');
-        console.log(embedID);
-        setTrailers(filteredTrailers);
-      } catch (error) {
-        console.error('Error occured:', error);
-      }
-    };
-
-    fetchInfo();
-  }, [id]);
 
   const [runtime, setRuntime] = useState({
     hours: 0,
@@ -93,15 +28,15 @@ function DetailsPage() {
   });
 
   const selectOptions =
-    secondLang != 'en'
+    mediaDetails?.original_language != 'en'
       ? [
           {
             value: 'en',
             label: 'English'
           },
           {
-            value: secondLang,
-            label: `${langCodes[secondLang]}`
+            value: mediaDetails?.original_language,
+            label: `${langCodes[mediaDetails?.original_language]}`
           }
         ]
       : [
@@ -118,23 +53,24 @@ function DetailsPage() {
 
   useEffect(() => {
     const convertToHours = () => {
-      const minutes = mediaInfo?.runtime || mediaInfo?.last_episode_to_air?.runtime;
+      const minutes = mediaDetails?.runtime || mediaDetails?.last_episode_to_air?.runtime;
       const hours = Math.floor(minutes / 60);
       const remainingMinutes = minutes % 60;
 
       setRuntime({ hours: hours, minutes: remainingMinutes });
     };
     convertToHours();
-  }, [mediaInfo]);
+  }, [mediaDetails]);
+
   return (
     <>
       <div className="">
         <Topbar></Topbar>
         <div className="flex flex-col pt-0">
           <DetailsPane
-            mediaInfo={mediaInfo}
-            imdbID={imdbID}
-            seasonsInfo={seasonsInfo}
+            mediaDetails={mediaDetails}
+            imdbID={mediaDetails?.external_ids.imdb_id}
+            seasonsInfo={mediaDetails?.seasons}
             mediaType={mediaType}
           />
           <div className="mx-10 mt-5 flex w-full max-w-screen-xl gap-3 overflow-hidden rounded-md bg-slate-800 p-5 text-slate-200">
@@ -149,7 +85,7 @@ function DetailsPage() {
                     handleItemCopy(e.target.innerText.trim().split('-')[0], 'Release Date')
                   }
                 >
-                  {mediaInfo?.release_date || mediaInfo?.first_air_date}
+                  {mediaDetails?.release_date || mediaDetails?.first_air_date}
                 </motion.div>
               </div>
               <div className="grid grid-cols-3 gap-5 ">
@@ -159,15 +95,15 @@ function DetailsPage() {
                   className="col-span-2 flex cursor-pointer gap-2"
                   onClick={(e) =>
                     handleItemCopy(
-                      mediaInfo?.genres.map((genre) => genre.name).join(', '),
+                      mediaDetails?.genres.map((genre) => genre.name).join(', '),
                       'Genres'
                     )
                   }
                 >
-                  {mediaInfo?.genres &&
-                    mediaInfo.genres.map((genre, index) => (
+                  {mediaDetails?.genres &&
+                    mediaDetails.genres.map((genre, index) => (
                       <span key={index} className="rounded-md bg-slate-700 p-1 text-sm ">
-                        {genre.name}
+                        {genre}
                       </span>
                     ))}
                 </motion.div>
@@ -197,7 +133,7 @@ function DetailsPage() {
                   whileHover={{ color: '#7DD3FC' }}
                   onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'IMDB ID')}
                 >
-                  {imdbID}
+                  {mediaDetails?.external_ids.imdb_id}
                 </motion.div>
               </div>
               <div className="grid grid-cols-3 gap-5 ">
@@ -207,7 +143,7 @@ function DetailsPage() {
                   whileHover={{ color: '#7DD3FC' }}
                   onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'IMDB URL')}
                 >
-                  https://imdb.com/title/{imdbID}
+                  https://imdb.com/title/{mediaDetails?.external_ids.imdb_id}
                 </motion.div>
               </div>
             </div>
@@ -219,7 +155,7 @@ function DetailsPage() {
                 whileHover={{ color: '#7DD3FC' }}
                 onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'Overview')}
               >
-                {mediaInfo?.overview}
+                {mediaDetails?.overview}
               </motion.div>
             </div>
             {mediaType === 'tv' && (
@@ -227,7 +163,7 @@ function DetailsPage() {
                 <span className="col-span-3 text-2xl font-bold">Season Info</span>
 
                 <motion.div className="col-span-2 mt-1 flex cursor-pointer flex-wrap gap-2">
-                  {seasonsInfo.map((season, index) => (
+                  {mediaDetails?.seasons.map((season, index) => (
                     <div className="flex flex-col rounded-lg border border-slate-600 bg-slate-700/50 p-1 px-2">
                       <span className="text-lg font-bold">{season.name}</span>
                       <span>{season.episode_count} episodes</span>
@@ -294,19 +230,21 @@ function DetailsPage() {
               </div>
               <TabPanel>
                 <PostersTab
-                  posters={posters}
+                  posters={mediaDetails?.posters}
                   fileName={
-                    mediaInfo && (mediaInfo.title || mediaInfo.name)
+                    mediaDetails && (mediaDetails.title || mediaDetails.name)
                       ? 'Download ' +
-                        (mediaInfo.title || mediaInfo.name).replace(/[^a-zA-Z0-9\s]/g, '')
+                        (mediaDetails.title || mediaDetails.name).replace(/[^a-zA-Z0-9\s]/g, '')
                       : ''
                   }
                   language={selectedOption.value}
                 />
               </TabPanel>
               <TabPanel className="flex flex-wrap place-content-center gap-x-2 gap-y-5">
-                {trailers &&
-                  trailers.map((trailer, index) => <Trailer data={trailer} key={index} />)}
+                {mediaDetails?.videos &&
+                  mediaDetails?.videos.map((trailer, index) => (
+                    <Trailer data={trailer} key={index} />
+                  ))}
               </TabPanel>
             </Tabs>
           </div>

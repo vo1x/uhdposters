@@ -6,19 +6,19 @@ import GradientBackdrop from './GradientBackdrop';
 function DetailsPane(props) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
   const imagePrevUrl = 'https://image.tmdb.org/t/p/w220_and_h330_face';
-  const { mediaInfo, imdbID, seasonsInfo, mediaType } = props;
+  const { mediaDetails, imdbID, seasonsInfo, mediaType } = props;
   const [handleItemCopy] = useClipboard();
 
   return (
     <>
       <div className={`relative flex h-[500px] overflow-hidden `}>
-        <GradientBackdrop url={imageBaseUrl + mediaInfo.backdrop_path} />
+        <GradientBackdrop url={imageBaseUrl + mediaDetails?.backdrop_path} />
         <div className=" flex gap-5 place-self-end px-10">
           <div className="relative mb-5 flex h-full max-h-96 min-h-80 min-w-52 max-w-52 flex-col gap-1 text-center">
-            {mediaInfo && (
+            {mediaDetails && (
               <>
                 <img
-                  src={imagePrevUrl + mediaInfo.poster_path}
+                  src={imagePrevUrl + mediaDetails?.poster_path}
                   alt="cover img"
                   className={`h-auto w-full min-w-52 max-w-52 rounded-md shadow-2xl shadow-slate-950 transition-opacity duration-300`}
                 />
@@ -27,7 +27,7 @@ function DetailsPane(props) {
                   className="cursor-pointer text-slate-300"
                   onClick={(e) => handleItemCopy(e.target.innerText, 'Name & Date String')}
                 >
-                  {`${mediaInfo.name || mediaInfo.title} (${mediaType === 'tv' && mediaInfo.first_air_date ? mediaInfo.first_air_date.split('-')[0] : mediaInfo.release_date ? mediaInfo.release_date.split('-')[0] : ''})`}
+                  {`${mediaDetails?.name || mediaDetails?.title} (${mediaType === 'tv' && mediaDetails?.first_air_date ? mediaDetails?.first_air_date.split('-')[0] : mediaDetails?.release_date ? mediaDetails?.release_date.split('-')[0] : ''})`}
                 </motion.span>
               </>
             )}
@@ -38,24 +38,24 @@ function DetailsPane(props) {
               <div className="flex flex-col text-3xl ">
                 <div
                   className="flex items-start  gap-1 font-bold text-slate-100  hover:cursor-pointer"
-                  onClick={() => handleItemCopy(mediaInfo.title || mediaInfo.name, 'Title')}
+                  onClick={() => handleItemCopy(mediaDetails?.title || mediaDetails?.name, 'Title')}
                 >
                   <motion.span whileHover={{ color: '#7DD3FC' }}>
-                    {mediaInfo.title || mediaInfo.name}{' '}
+                    {mediaDetails?.title || mediaDetails?.name}{' '}
                   </motion.span>
                 </div>
-                {(mediaInfo['original_title'] || mediaInfo['original_name']) != undefined &&
-                mediaInfo['original_language'] != 'en' ? (
+                {(mediaDetails?.original_title || mediaDetails?.original_name) != undefined &&
+                mediaDetails['original_language'] != 'en' ? (
                   <span
                     className="w-max text-xl text-slate-400 hover:cursor-pointer hover:text-sky-300"
                     onClick={() => {
                       handleItemCopy(
-                        mediaInfo['original_title'] || mediaInfo['original_name'],
+                        mediaDetails?.original_title || mediaDetails?.original_name,
                         'Original Name'
                       );
                     }}
                   >
-                    {mediaInfo['original_title'] || mediaInfo['original_name']}
+                    {mediaDetails?.original_title || mediaDetails?.original_name}
                   </span>
                 ) : null}
               </div>
