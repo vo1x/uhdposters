@@ -11,7 +11,7 @@ function DetailsPane(props) {
 
   return (
     <>
-      <div className={`relative flex h-[500px] `}>
+      <div className={`relative flex h-[500px] overflow-hidden `}>
         <GradientBackdrop url={imageBaseUrl + mediaInfo.backdrop_path} />
         <div className=" flex gap-5 place-self-end px-10">
           <div className="relative mb-5 flex h-full max-h-96 min-h-80 min-w-52 max-w-52 flex-col gap-1 text-center">

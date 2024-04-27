@@ -128,7 +128,7 @@ function DetailsPage() {
   }, [mediaInfo]);
   return (
     <>
-      <div>
+      <div className="">
         <Topbar></Topbar>
         <div className="flex flex-col pt-0">
           <DetailsPane
