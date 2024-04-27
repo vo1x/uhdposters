@@ -226,13 +226,8 @@ function DetailsPage() {
               <div className="min-w-80">
                 <span className="col-span-3 text-2xl font-bold">Season Info</span>
 
-                <motion.div
-                  className="col-span-2 flex flex-wrap cursor-pointer gap-2 mt-1"
-                  whileHover={{ color: '#7DD3FC' }}
-                  // onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'Overview')}
-                >
-                  {/* {JSON.stringify(seasonsInfo)} */}
-                  {seasonsInfo.map((season) => (
+                <motion.div className="col-span-2 mt-1 flex cursor-pointer flex-wrap gap-2">
+                  {seasonsInfo.map((season, index) => (
                     <div className="flex flex-col rounded-lg border border-slate-600 bg-slate-700/50 p-1 px-2">
                       <span className="text-lg font-bold">{season.name}</span>
                       <span>{season.episode_count} episodes</span>
