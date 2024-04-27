@@ -103,33 +103,11 @@ function SearchModal({ onChange }) {
           </div>
         ) : (
           <div className="mt-2 max-h-[440px] overflow-y-auto rounded-lg border border-slate-600 bg-slate-900 text-slate-50 shadow-md shadow-black/75">
-            <span className="flex max-h-24 gap-2 rounded-lg p-2 text-slate-400 hover:bg-slate-800">
+            <span className="flex max-h-24 gap-2 rounded-lg p-2 text-slate-400 ">
               No results found
             </span>
           </div>
         )}
-        {/* 
-        {isFetched && searchResults && searchResults.length > 0 ? (
-          <div className="mt-2 max-h-[440px] overflow-y-auto rounded-lg border border-slate-600 bg-slate-900 text-slate-50 shadow-md shadow-black/75">
-            {searchResults.map((result) => (
-              <div className="flex max-h-24 gap-2 rounded-lg p-2 hover:bg-slate-800">
-                <img src={imageBaseUrl + result.poster_path} width={48} alt="" />
-                <div className="flex flex-col overflow-hidden">
-                  <span>{result.name || result.title}</span>
-                  <span className="truncate">{result.overview}</span>
-                  <div className="flex">
-                    <span>{result.media_type}</span>
-                    <span>{result.first_air_date || result.release_date}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="mt-2 max-h-[440px] overflow-y-auto rounded-lg border border-slate-600 bg-slate-900 text-slate-50 shadow-md shadow-black/75">
-            <span>loading</span>
-          </div>
-        )} */}
       </div>
     </div>
   );
