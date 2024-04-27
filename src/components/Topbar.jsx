@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Header from './Header';
-import SearchBar from './SearchBar';
 import { Search } from 'lucide-react';
 import SearchModal from './SearchModal';
 function Topbar() {
