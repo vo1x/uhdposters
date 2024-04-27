@@ -270,7 +270,7 @@ function DetailsPage() {
                           defaultValue={selectOptions[0]}
                           options={selectOptions}
                           onChange={setSelectedOption}
-                          className={`rounded-md bg-slate-600/50`}
+                          className={`rounded-md bg-slate-700/50`}
                         ></Select>
                         {/* <span>Language</span> */}
                       </span>
