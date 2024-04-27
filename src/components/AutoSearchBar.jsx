@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDebounce } from 'use-debounce';
 
-function SearchBar({ defaultValue, setInputValue }) {
+function AutoSearchBar({ defaultValue, setInputValue }) {
   const navigate = useNavigate();
 
   const [inputText, setInputText] = useState(defaultValue);
@@ -39,4 +39,4 @@ function SearchBar({ defaultValue, setInputValue }) {
   );
 }
 
-export default SearchBar;
+export default AutoSearchBar;

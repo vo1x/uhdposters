@@ -59,7 +59,7 @@ const Select = ({ placeHolder, options, onChange, defaultValue, className }) => 
   };
 
   return (
-    <div className={`z-50`}>
+    <div className={`z-10`}>
       <div
         ref={inputRef}
         onClick={handleInputClick}
@@ -107,7 +107,7 @@ const Select = ({ placeHolder, options, onChange, defaultValue, className }) => 
             exit={{ opacity: 0, scale: 0 }}
             className=""
           >
-            <div className="absolute mt-2 h-max max-h-96 w-40 overflow-auto rounded-md border border-slate-700 bg-slate-800 p-2 shadow-md shadow-black drop-shadow-md">
+            <div className="absolute mt-2 h-max max-h-96 w-40 overflow-auto rounded-md border border-slate-700 bg-slate-800 p-2 shadow-sm shadow-black ">
               {getOptions().map((option) => (
                 <div
                   onClick={() => onItemClick(option)}
