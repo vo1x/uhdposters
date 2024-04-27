@@ -222,6 +222,25 @@ function DetailsPage() {
                 {mediaInfo?.overview}
               </motion.div>
             </div>
+            {mediaType === 'tv' && (
+              <div className="min-w-80">
+                <span className="col-span-3 text-2xl font-bold">Season Info</span>
+
+                <motion.div
+                  className="col-span-2 flex flex-wrap cursor-pointer gap-2 mt-1"
+                  whileHover={{ color: '#7DD3FC' }}
+                  // onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'Overview')}
+                >
+                  {/* {JSON.stringify(seasonsInfo)} */}
+                  {seasonsInfo.map((season) => (
+                    <div className="flex flex-col rounded-lg border border-slate-600 bg-slate-700/50 p-1 px-2">
+                      <span className="text-lg font-bold">{season.name}</span>
+                      <span>{season.episode_count} episodes</span>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+            )}
           </div>
           <div className="min-h-screen  bg-slate-900 pb-5 text-slate-100">
             <Tabs className="mx-10 my-5 flex gap-5 rounded-md  p-2  ">
