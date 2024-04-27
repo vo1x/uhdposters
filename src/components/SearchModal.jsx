@@ -107,12 +107,20 @@ function SearchModal({ onChange }) {
                       onClick={() => onChange(false)}
                       className="flex max-h-24 gap-2 rounded-lg p-2 hover:bg-slate-800"
                     >
-                      <img src={imageBaseUrl + result.poster_path} width={48} alt="" />
+                      <div className="min-w-12">
+                        <img
+                          src={imageBaseUrl + result.poster_path}
+                          width={48}
+                          loading="lazy"
+                          alt=""
+                        />
+                      </div>
                       <div className="flex flex-col overflow-hidden">
-                        <span>{result.name || result.title}</span>
-                        <span className="truncate">{result.overview}</span>
-                        <div className="flex">
+                        <span className="font-semibold">{result.name || result.title}</span>
+                        <span className="truncate text-sm text-slate-300">{result.overview}</span>
+                        <div className="flex gap-1 capitalize text-slate-400">
                           <span>{result.media_type}</span>
+                          <span>•</span>
                           <span>{result.first_air_date || result.release_date}</span>
                         </div>
                       </div>
