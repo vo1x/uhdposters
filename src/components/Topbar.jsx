@@ -25,21 +25,18 @@ function Topbar() {
     <>
       <div className="sticky top-0 z-50 flex justify-between bg-slate-900/90 p-3 px-10 backdrop-blur-xl">
         <Header></Header>
-        <button
+        <div
           onClick={() => setIsOpen(true)}
-          className="relative flex w-44 items-center gap-2 rounded-xl border border-slate-600 bg-slate-800 p-1 text-slate-400"
+          className="relative flex cursor-pointer w-44 items-center gap-2 rounded-xl border border-slate-600 bg-slate-800 p-1 text-slate-400"
         >
-          <button
-            onClick={() => handleEscButton()}
-            className="absolute right-1 top-1/2 flex -translate-y-1/2 transform items-center justify-center rounded-lg border  border-slate-600 bg-slate-800/50 px-1 py-1 text-xs font-semibold text-slate-300"
-          >
+          <button className="absolute right-1 top-1/2 flex -translate-y-1/2 transform items-center justify-center rounded-lg border  border-slate-600 bg-slate-800/50 px-1 py-1 text-xs font-semibold text-slate-300">
             <span>CTRL + K</span>
           </button>
           <span>
             <Search size={20} />
           </span>
           <span>Search...</span>
-        </button>
+        </div>
       </div>
       {isOpen && <SearchModal onChange={setIsOpen} />}
     </>

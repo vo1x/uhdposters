@@ -164,7 +164,10 @@ function DetailsPage() {
 
                 <motion.div className="col-span-2 mt-1 flex cursor-pointer flex-wrap gap-2">
                   {mediaDetails?.seasons.map((season, index) => (
-                    <div className="flex flex-col rounded-lg border border-slate-600 bg-slate-700/50 p-1 px-2">
+                    <div
+                      key={index}
+                      className="flex flex-col rounded-lg border border-slate-600 bg-slate-700/50 p-1 px-2"
+                    >
                       <span className="text-lg font-bold">{season.name}</span>
                       <span>{season.episode_count} episodes</span>
                     </div>

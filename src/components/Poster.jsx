@@ -60,8 +60,6 @@ function Poster(props) {
     <>
       <div
         className="relative flex flex-col items-center gap-3 rounded-md"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
         <img src={imagePrevUrl + props.data.file_path} alt="" className="h-auto w-full max-w-60" />
         <AnimatePresence>
