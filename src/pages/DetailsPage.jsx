@@ -93,12 +93,7 @@ function DetailsPage() {
                 <motion.div
                   whileHover={{ color: '#7DD3FC' }}
                   className="col-span-2 flex cursor-pointer gap-2"
-                  onClick={(e) =>
-                    handleItemCopy(
-                      mediaDetails?.genres.map((genre) => genre.name).join(', '),
-                      'Genres'
-                    )
-                  }
+                  onClick={(e) => handleItemCopy(mediaDetails?.genres.join(', '), 'Genres')}
                 >
                   {mediaDetails?.genres &&
                     mediaDetails.genres.map((genre, index) => (
