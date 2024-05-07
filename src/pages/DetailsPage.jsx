@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import Footer from '../components/Footer';
 import { useState, useEffect, useCallback } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -247,6 +248,7 @@ function DetailsPage() {
             </Tabs>
           </div>
         </div>
+        <Footer></Footer>
       </div>
       <ToastContainer />
     </>

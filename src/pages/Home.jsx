@@ -8,6 +8,8 @@ import { FaTags } from 'react-icons/fa';
 import Select from '../components/Select';
 import SearchBar from '../components/AutoSearchBar';
 import { useQuery } from '@tanstack/react-query';
+import Footer from '../components/Footer';
+
 import SearchResults from '../components/SearchResults';
 function Search() {
   const { searchTerm } = useParams();
@@ -117,70 +119,73 @@ function Search() {
   }, [searchResults, selectedFormat.value, selectedYear.value, isFetched]);
   return (
     <>
-      <div className="flex min-h-screen flex-col gap-10 bg-slate-900 pb-5 pt-1 ">
-        <div className="place-self-center pt-2">
-          <Header></Header>
-        </div>
-        <div className="min-w-7xl w-full max-w-7xl place-self-center px-2 md:px-0">
-          <div className="items-centers flex gap-5 ">
-            <div className="flex flex-col gap-1 text-slate-300">
-              <span className="font-semibold">Search</span>
-              <SearchBar defaultValue={searchTerm} setInputValue={setInputValue}></SearchBar>
-            </div>
-            <div className="flex flex-col gap-1 text-slate-300">
-              <span className="font-semibold">Format</span>
-              <Select
-                options={formatSelectOptions}
-                placeHolder={selectedFormat.label}
-                onChange={setSelectedFormat}
-                defaultValue={formatSelectOptions[0]}
-                className={'rounded-md'}
-              ></Select>
-            </div>
-            <div className="flex flex-col gap-1 text-slate-300">
-              <span className="font-semibold">Year</span>
-              <Select
-                options={yearSelectOptions}
-                placeHolder={selectedYear.label}
-                onChange={setSelectedYear}
-                defaultValue={yearSelectOptions[0]}
-                className={'rounded-md'}
-              ></Select>
-            </div>
+      <div className="flex flex-col">
+        <div className="flex min-h-screen flex-col gap-10 bg-slate-900 pb-5 pt-1 ">
+          <div className="place-self-center pt-2">
+            <Header></Header>
           </div>
-
-          <div className="my-5 flex justify-between">
-            {searchTerm && (
-              <div className="flex items-center gap-2 ">
-                <div className="text-xl text-slate-400">
-                  <FaTags />
-                </div>
-                <AnimatePresence>
-                  {Object.entries(tags).map(([key, value]) =>
-                    value !== '' ? (
-                      <motion.div
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0, opacity: 0 }}
-                        key={key}
-                        className="w-max rounded-lg bg-blue-500 p-1 px-2 text-sm font-semibold text-slate-100"
-                      >
-                        {value}
-                      </motion.div>
-                    ) : null
-                  )}
-                </AnimatePresence>
+          <div className="min-w-7xl w-full max-w-7xl place-self-center px-2 md:px-0">
+            <div className="items-centers flex gap-5 ">
+              <div className="flex flex-col gap-1 text-slate-300">
+                <span className="font-semibold">Search</span>
+                <SearchBar defaultValue={searchTerm} setInputValue={setInputValue}></SearchBar>
               </div>
-            )}
+              <div className="flex flex-col gap-1 text-slate-300">
+                <span className="font-semibold">Format</span>
+                <Select
+                  options={formatSelectOptions}
+                  placeHolder={selectedFormat.label}
+                  onChange={setSelectedFormat}
+                  defaultValue={formatSelectOptions[0]}
+                  className={'rounded-md'}
+                ></Select>
+              </div>
+              <div className="flex flex-col gap-1 text-slate-300">
+                <span className="font-semibold">Year</span>
+                <Select
+                  options={yearSelectOptions}
+                  placeHolder={selectedYear.label}
+                  onChange={setSelectedYear}
+                  defaultValue={yearSelectOptions[0]}
+                  className={'rounded-md'}
+                ></Select>
+              </div>
+            </div>
+
+            <div className="my-5 flex justify-between">
+              {searchTerm && (
+                <div className="flex items-center gap-2 ">
+                  <div className="text-xl text-slate-400">
+                    <FaTags />
+                  </div>
+                  <AnimatePresence>
+                    {Object.entries(tags).map(([key, value]) =>
+                      value !== '' ? (
+                        <motion.div
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          exit={{ scale: 0, opacity: 0 }}
+                          key={key}
+                          className="w-max rounded-lg bg-blue-500 p-1 px-2 text-sm font-semibold text-slate-100"
+                        >
+                          {value}
+                        </motion.div>
+                      ) : null
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
+            </div>
+            <SearchResults
+              isFetched={isFetched}
+              filteredData={filteredData}
+              searchResults={searchResults}
+              searchTerm={searchTerm}
+              isFetching={isFetching}
+            />
           </div>
-          <SearchResults
-            isFetched={isFetched}
-            filteredData={filteredData}
-            searchResults={searchResults}
-            searchTerm={searchTerm}
-            isFetching={isFetching}
-          />
         </div>
+        <Footer></Footer>
       </div>
     </>
   );
