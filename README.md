@@ -5,4 +5,5 @@ A beginner ReactJs project that uses the TMDB Api to fetch posters and trailers 
 
 ## To-do
 
-- [ ] Add a reusable tooltip component 
+- [ ] Add a reusable tooltip component
+- [ ] Add "Infinite scrolling"
