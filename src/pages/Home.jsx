@@ -16,10 +16,15 @@ function Search() {
   const apiKey = import.meta.env.VITE_TMDB_API_KEY;
   const tmdbBaseUrl = 'https://api.themoviedb.org/3';
   const fetchInfo = async () => {
+    const imdbIdRegex = /^tt\d{7,}$/;
+    let url = '';
+    if (imdbIdRegex.test(searchTerm)) {
+      url = `/find?id=${searchTerm}`;
+    } else {
+      url = `/search?query=${searchTerm}`;
+    }
     try {
-      const { data } = await axios.get(
-        `/search?query=${searchTerm}`
-      );
+      const { data } = await axios.get(url);
       return data;
     } catch (error) {
       toast.error(error, { theme: 'colored', autoClose: 2000 });

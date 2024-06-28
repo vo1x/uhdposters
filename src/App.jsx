@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const queryClient = new QueryClient();
 import axios from 'axios';
 axios.defaults.baseURL = 'https://uhdpjs.vercel.app';
+//  axios.defaults.baseURL = 'http://localhost:5000';
+
 function App() {
   return (
     <>
