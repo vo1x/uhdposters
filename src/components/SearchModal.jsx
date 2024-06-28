@@ -35,7 +35,7 @@ function SearchModal({ onChange }) {
     setIsLoading(true);
     try {
       const { data } = await axios.get(
-        `${tmdbBaseUrl}/search/multi?api_key=${apiKey}&query=${query}`
+        `/search?query=${query}`
       );
       setIsLoading(false);
       return data.results;
