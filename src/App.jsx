@@ -4,6 +4,8 @@ import DetailsPage from './pages/DetailsPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 const queryClient = new QueryClient();
+import axios from 'axios';
+axios.defaults.baseURL = 'https://uhdpjs.vercel.app';
 function App() {
   return (
     <>

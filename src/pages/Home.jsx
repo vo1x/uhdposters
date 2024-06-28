@@ -18,9 +18,9 @@ function Search() {
   const fetchInfo = async () => {
     try {
       const { data } = await axios.get(
-        `${tmdbBaseUrl}/search/multi?api_key=${apiKey}&query=${searchTerm}`
+        `/search?query=${searchTerm}`
       );
-      return data.results;
+      return data;
     } catch (error) {
       toast.error(error, { theme: 'colored', autoClose: 2000 });
     }
@@ -28,8 +28,8 @@ function Search() {
 
   const fetchTrending = async () => {
     try {
-      const { data } = await axios.get(`${tmdbBaseUrl}/trending/all/day?api_key=${apiKey}`);
-      return data.results;
+      const { data } = await axios.get(`/trending`);
+      return data;
     } catch (error) {
       toast.error(error, { theme: 'colored', autoClose: 2000 });
     }
