@@ -28,7 +28,7 @@ function Details() {
   const [mediaDetails] = useMediaInfo(mediaType, id);
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const [handleItemCopy] = useClipboard();
+  const { copyToClipboard } = useClipboard();
   const handleTabClick = useCallback(() => setActiveTabIndex((prev) => 1 - prev), []);
 
   const [runtime, setRuntime] = useState({
@@ -88,7 +88,10 @@ function Details() {
                   whileHover={{ color: '#7DD3FC' }}
                   className="col-span-2 cursor-pointer"
                   onClick={(e) =>
-                    handleItemCopy(e.target.innerText.trim().split('-')[0], 'Release Date')
+                    copyToClipboard({
+                      text: e.target.innerText.trim().split('-')[0],
+                      item: 'Release Date'
+                    })
                   }
                 >
                   {mediaDetails?.release_date}
@@ -99,7 +102,9 @@ function Details() {
                 <motion.div
                   whileHover={{ color: '#7DD3FC' }}
                   className="col-span-2 flex cursor-pointer gap-2"
-                  onClick={(e) => handleItemCopy(mediaDetails?.genres.join(', '), 'Genres')}
+                  onClick={(e) =>
+                    copyToClipboard({ text: mediaDetails?.genres.join(', '), item: 'Genres' })
+                  }
                 >
                   {mediaDetails?.genres &&
                     mediaDetails.genres.map((genre, index) => (
@@ -116,7 +121,9 @@ function Details() {
                 <motion.div
                   className="col-span-2 flex cursor-pointer gap-2"
                   whileHover={{ color: '#7DD3FC' }}
-                  onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'Runtime')}
+                  onClick={(e) =>
+                    copyToClipboard({ text: e.target.innerText.trim(), item: 'Runtime' })
+                  }
                 >
                   {runtime.hours > 0 ? (
                     <span>
@@ -132,7 +139,9 @@ function Details() {
                 <motion.div
                   className="col-span-2 flex cursor-pointer gap-2"
                   whileHover={{ color: '#7DD3FC' }}
-                  onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'IMDB ID')}
+                  onClick={(e) =>
+                    copyToClipboard({ text: e.target.innerText.trim(), item: 'IMDB ID' })
+                  }
                 >
                   {mediaDetails?.external_ids.imdb_id}
                 </motion.div>
@@ -142,7 +151,9 @@ function Details() {
                 <motion.div
                   className="col-span-2 flex cursor-pointer gap-2"
                   whileHover={{ color: '#7DD3FC' }}
-                  onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'IMDB URL')}
+                  onClick={(e) =>
+                    copyToClipboard({ text: e.target.innerText.trim(), item: 'IMDB URL' })
+                  }
                 >
                   https://imdb.com/title/{mediaDetails?.external_ids.imdb_id}
                 </motion.div>
@@ -153,7 +164,9 @@ function Details() {
               <motion.div
                 className="flex cursor-pointer gap-2"
                 whileHover={{ color: '#7DD3FC' }}
-                onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'Overview')}
+                onClick={(e) =>
+                  copyToClipboard({ text: e.target.innerText.trim(), item: 'Overview' })
+                }
               >
                 {mediaDetails?.overview}
               </motion.div>

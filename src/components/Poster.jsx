@@ -4,13 +4,13 @@ import { Link, Download, Loader2, ClipboardCheck } from 'lucide-react';
 import Select from './Select';
 
 import useImageDownloader from '../hooks/useImageDownloader';
+import useClipboard from '../hooks/useClipboard';
 
 function Poster({ posterData, fileName }) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/';
 
-  const [isCopySuccess, setIsCopySuccess] = useState(false);
-
   const { downloadImage, isDownloading } = useImageDownloader();
+  const { copyToClipboard, isCopied } = useClipboard();
 
   const qualitySelectOptions = [
     {
@@ -64,15 +64,10 @@ function Poster({ posterData, fileName }) {
       resolution = 'w200';
     }
 
-    navigator.clipboard
-      .writeText(`${imageBaseUrl}${resolution}${posterData.file_path}`)
-      .then(() => {
-        setIsCopySuccess(true);
-        setTimeout(() => {
-          setIsCopySuccess(false);
-        }, 2000);
-      })
-      .catch((error) => console.error('Error copying text: ', error));
+    copyToClipboard({
+      text: `${imageBaseUrl}${resolution}${posterData.file_path}`,
+      toastEnabled: false
+    });
   };
 
   return (
@@ -88,11 +83,11 @@ function Poster({ posterData, fileName }) {
                   whileTap={{ scale: 0.9 }}
                   onClick={handleCopyAction}
                   initial={{ background: '#0ea5e9' }}
-                  animate={isCopySuccess ? { background: '#22c55e' } : { background: '#0ea5e9' }}
+                  animate={isCopied ? { background: '#22c55e' } : { background: '#0ea5e9' }}
                   exit={{ background: '#0ea5e9' }}
                   className={`rounded-md p-2 outline-none`}
                 >
-                  {isCopySuccess ? <ClipboardCheck size={20} /> : <Link size={20} />}
+                  {isCopied ? <ClipboardCheck size={20} /> : <Link size={20} />}
                 </motion.button>
               </AnimatePresence>
               <div className="flex">

@@ -6,7 +6,7 @@ import GradientBackdrop from './GradientBackdrop';
 function Hero({ mediaDetails, imdbID, mediaType }) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
   const imagePrevUrl = 'https://image.tmdb.org/t/p/w220_and_h330_face';
-  const [handleItemCopy] = useClipboard();
+  const { copyToClipboard } = useClipboard();
 
   return (
     <>
@@ -24,7 +24,9 @@ function Hero({ mediaDetails, imdbID, mediaType }) {
                 <motion.span
                   whileHover={{ color: '#7DD3FC' }}
                   className="cursor-pointer text-slate-300"
-                  onClick={(e) => handleItemCopy(e.target.innerText, 'Name & Date String')}
+                  onClick={(e) =>
+                    copyToClipboard({ text: e.target.innerText, item: 'Name & Date String' })
+                  }
                 >
                   {`${mediaDetails.title} (${mediaDetails.release_date.split('-')[0]})`}
                 </motion.span>
@@ -38,7 +40,7 @@ function Hero({ mediaDetails, imdbID, mediaType }) {
                 <div className="flex flex-col text-3xl ">
                   <div
                     className="flex items-start  gap-1 font-bold text-slate-100  hover:cursor-pointer"
-                    onClick={() => handleItemCopy(mediaDetails.title, 'Title')}
+                    onClick={() => copyToClipboard({ text: mediaDetails.title, item: 'Title' })}
                   >
                     <motion.span whileHover={{ color: '#7DD3FC' }}>
                       {mediaDetails.title}{' '}
