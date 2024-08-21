@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, Download, Loader2, ClipboardCheck } from 'lucide-react';
 import Select from './Select';
-function Poster({ data, fileName }) {
+function Poster({ posterData, fileName }) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/';
 
   const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ function Poster({ data, fileName }) {
     setLoading(true);
 
     const data = new FormData();
-    data.append('file', `${imageBaseUrl}${data.file_path}`);
+    data.append('file', `${imageBaseUrl}${posterData.file_path}`);
     data.append('upload_preset', 'uhdposters');
     data.append('cloud_name', 'dqvyyissy');
 
@@ -80,7 +80,7 @@ function Poster({ data, fileName }) {
     }
 
     navigator.clipboard
-      .writeText(`${imageBaseUrl}${resolution}${data.file_path}`)
+      .writeText(`${imageBaseUrl}${resolution}${posterData.file_path}`)
       .then(() => {
         setIsCopySuccess(true);
         setTimeout(() => {
@@ -93,7 +93,7 @@ function Poster({ data, fileName }) {
   return (
     <>
       <div className="flex flex-col items-center gap-4">
-        <img src={`${imageBaseUrl}w200${data.file_path}`} alt="" className="h-auto w-full" />
+        <img src={`${imageBaseUrl}w200${posterData.file_path}`} alt="" className="h-auto w-full" />
         {
           <div className="flex w-full flex-col items-center gap-2 rounded-md ">
             <div className="flex w-full items-center justify-center gap-2">

@@ -9,7 +9,7 @@ function PostersTab({ posters, fileName, language }) {
             .filter((poster) => {
               return poster.iso_639_1 === language;
             })
-            .map((poster, index) => <Poster key={index} data={poster} fileName={fileName} />)}
+            .map((poster, index) => <Poster key={index} posterData={poster} fileName={fileName} />)}
       </div>
     </>
   );
