@@ -9,10 +9,11 @@ function Poster(props) {
   const [loading, setLoading] = useState(false);
   const qualitySelectOptions = [
     { value: 'high', label: 'HD' },
-    { value: 'low', label: 'Optimized' }
+    { value: 'medium', label: '400 x 600' },
+    { value: 'low', label: '200 x 300' }
   ];
 
-  const [imageQuality, setImageQuality] = useState(qualitySelectOptions[0].value);
+  const [imageQuality, setImageQuality] = useState(qualitySelectOptions[0]);
 
   const uploadImage = (imageQuality) => {
     setLoading(true);
@@ -29,10 +30,17 @@ function Poster(props) {
       .then((data) => {
         const fileID = data.secure_url.split('/').pop();
         let finalURL = '';
-        if (imageQuality !== 'high') {
-          const width = 200;
-          const height = 300;
-          finalURL = `https://res.cloudinary.com/dqvyyissy/image/upload/w_${width},h_${height},c_scale/fl_attachment:${props.fileName} MoviesMod/v${Date.now()}/${fileID}`;
+        let width, height;
+        if (imageQuality.value !== 'high') {
+          if (imageQuality.value !== 'low') {
+            width = 400;
+            height = 600;
+            finalURL = `https://res.cloudinary.com/dqvyyissy/image/upload/w_${width},h_${height},c_scale/fl_attachment:${props.fileName}/v${Date.now()}/${fileID}`;
+          } else {
+            width = 200;
+            height = 300;
+            finalURL = `https://res.cloudinary.com/dqvyyissy/image/upload/w_${width},h_${height},c_scale/fl_attachment:${props.fileName} MoviesMod/v${Date.now()}/${fileID}`;
+          }
         } else {
           finalURL = `https://res.cloudinary.com/dqvyyissy/image/upload/fl_attachment:${props.fileName}/v${Date.now()}/${fileID}`;
         }
@@ -58,9 +66,7 @@ function Poster(props) {
 
   return (
     <>
-      <div
-        className="relative flex flex-col items-center gap-3 rounded-md"
-      >
+      <div className="relative flex flex-col items-center gap-3 rounded-md">
         <img src={imagePrevUrl + props.data.file_path} alt="" className="h-auto w-full max-w-60" />
         <AnimatePresence>
           {
