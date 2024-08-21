@@ -6,15 +6,13 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTags } from 'react-icons/fa';
 import Select from '../components/Select';
-import SearchBar from '../components/AutoSearchBar';
+import SearchBar from '../components/Home/AutoSearchBar';
 import { useQuery } from '@tanstack/react-query';
 import Footer from '../components/Footer';
 
 import SearchResults from '../components/SearchResults';
 function Search() {
   const { searchTerm } = useParams();
-  const apiKey = import.meta.env.VITE_TMDB_API_KEY;
-  const tmdbBaseUrl = 'https://api.themoviedb.org/3';
   const fetchInfo = async () => {
     const imdbIdRegex = /^tt\d{7,}$/;
     let url = '';
@@ -43,8 +41,7 @@ function Search() {
   const {
     data: searchResults,
     isFetched,
-    isFetching,
-    isLoading
+    isFetching
   } = useQuery({
     queryKey: [searchTerm !== '' ? searchTerm : 'trending'],
     queryFn: () => (searchTerm && searchTerm !== '' ? fetchInfo() : fetchTrending()),
@@ -61,6 +58,7 @@ function Search() {
     },
     { value: 'movie', label: 'Movie' }
   ];
+
   const currentYear = new Date().getFullYear();
 
   const yearOptions = Array.from({ length: currentYear - 1939 }, (_, index) => ({

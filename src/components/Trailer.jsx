@@ -1,29 +1,24 @@
 import { FiCopy } from 'react-icons/fi';
-import { toast } from 'react-toastify';
-function Trailer(props) {
-  const handleCopyClick = () => {
-    try {
-      navigator.clipboard
-        .writeText(`https://youtube.com/embed/${props.data.key}`)
-        .then(() => toast.success('Trailer link copied', { theme: 'colored', autoClose: 2000 }));
-    } catch (error) {
-      toast.error(error);
-    }
-  };
+
+import useClipboard from '../hooks/useClipboard';
+
+function Trailer({ data }) {
+  const [handleItemCopy] = useClipboard();
+
   return (
     <>
       <div className="relative flex max-w-80 flex-col content-center rounded-md border border-slate-700 bg-slate-800 p-3">
-        <iframe src={`https://youtube.com/embed/${props.data.key}`}></iframe>
+        <iframe src={`https://youtube.com/embed/${data.key}`}></iframe>
         <span className="my-2 w-full border border-slate-700 "></span>
 
         <div className="flex items-center justify-between">
-          <div className="">
+          <div>
             <span className="w-max content-center rounded-md border  border-slate-700 bg-slate-900/75  p-1 px-2 text-sm text-slate-400 ">
-              {props.data.official ? 'Official' : 'Unofficial'}
+              {data.official ? 'Official' : 'Unofficial'}
             </span>
           </div>
           <button
-            onClick={handleCopyClick}
+            onClick={() => handleItemCopy(`https://youtube.com/embed/${data.key}`, 'Trailer link')}
             className=" rounded-md text-lg text-slate-400  hover:text-slate-100"
           >
             <FiCopy></FiCopy>

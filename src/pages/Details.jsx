@@ -1,21 +1,29 @@
-import { useParams } from 'react-router-dom';
-import Footer from '../components/Footer';
 import { useState, useEffect, useCallback } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+
+import Footer from '../components/Footer';
 import 'react-toastify/dist/ReactToastify.css';
-import Topbar from '../components/Topbar';
+
+import { motion } from 'framer-motion';
+
 import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
+
+import Topbar from '../components/Topbar';
 import Trailer from '../components/Trailer';
-import DetailsPane from '../components/HeroSection';
+import Hero from '../components/Details/Hero';
 import PostersTab from '../components/PostersTab';
-import { motion, AnimatePresence } from 'framer-motion';
 import Select from '../components/Select';
+
 import { Settings2, Languages } from 'lucide-react';
-import useClipboard from '../hooks/useClipboard';
+
+import { ToastContainer } from 'react-toastify';
+
 import langCodes from '../components/langCodes.json';
+
+import useClipboard from '../hooks/useClipboard';
 import useMediaInfo from '../hooks/useMediaInfo';
 
-function DetailsPage() {
+function Details() {
   const { mediaType, id } = useParams();
   const [mediaDetails] = useMediaInfo(mediaType, id);
 
@@ -47,37 +55,34 @@ function DetailsPage() {
           }
         ];
 
-  const [selectedOption, setSelectedOption] = useState({
-    value: 'en',
-    label: 'English'
-  });
+  const [selectedOption, setSelectedOption] = useState(selectOptions[0]);
+
+  const convertToHours = () => {
+    const minutes = mediaDetails?.runtime;
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+
+    setRuntime({ hours: hours, minutes: remainingMinutes });
+  };
 
   useEffect(() => {
-    const convertToHours = () => {
-      const minutes = mediaDetails?.runtime || mediaDetails?.last_episode_to_air?.runtime;
-      const hours = Math.floor(minutes / 60);
-      const remainingMinutes = minutes % 60;
-
-      setRuntime({ hours: hours, minutes: remainingMinutes });
-    };
     convertToHours();
   }, [mediaDetails]);
 
   return (
     <>
-      <div className="">
+      <div>
         <Topbar></Topbar>
-        <div className="flex flex-col pt-0">
-          <DetailsPane
+        <div className="flex flex-col">
+          <Hero
             mediaDetails={mediaDetails}
             imdbID={mediaDetails?.external_ids.imdb_id}
-            seasonsInfo={mediaDetails?.seasons}
             mediaType={mediaType}
           />
-          <div className="mx-10 mt-5 flex w-full max-w-screen-xl gap-16 overflow-hidden rounded-md bg-slate-800 p-5 text-slate-200">
+          <div className="mx-10 mt-4 flex w-full max-w-screen-xl gap-16 overflow-hidden rounded-md bg-slate-800 p-4 text-slate-200">
             <div className="flex min-w-96 flex-col gap-2">
-              <span className="col-span-3 text-2xl font-bold">Details</span>
-              <div className="grid grid-cols-3 gap-5">
+              <span className="text-2xl font-bold">Details</span>
+              <div className="grid grid-cols-3 gap-6">
                 <span className="font-semibold text-slate-300">Release Date</span>
                 <motion.div
                   whileHover={{ color: '#7DD3FC' }}
@@ -86,10 +91,10 @@ function DetailsPage() {
                     handleItemCopy(e.target.innerText.trim().split('-')[0], 'Release Date')
                   }
                 >
-                  {mediaDetails?.release_date || mediaDetails?.first_air_date}
+                  {mediaDetails?.release_date}
                 </motion.div>
               </div>
-              <div className="grid grid-cols-3 gap-5 ">
+              <div className="grid grid-cols-3 gap-4">
                 <span className="font-semibold text-slate-300">Genres</span>
                 <motion.div
                   whileHover={{ color: '#7DD3FC' }}
@@ -104,7 +109,7 @@ function DetailsPage() {
                     ))}
                 </motion.div>
               </div>
-              <div className="grid grid-cols-3 gap-5 ">
+              <div className="grid grid-cols-3 gap-4 ">
                 <span className="font-semibold text-slate-300">
                   Runtime{mediaType === 'tv' && <span> (Avg)</span>}
                 </span>
@@ -122,7 +127,7 @@ function DetailsPage() {
                   )}
                 </motion.div>
               </div>
-              <div className="grid grid-cols-3 gap-5 ">
+              <div className="grid grid-cols-3 gap-4 ">
                 <span className="font-semibold text-slate-300">IMDB ID</span>
                 <motion.div
                   className="col-span-2 flex cursor-pointer gap-2"
@@ -132,7 +137,7 @@ function DetailsPage() {
                   {mediaDetails?.external_ids.imdb_id}
                 </motion.div>
               </div>
-              <div className="grid grid-cols-3 gap-5 ">
+              <div className="grid grid-cols-3 gap-4 ">
                 <span className="font-semibold text-slate-300">IMDB URL</span>
                 <motion.div
                   className="col-span-2 flex cursor-pointer gap-2"
@@ -143,11 +148,10 @@ function DetailsPage() {
                 </motion.div>
               </div>
             </div>
-            <div>
-              <span className="col-span-3 text-2xl font-bold">Overview</span>
-
+            <div className="flex flex-col gap-2">
+              <span className="text-2xl font-bold">Overview</span>
               <motion.div
-                className="col-span-2 flex cursor-pointer gap-2"
+                className="flex cursor-pointer gap-2"
                 whileHover={{ color: '#7DD3FC' }}
                 onClick={(e) => handleItemCopy(e.target.innerText.trim(), 'Overview')}
               >
@@ -221,7 +225,6 @@ function DetailsPage() {
                           onChange={setSelectedOption}
                           className={`rounded-md bg-slate-700/50`}
                         ></Select>
-                        {/* <span>Language</span> */}
                       </span>
                     </div>
                   </div>
@@ -231,15 +234,14 @@ function DetailsPage() {
                 <PostersTab
                   posters={mediaDetails?.posters}
                   fileName={
-                    mediaDetails && (mediaDetails.title || mediaDetails.name)
-                      ? 'Download ' +
-                        (mediaDetails.title || mediaDetails.name).replace(/[^a-zA-Z0-9\s]/g, '')
+                    mediaDetails && mediaDetails.title
+                      ? 'Download ' + mediaDetails.title.replace(/[^a-zA-Z0-9\s]/g, '')
                       : ''
                   }
                   language={selectedOption.value}
                 />
               </TabPanel>
-              <TabPanel className="flex flex-wrap place-content-center gap-x-2 gap-y-5">
+              <TabPanel className="flex flex-wrap place-content-center gap-x-2 gap-y-6">
                 {mediaDetails?.videos &&
                   mediaDetails?.videos.map((trailer, index) => (
                     <Trailer data={trailer} key={index} />
@@ -255,4 +257,4 @@ function DetailsPage() {
   );
 }
 
-export default DetailsPage;
+export default Details;

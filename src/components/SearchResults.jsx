@@ -13,9 +13,7 @@ export default function SearchResults({
         {isFetching ? (
           Array.from({ length: 12 }, (_, index) => <CardSkeleton key={index} />)
         ) : isFetched && searchResults.length !== 0 ? (
-          filteredData.map((result, index) => (
-            <Card key={result.id} data={result} index={index} length={searchResults.length} />
-          ))
+          filteredData.map((result, index) => <Card key={result.id} data={result} />)
         ) : (
           <span className="w-max text-2xl font-bold text-slate-400">
             No results found for "<span className="text-sky-300">{searchTerm}</span>"

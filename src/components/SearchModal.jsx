@@ -8,8 +8,6 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function SearchModal({ onChange }) {
-  const apiKey = import.meta.env.VITE_TMDB_API_KEY;
-  const tmdbBaseUrl = 'https://api.themoviedb.org/3';
   const [inputText, setInputText] = useState('');
   const [value] = useDebounce(inputText, 1000);
   const inputRef = useRef(null);
@@ -34,9 +32,7 @@ function SearchModal({ onChange }) {
   const fetchInfo = async (query) => {
     setIsLoading(true);
     try {
-      const { data } = await axios.get(
-        `/search?query=${query}`
-      );
+      const { data } = await axios.get(`/search?query=${query}`);
       setIsLoading(false);
       return data.results;
     } catch (error) {
@@ -44,11 +40,7 @@ function SearchModal({ onChange }) {
     }
   };
 
-  const {
-    data: searchResults,
-    isFetched,
-    isFetching
-  } = useQuery({
+  const { data: searchResults, isFetched } = useQuery({
     queryKey: [value],
     queryFn: () => fetchInfo(value),
     enabled: !!value || value !== '',
@@ -116,12 +108,12 @@ function SearchModal({ onChange }) {
                         />
                       </div>
                       <div className="flex flex-col overflow-hidden">
-                        <span className="font-semibold">{result.name || result.title}</span>
+                        <span className="font-semibold">{result.title}</span>
                         <span className="truncate text-sm text-slate-300">{result.overview}</span>
                         <div className="flex gap-1 capitalize text-slate-400">
                           <span>{result.media_type}</span>
                           <span>•</span>
-                          <span>{result.first_air_date || result.release_date}</span>
+                          <span>{result.release_date}</span>
                         </div>
                       </div>
                     </div>
