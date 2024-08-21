@@ -1,8 +1,6 @@
 import Poster from './Poster';
 
-function PostersTab(props) {
-  const { posters, fileName, language } = props;
-
+function PostersTab({ posters, fileName, language }) {
   return (
     <>
       <div className="flex flex-wrap place-items-start gap-10">

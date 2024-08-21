@@ -74,7 +74,7 @@ function DetailsPage() {
             seasonsInfo={mediaDetails?.seasons}
             mediaType={mediaType}
           />
-          <div className="mx-10 mt-5 flex w-full max-w-screen-xl gap-3 overflow-hidden rounded-md bg-slate-800 p-5 text-slate-200">
+          <div className="mx-10 mt-5 flex w-full max-w-screen-xl gap-16 overflow-hidden rounded-md bg-slate-800 p-5 text-slate-200">
             <div className="flex min-w-96 flex-col gap-2">
               <span className="col-span-3 text-2xl font-bold">Details</span>
               <div className="grid grid-cols-3 gap-5">
