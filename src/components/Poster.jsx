@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
 import { Link, Download, Loader2, ClipboardCheck } from 'lucide-react';
 import Select from './Select';
+
+import useImageDownloader from '../hooks/useImageDownloader';
+
 function Poster({ posterData, fileName }) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/';
 
-  const [loading, setLoading] = useState(false);
   const [isCopySuccess, setIsCopySuccess] = useState(false);
+
+  const { downloadImage, isDownloading } = useImageDownloader();
 
   const qualitySelectOptions = [
     {
@@ -27,9 +30,8 @@ function Poster({ posterData, fileName }) {
   const [imageQuality, setImageQuality] = useState(qualitySelectOptions[0]);
 
   const uploadImage = async (imageQuality) => {
-    setLoading(true);
-
     let downloadUrl = '';
+    let imgFileName = fileName;
 
     if (imageQuality.value === 'high') {
       downloadUrl = `/tmdb/t/p/original${posterData.file_path}`;
@@ -41,27 +43,10 @@ function Poster({ posterData, fileName }) {
 
     if (imageQuality.value === 'low') {
       downloadUrl = `/tmdb/t/p/w200${posterData.file_path}`;
+      imgFileName = fileName + ' MoviesMod';
     }
-    try {
-      const response = await axios.get(downloadUrl, {
-        responseType: 'blob'
-      });
 
-      const imageObjectURL = URL.createObjectURL(response.data);
-
-      const link = document.createElement('a');
-      link.href = imageObjectURL;
-
-      link.download = fileName;
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching or downloading image:', error);
-    }
+    await downloadImage(downloadUrl, imgFileName);
   };
 
   const handleCopyAction = () => {
@@ -121,7 +106,7 @@ function Poster({ posterData, fileName }) {
                   onClick={() => uploadImage(imageQuality)}
                   className="rounded-r-md bg-sky-500 px-2"
                 >
-                  {loading ? (
+                  {isDownloading ? (
                     <Loader2 className="animate-spin" size={20} />
                   ) : (
                     <Download size={20} />
