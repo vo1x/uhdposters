@@ -3,7 +3,7 @@ import { FiCopy } from 'react-icons/fi';
 import useClipboard from '../hooks/useClipboard';
 
 function Trailer({ data }) {
-  const [handleItemCopy] = useClipboard();
+  const { copyToClipboard } = useClipboard();
 
   return (
     <>
@@ -18,7 +18,12 @@ function Trailer({ data }) {
             </span>
           </div>
           <button
-            onClick={() => handleItemCopy(`https://youtube.com/embed/${data.key}`, 'Trailer link')}
+            onClick={() =>
+              copyToClipboard({
+                text: `https://youtube.com/embed/${data.key}`,
+                item: 'Trailer link'
+              })
+            }
             className=" rounded-md text-lg text-slate-400  hover:text-slate-100"
           >
             <FiCopy></FiCopy>
