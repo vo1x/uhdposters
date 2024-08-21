@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import axios from 'axios';
 import { Link, Download, Loader2, ClipboardCheck } from 'lucide-react';
 import Select from './Select';
 function Poster({ posterData, fileName }) {
@@ -25,43 +26,42 @@ function Poster({ posterData, fileName }) {
 
   const [imageQuality, setImageQuality] = useState(qualitySelectOptions[0]);
 
-  const uploadImage = (imageQuality) => {
+  const uploadImage = async (imageQuality) => {
     setLoading(true);
 
-    const data = new FormData();
-    data.append('file', `${imageBaseUrl}${posterData.file_path}`);
-    data.append('upload_preset', 'uhdposters');
-    data.append('cloud_name', 'dqvyyissy');
+    let downloadUrl = '';
 
-    fetch('https://api.cloudinary.com/v1_1/dqvyyissy/image/upload', {
-      method: 'POST',
-      body: data
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        const fileID = data.secure_url.split('/').pop();
-        let finalURL = '';
+    if (imageQuality.value === 'high') {
+      downloadUrl = `/tmdb/t/p/original${posterData.file_path}`;
+    }
 
-        if (imageQuality.value === 'high') {
-          finalURL = `https://res.cloudinary.com/dqvyyissy/image/upload/fl_attachment:${fileName}/v${Date.now()}/${fileID}`;
-        }
+    if (imageQuality.value === 'medium') {
+      downloadUrl = `/tmdb/t/p/w400${posterData.file_path}`;
+    }
 
-        if (imageQuality.value === 'medium') {
-          const width = 400;
-          const height = 600;
-          finalURL = `https://res.cloudinary.com/dqvyyissy/image/upload/w_${width},h_${height},c_scale/fl_attachment:${fileName}/v${Date.now()}/${fileID}`;
-        }
+    if (imageQuality.value === 'low') {
+      downloadUrl = `/tmdb/t/p/w200${posterData.file_path}`;
+    }
+    try {
+      const response = await axios.get(downloadUrl, {
+        responseType: 'blob'
+      });
 
-        if (imageQuality.value === 'low') {
-          const width = 200;
-          const height = 300;
-          finalURL = `https://res.cloudinary.com/dqvyyissy/image/upload/w_${width},h_${height},c_scale/fl_attachment:${fileName} MoviesMod/v${Date.now()}/${fileID}`;
-        }
+      const imageObjectURL = URL.createObjectURL(response.data);
 
-        window.location.href = finalURL;
-        setLoading(false);
-      })
-      .catch((err) => console.log(err));
+      const link = document.createElement('a');
+      link.href = imageObjectURL;
+
+      link.download = fileName;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching or downloading image:', error);
+    }
   };
 
   const handleCopyAction = () => {
