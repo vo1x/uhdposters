@@ -29,7 +29,7 @@ function Poster({ posterData, fileName }) {
 
   const [imageQuality, setImageQuality] = useState(qualitySelectOptions[0]);
 
-  const uploadImage = async (imageQuality) => {
+  const handleImageDownload = async () => {
     let downloadUrl = '';
     let imgFileName = fileName;
 
@@ -102,10 +102,7 @@ function Poster({ posterData, fileName }) {
                   options={qualitySelectOptions}
                   className="w-24 rounded-l-md"
                 />
-                <button
-                  onClick={() => uploadImage(imageQuality)}
-                  className="rounded-r-md bg-sky-500 px-2"
-                >
+                <button onClick={handleImageDownload} className="rounded-r-md bg-sky-500 px-2">
                   {isDownloading ? (
                     <Loader2 className="animate-spin" size={20} />
                   ) : (
