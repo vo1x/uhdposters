@@ -11,7 +11,7 @@ function Hero({ mediaDetails }: { mediaDetails: any }) {
   return (
     <>
       <div className={`relative flex overflow-hidden md:h-[500px] md:w-full`}>
-        <GradientBackdrop url={`${imageBaseUrl}original${mediaDetails?.backdrop_path}`} />
+        <GradientBackdrop url={`${imageBaseUrl}/original${mediaDetails?.backdrop_path}`} />
         <div className="mt-4 flex w-full flex-col items-center px-10 md:mt-0 md:flex-row md:gap-5 md:place-self-end">
           <div className="relative mb-5 flex h-full max-h-96 min-h-80 min-w-52 max-w-52 flex-col gap-1 text-center">
             {mediaDetails && (
