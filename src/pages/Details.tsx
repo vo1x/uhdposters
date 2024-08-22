@@ -9,14 +9,14 @@ import { Settings2, Languages } from 'lucide-react';
 
 import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
 
-import langCodes from '../components/langCodes.json';
+import langCodes from '../utils/langCodes.json';
 
-import Topbar from '../components/Topbar';
-import Trailer from '../components/Trailer';
+import Topbar from '../components/UI/Topbar';
+import Trailer from '../components/Details/Trailer';
 import Hero from '../components/Details/Hero';
-import PostersTab from '../components/PostersTab';
-import Select from '../components/Select';
-import Footer from '../components/Footer';
+import Poster from '../components/Details/Poster';
+import Select from '../components/UI/Select';
+import Footer from '../components/UI/Footer';
 
 import useClipboard from '../hooks/useClipboard';
 import useMediaInfo from '../hooks/useMediaInfo';
@@ -34,7 +34,7 @@ function Details() {
     minutes: 0
   });
 
-  const selectOptions =
+  const languageSelectOptions =
     mediaDetails?.original_language != 'en'
       ? [
           {
@@ -53,7 +53,7 @@ function Details() {
           }
         ];
 
-  const [selectedOption, setSelectedOption] = useState(selectOptions[0]);
+  const [selectedOption, setSelectedOption] = useState(languageSelectOptions[0]);
 
   const convertToHours = () => {
     const minutes = mediaDetails?.runtime;
@@ -77,7 +77,7 @@ function Details() {
             <div className="flex min-w-96 flex-col gap-2">
               <span className="text-2xl font-bold">Details</span>
               <div className="grid grid-cols-3 gap-6">
-                <span className="font-semibold text-slate-300">Release Date</span>
+                <span className="label">Release Date</span>
                 <motion.div
                   whileHover={{ color: '#7DD3FC' }}
                   className="col-span-2 cursor-pointer"
@@ -92,7 +92,7 @@ function Details() {
                 </motion.div>
               </div>
               <div className="grid grid-cols-3 gap-4">
-                <span className="font-semibold text-slate-300">Genres</span>
+                <span className="label">Genres</span>
                 <motion.div
                   whileHover={{ color: '#7DD3FC' }}
                   className="col-span-2 flex cursor-pointer gap-2"
@@ -109,9 +109,7 @@ function Details() {
                 </motion.div>
               </div>
               <div className="grid grid-cols-3 gap-4 ">
-                <span className="font-semibold text-slate-300">
-                  Runtime{mediaType === 'tv' && <span> (Avg)</span>}
-                </span>
+                <span className="label">Runtime{mediaType === 'tv' && <span> (Avg)</span>}</span>
                 <motion.div
                   className="col-span-2 flex cursor-pointer gap-2"
                   whileHover={{ color: '#7DD3FC' }}
@@ -129,7 +127,7 @@ function Details() {
                 </motion.div>
               </div>
               <div className="grid grid-cols-3 gap-4 ">
-                <span className="font-semibold text-slate-300">IMDB ID</span>
+                <span className="label">IMDB ID</span>
                 <motion.div
                   className="col-span-2 flex cursor-pointer gap-2"
                   whileHover={{ color: '#7DD3FC' }}
@@ -141,7 +139,7 @@ function Details() {
                 </motion.div>
               </div>
               <div className="grid grid-cols-3 gap-4 ">
-                <span className="font-semibold text-slate-300">IMDB URL</span>
+                <span className="label">IMDB URL</span>
                 <motion.div
                   className="col-span-2 flex cursor-pointer gap-2"
                   whileHover={{ color: '#7DD3FC' }}
@@ -227,8 +225,8 @@ function Details() {
                       <span className="flex items-center gap-2 text-slate-300">
                         <Languages size={20}></Languages>
                         <Select
-                          defaultValue={selectOptions[0]}
-                          options={selectOptions}
+                          defaultValue={languageSelectOptions[0]}
+                          options={languageSelectOptions}
                           onChange={setSelectedOption}
                           className={`rounded-md bg-slate-700/50`}
                         ></Select>
@@ -237,16 +235,21 @@ function Details() {
                   </div>
                 )}
               </div>
-              <TabPanel>
-                <PostersTab
-                  posters={mediaDetails?.posters}
-                  fileName={
-                    mediaDetails && mediaDetails.title
-                      ? 'Download ' + mediaDetails.title.replace(/[^a-zA-Z0-9\s]/g, '')
-                      : ''
-                  }
-                  language={selectedOption.value}
-                />
+              <TabPanel className="flex flex-wrap place-items-start gap-10">
+                {mediaDetails?.posters &&
+                  mediaDetails?.posters
+                    .filter((poster: any) => poster.iso_639_1 === selectedOption.value)
+                    .map((poster: any, index: number) => (
+                      <Poster
+                        key={index}
+                        posterData={poster}
+                        fileName={
+                          mediaDetails && mediaDetails.title
+                            ? 'Download ' + mediaDetails.title.replace(/[^a-zA-Z0-9\s]/g, '')
+                            : ''
+                        }
+                      />
+                    ))}
               </TabPanel>
               <TabPanel className="flex flex-wrap place-content-center gap-x-2 gap-y-6">
                 {mediaDetails?.videos &&

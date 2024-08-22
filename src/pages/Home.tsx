@@ -6,12 +6,12 @@ import { toast } from 'react-toastify';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTags } from 'react-icons/fa';
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Select from '../components/Select';
+import Header from '../components/UI/Header';
+import Footer from '../components/UI/Footer';
+import Select from '../components/UI/Select';
 import SearchBar from '../components/Home/AutoSearchBar';
-import Card from '../components/Card';
-import CardSkeleton from '../components/CardSkeleton';
+import Card from '../components/Home/Card';
+import CardSkeleton from '../components/UI/CardSkeleton';
 
 function Search() {
   const { searchTerm } = useParams();
@@ -77,13 +77,20 @@ function Search() {
     yearTag: string;
   }>({ searchTag: '', formatTag: '', yearTag: '' });
 
+  const [filters, setFilters] = useState<{
+    format: string;
+    year: string;
+  }>({
+    format: 'all',
+    year: 'all'
+  });
+
   const [selectedFormat, setSelectedFormat] = useState(formatSelectOptions[0]);
   const [selectedYear, setSelectedYear] = useState<{
     value: number | string;
     label: string;
   }>(yearSelectOptions[0]);
 
-  const [filteredData, setFilteredData] = useState<any>([]);
   const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
@@ -94,57 +101,50 @@ function Search() {
 
     if (selectedFormat.value === 'all') {
       setTags((prev) => ({ ...prev, formatTag: '' }));
+      setFilters((prev) => ({ ...prev, format: 'all' }));
     } else {
       setTags((prev) => ({ ...prev, formatTag: selectedFormat.value }));
+      setFilters((prev) => ({ ...prev, format: selectedFormat.value }));
     }
     if (selectedYear.value === 'all') {
       setTags((prev) => ({ ...prev, yearTag: '' }));
+      setFilters((prev) => ({ ...prev, year: 'all' }));
     } else {
       setTags((prev) => ({ ...prev, yearTag: selectedYear.value.toString() }));
+      setFilters((prev) => ({ ...prev, year: selectedYear.value.toString() }));
     }
   }, [inputValue, selectedFormat.value, selectedYear.value]);
 
-  useEffect(() => {
-    if (!searchResults && isFetched) {
-      return;
-    }
+  const filterSearchResults = () => {
+    let filteredResults = searchResults ?? [];
 
-    const filterDataByFormat = () => {
-      let filteredResults = searchResults ? [...searchResults] : [];
+    const filteredList = filteredResults.filter((result: any) => {
+      const yearMatches =
+        filters.year === 'all' || result.release_date.split('-')[0] === filters.year.toString();
+      const formatMatches = filters.format === 'all' || result.media_type === filters.format;
 
-      if (selectedFormat.value !== 'all') {
-        filteredResults = filteredResults.filter((res) => res.media_type === selectedFormat.value);
-      }
+      return yearMatches && formatMatches;
+    });
 
-      if (selectedYear.value !== 'all') {
-        filteredResults = filteredResults.filter(
-          (res) =>
-            (res.release_date && parseInt(res.release_date.split('-')[0]) === selectedYear.value) ||
-            (res.first_air_date &&
-              parseInt(res.first_air_date.split('-')[0]) === selectedYear.value)
-        );
-      }
+    return filteredList;
+  };
 
-      setFilteredData(filteredResults);
-    };
-
-    filterDataByFormat();
-  }, [searchResults, selectedFormat.value, selectedYear.value, isFetched]);
   return (
     <>
       <div className="flex flex-col">
-        <div className="flex min-h-screen flex-col gap-10 bg-slate-900 pb-5 pt-1 ">
+        <div className="flex min-h-screen flex-col gap-10 bg-slate-900 pb-6 pt-2">
           <div className="place-self-center pt-2">
             <Header></Header>
           </div>
+
           <div className="min-w-7xl w-full max-w-7xl place-self-center px-2 md:px-0">
             <div className="items-centers flex gap-5 ">
-              <div className="flex flex-col gap-1 text-slate-300">
-                <span className="font-semibold">Search</span>
+              <div className="flex flex-col gap-2 ">
+                <span className="label">Search</span>
                 <SearchBar defaultValue={searchTerm} setInputValue={setInputValue}></SearchBar>
               </div>
-              <div className="flex flex-col gap-1 text-slate-300">
-                <span className="font-semibold">Format</span>
+              <div className="flex flex-col gap-2 ">
+                <span className="label">Format</span>
                 <Select
                   options={formatSelectOptions}
                   onChange={setSelectedFormat}
@@ -152,8 +152,8 @@ function Search() {
                   className={'rounded-md'}
                 />
               </div>
-              <div className="flex flex-col gap-1 text-slate-300">
-                <span className="font-semibold">Year</span>
+              <div className="flex flex-col gap-2">
+                <span className="label">Year</span>
                 <Select
                   options={yearSelectOptions}
                   onChange={setSelectedYear}
@@ -163,7 +163,8 @@ function Search() {
               </div>
             </div>
 
-            <div className="my-5 flex justify-between">
+            {/* Tags indicator */}
+            <div className="my-6 flex justify-between">
               {searchTerm && (
                 <div className="flex items-center gap-2 ">
                   <div className="text-xl text-slate-400">
@@ -187,11 +188,13 @@ function Search() {
                 </div>
               )}
             </div>
+
+            {/* Search Results */}
             <div className="grid grid-cols-3 place-items-center gap-y-6 md:grid-cols-4 lg:grid-cols-6 lg:place-content-center lg:place-items-start lg:gap-10">
               {isFetching ? (
                 Array.from({ length: 12 }, (_, index) => <CardSkeleton key={index} />)
               ) : isFetched && searchResults.length !== 0 ? (
-                filteredData.map((result: any) => <Card key={result.id} data={result} />)
+                filterSearchResults().map((result: any) => <Card key={result.id} data={result} />)
               ) : (
                 <span className="w-max text-2xl font-bold text-slate-400">
                   No results found for "<span className="text-sky-300">{searchTerm}</span>"
