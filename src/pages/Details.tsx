@@ -96,7 +96,7 @@ function Details() {
                 <motion.div
                   whileHover={{ color: '#7DD3FC' }}
                   className="col-span-2 flex cursor-pointer gap-2"
-                  onClick={(e) =>
+                  onClick={() =>
                     copyToClipboard({ text: mediaDetails?.genres.join(', '), item: 'Genres' })
                   }
                 >
