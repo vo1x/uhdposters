@@ -2,18 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDebounce } from 'use-debounce';
 
-type SetInputValue = (value: string) => void;
-
-function AutoSearchBar({
-  defaultValue,
-  setInputValue
-}: {
-  defaultValue: string | undefined;
-  setInputValue: SetInputValue;
-}) {
+function AutoSearchBar({ defaultValue }: { defaultValue: string }) {
   const navigate = useNavigate();
 
-  const [inputText, setInputText] = useState<string | undefined>(defaultValue);
+  const [inputText, setInputText] = useState<string>(defaultValue);
   const [value] = useDebounce(inputText, 1000);
 
   useEffect(() => {
@@ -36,7 +28,6 @@ function AutoSearchBar({
         defaultValue={value}
         onChange={(e) => {
           setInputText(e.target.value);
-          setInputValue(e.target.value);
         }}
         className="rounded-md bg-slate-800 p-2 text-slate-300 placeholder-slate-500 outline-none"
       />
