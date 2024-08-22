@@ -10,9 +10,9 @@ function Hero({ mediaDetails, imdbID, mediaType }) {
 
   return (
     <>
-      <div className={`relative flex h-[500px] overflow-hidden `}>
+      <div className={`relative flex overflow-hidden md:h-[500px] md:w-full`}>
         <GradientBackdrop url={imageBaseUrl + mediaDetails?.backdrop_path} />
-        <div className=" flex gap-5 place-self-end px-10">
+        <div className="mt-4 flex w-full flex-col items-center px-10 md:mt-0 md:flex-row md:gap-5 md:place-self-end">
           <div className="relative mb-5 flex h-full max-h-96 min-h-80 min-w-52 max-w-52 flex-col gap-1 text-center">
             {mediaDetails && (
               <>
@@ -37,7 +37,7 @@ function Hero({ mediaDetails, imdbID, mediaType }) {
           <div className="flex flex-col justify-center gap-4 ">
             <div className="flex  flex-col justify-center gap-2">
               {mediaDetails && (
-                <div className="flex flex-col text-3xl ">
+                <div className="flex flex-col items-center text-2xl md:items-start md:text-3xl ">
                   <div
                     className="flex items-start  gap-1 font-bold text-slate-100  hover:cursor-pointer"
                     onClick={() => copyToClipboard({ text: mediaDetails.title, item: 'Title' })}

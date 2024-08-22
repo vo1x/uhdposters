@@ -17,7 +17,7 @@ function Card({ data }) {
         <div
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`relative flex h-full w-full min-w-28 max-w-28 flex-col gap-2 overflow-hidden rounded-md text-slate-400 transition-all duration-300 md:max-h-80 md:min-h-80 md:min-w-48 md:max-w-48`}
+          className={`relative flex h-full w-28 flex-col gap-2 overflow-hidden rounded-md text-slate-400 transition-all duration-300 md:w-40 lg:w-48`}
         >
           <div className="relative">
             <AnimatePresence>
@@ -27,7 +27,7 @@ function Card({ data }) {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 h-[168px] w-28 bg-[#1e293b] md:max-h-72 md:min-h-72 md:w-48"
+                  className="absolute inset-0 h-[168px] w-28 bg-[#1e293b] md:max-h-64 md:min-h-64 md:w-40"
                 />
               )}
               <motion.img
@@ -35,7 +35,7 @@ function Card({ data }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: imageLoaded ? 1 : 0 }}
                 exit={{ opacity: 0 }}
-                className="h-[168px] w-28 rounded-md object-cover md:h-72 md:w-48"
+                className="h-full w-28 rounded-md object-cover md:w-48 lg:w-48"
                 src={imageSrc}
                 alt="Media Backdrop"
                 onLoad={() => setImageLoaded(true)}

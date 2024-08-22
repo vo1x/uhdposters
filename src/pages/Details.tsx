@@ -73,13 +73,13 @@ function Details() {
     <>
       <div>
         <Topbar></Topbar>
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center md:items-start">
           <Hero
             mediaDetails={mediaDetails}
             imdbID={mediaDetails?.external_ids.imdb_id}
             mediaType={mediaType}
           />
-          <div className="mx-10 mt-4 flex w-full max-w-screen-xl gap-16 overflow-hidden rounded-md bg-slate-800 p-4 text-slate-200">
+          <div className="mx-2 mt-8 flex w-fit flex-col gap-16 overflow-hidden rounded-md bg-slate-800 p-4 text-slate-200 md:mx-10 md:mt-4 md:w-full md:max-w-screen-xl md:flex-row">
             <div className="flex min-w-96 flex-col gap-2">
               <span className="text-2xl font-bold">Details</span>
               <div className="grid grid-cols-3 gap-6">
@@ -190,8 +190,8 @@ function Details() {
             )}
           </div>
           <div className="min-h-screen  bg-slate-900 pb-5 text-slate-100">
-            <Tabs className="mx-10 my-5 flex gap-5 rounded-md  p-2  ">
-              <div className="sticky top-20 z-10 h-max w-full min-w-60 max-w-60 ">
+            <Tabs className="mx-10 my-5 flex flex-col gap-5 rounded-md   p-2 md:flex-row">
+              <div className="sticky top-20 z-20 h-max w-96 bg-slate-900  md:w-full md:min-w-60 md:max-w-60">
                 <TabList className=" flex w-full flex-col self-start rounded-md border border-slate-700 bg-slate-800 p-1">
                   <Tab
                     className={` h-max ${activeTabIndex === 0 ? 'bg-sky-500' : ''} cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-2 outline-none`}

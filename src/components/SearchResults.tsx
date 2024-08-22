@@ -9,7 +9,7 @@ export default function SearchResults({
 }) {
   return (
     <>
-      <div className="grid grid-cols-3 place-items-center gap-y-6 md:grid-cols-6 md:place-content-center md:place-items-start md:gap-10">
+      <div className="grid grid-cols-3 place-items-center gap-y-6 md:grid-cols-4 lg:grid-cols-6 lg:place-content-center lg:place-items-start lg:gap-10">
         {isFetching ? (
           Array.from({ length: 12 }, (_, index) => <CardSkeleton key={index} />)
         ) : isFetched && searchResults.length !== 0 ? (
