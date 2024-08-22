@@ -1,31 +1,29 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Footer from '../components/Footer';
+import { motion } from 'framer-motion';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { motion } from 'framer-motion';
+import { Settings2, Languages } from 'lucide-react';
 
 import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
+
+import langCodes from '../components/langCodes.json';
 
 import Topbar from '../components/Topbar';
 import Trailer from '../components/Trailer';
 import Hero from '../components/Details/Hero';
 import PostersTab from '../components/PostersTab';
 import Select from '../components/Select';
-
-import { Settings2, Languages } from 'lucide-react';
-
-import { ToastContainer } from 'react-toastify';
-
-import langCodes from '../components/langCodes.json';
+import Footer from '../components/Footer';
 
 import useClipboard from '../hooks/useClipboard';
 import useMediaInfo from '../hooks/useMediaInfo';
 
 function Details() {
   const { mediaType, id } = useParams();
-  const [mediaDetails] = useMediaInfo(mediaType, id);
+  const [mediaDetails] = useMediaInfo(mediaType!, id!);
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const { copyToClipboard } = useClipboard();
@@ -45,7 +43,7 @@ function Details() {
           },
           {
             value: mediaDetails?.original_language,
-            label: `${langCodes[mediaDetails?.original_language]}`
+            label: `${langCodes[mediaDetails?.original_language as keyof typeof langCodes]}`
           }
         ]
       : [
@@ -74,11 +72,7 @@ function Details() {
       <div>
         <Topbar></Topbar>
         <div className="flex flex-col items-center md:items-start">
-          <Hero
-            mediaDetails={mediaDetails}
-            imdbID={mediaDetails?.external_ids.imdb_id}
-            mediaType={mediaType}
-          />
+          <Hero mediaDetails={mediaDetails} />
           <div className="mx-2 mt-8 flex w-fit flex-col gap-16 overflow-hidden rounded-md bg-slate-800 p-4 text-slate-200 md:mx-10 md:mt-4 md:w-full md:max-w-screen-xl md:flex-row">
             <div className="flex min-w-96 flex-col gap-2">
               <span className="text-2xl font-bold">Details</span>
@@ -87,7 +81,7 @@ function Details() {
                 <motion.div
                   whileHover={{ color: '#7DD3FC' }}
                   className="col-span-2 cursor-pointer"
-                  onClick={(e) =>
+                  onClick={(e: any) =>
                     copyToClipboard({
                       text: e.target.innerText.trim().split('-')[0],
                       item: 'Release Date'
@@ -107,7 +101,7 @@ function Details() {
                   }
                 >
                   {mediaDetails?.genres &&
-                    mediaDetails.genres.map((genre, index) => (
+                    mediaDetails.genres.map((genre: string, index: number) => (
                       <span key={index} className="rounded-md bg-slate-700 p-1 text-sm ">
                         {genre}
                       </span>
@@ -121,7 +115,7 @@ function Details() {
                 <motion.div
                   className="col-span-2 flex cursor-pointer gap-2"
                   whileHover={{ color: '#7DD3FC' }}
-                  onClick={(e) =>
+                  onClick={(e: any) =>
                     copyToClipboard({ text: e.target.innerText.trim(), item: 'Runtime' })
                   }
                 >
@@ -139,7 +133,7 @@ function Details() {
                 <motion.div
                   className="col-span-2 flex cursor-pointer gap-2"
                   whileHover={{ color: '#7DD3FC' }}
-                  onClick={(e) =>
+                  onClick={(e: any) =>
                     copyToClipboard({ text: e.target.innerText.trim(), item: 'IMDB ID' })
                   }
                 >
@@ -151,7 +145,7 @@ function Details() {
                 <motion.div
                   className="col-span-2 flex cursor-pointer gap-2"
                   whileHover={{ color: '#7DD3FC' }}
-                  onClick={(e) =>
+                  onClick={(e: any) =>
                     copyToClipboard({ text: e.target.innerText.trim(), item: 'IMDB URL' })
                   }
                 >
@@ -164,7 +158,7 @@ function Details() {
               <motion.div
                 className="flex cursor-pointer gap-2"
                 whileHover={{ color: '#7DD3FC' }}
-                onClick={(e) =>
+                onClick={(e: any) =>
                   copyToClipboard({ text: e.target.innerText.trim(), item: 'Overview' })
                 }
               >
@@ -176,7 +170,7 @@ function Details() {
                 <span className="col-span-3 text-2xl font-bold">Season Info</span>
 
                 <motion.div className="col-span-2 mt-1 flex cursor-pointer flex-wrap gap-2">
-                  {mediaDetails?.seasons.map((season, index) => (
+                  {mediaDetails?.seasons.map((season: any, index: number) => (
                     <div
                       key={index}
                       className="flex flex-col rounded-lg border border-slate-600 bg-slate-700/50 p-1 px-2"
@@ -256,7 +250,7 @@ function Details() {
               </TabPanel>
               <TabPanel className="flex flex-wrap place-content-center gap-x-2 gap-y-6">
                 {mediaDetails?.videos &&
-                  mediaDetails?.videos.map((trailer, index) => (
+                  mediaDetails?.videos.map((trailer: any, index: number) => (
                     <Trailer data={trailer} key={index} />
                   ))}
               </TabPanel>

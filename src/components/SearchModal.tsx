@@ -7,35 +7,44 @@ import { Loader2, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-function SearchModal({ onChange }) {
-  const [inputText, setInputText] = useState('');
+import { SetStateAction, Dispatch } from 'react';
+
+function SearchModal({
+  onChange
+}: {
+  onChange: ((value: string | boolean) => void) | Dispatch<SetStateAction<boolean>>;
+}) {
+  const [inputText, setInputText] = useState<string>('');
   const [value] = useDebounce(inputText, 1000);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const handleEscButton = () => {
     onChange(false);
   };
 
+  const [loading, setIsLoading] = useState<boolean>(false);
+
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: any) => {
       if (e.key === 'Escape') {
         handleEscButton();
       }
     };
-    inputRef.current.focus();
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
-  const [loading, setIsLoading] = useState(false);
-  const fetchInfo = async (query) => {
+  const fetchInfo = async (query: string) => {
     setIsLoading(true);
     try {
       const { data } = await axios.get(`/search?query=${query}`);
       setIsLoading(false);
       return data.results;
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error, { theme: 'colored', autoClose: 2000 });
     }
   };
@@ -93,7 +102,7 @@ function SearchModal({ onChange }) {
                 exit={{ scale: 0.95, opacity: 0 }}
                 className="mt-2 max-h-[440px] overflow-y-auto rounded-lg border border-slate-600 bg-slate-900 text-slate-50 shadow-md shadow-black/75"
               >
-                {searchResults.map((result, index) => (
+                {searchResults.map((result: any, index: number) => (
                   <Link key={index} to={`/details/${result.media_type}/${result.id}`}>
                     <div
                       onClick={() => onChange(false)}

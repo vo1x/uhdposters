@@ -2,7 +2,7 @@ import { FiCopy } from 'react-icons/fi';
 
 import useClipboard from '../hooks/useClipboard';
 
-function Trailer({ data }) {
+function Trailer({ data }: { data: any }) {
   const { copyToClipboard } = useClipboard();
 
   return (

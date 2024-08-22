@@ -1,30 +1,33 @@
 import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
-import Header from '../components/Header';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTags } from 'react-icons/fa';
+
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import Select from '../components/Select';
 import SearchBar from '../components/Home/AutoSearchBar';
-import { useQuery } from '@tanstack/react-query';
-import Footer from '../components/Footer';
+import Card from '../components/Card';
+import CardSkeleton from '../components/CardSkeleton';
 
-import SearchResults from '../components/SearchResults';
 function Search() {
   const { searchTerm } = useParams();
+
   const fetchInfo = async () => {
     const imdbIdRegex = /^tt\d{7,}$/;
-    let url = '';
-    if (imdbIdRegex.test(searchTerm)) {
+    let url = `/search?query=${searchTerm}`;
+
+    if (imdbIdRegex.test(searchTerm!)) {
       url = `/find?id=${searchTerm}`;
-    } else {
-      url = `/search?query=${searchTerm}`;
     }
+
     try {
       const { data } = await axios.get(url);
       return data;
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error, { theme: 'colored', autoClose: 2000 });
     }
   };
@@ -33,7 +36,7 @@ function Search() {
     try {
       const { data } = await axios.get(`/trending`);
       return data;
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error, { theme: 'colored', autoClose: 2000 });
     }
   };
@@ -63,18 +66,25 @@ function Search() {
 
   const yearOptions = Array.from({ length: currentYear - 1939 }, (_, index) => ({
     value: 1940 + index,
-    label: 1940 + index
+    label: (1940 + index).toString()
   })).reverse();
 
   const yearSelectOptions = [{ value: 'all', label: 'Any' }, ...yearOptions];
 
-  const [tags, setTags] = useState({ searchTag: '', formatTag: '', yearTag: '' });
+  const [tags, setTags] = useState<{
+    searchTag: string;
+    formatTag: string;
+    yearTag: string;
+  }>({ searchTag: '', formatTag: '', yearTag: '' });
 
   const [selectedFormat, setSelectedFormat] = useState(formatSelectOptions[0]);
-  const [selectedYear, setSelectedYear] = useState(yearSelectOptions[0]);
+  const [selectedYear, setSelectedYear] = useState<{
+    value: number | string;
+    label: string;
+  }>(yearSelectOptions[0]);
 
-  const [filteredData, setFilteredData] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+  const [filteredData, setFilteredData] = useState<any>([]);
+  const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
     setTags((prev) => ({
@@ -90,7 +100,7 @@ function Search() {
     if (selectedYear.value === 'all') {
       setTags((prev) => ({ ...prev, yearTag: '' }));
     } else {
-      setTags((prev) => ({ ...prev, yearTag: selectedYear.value }));
+      setTags((prev) => ({ ...prev, yearTag: selectedYear.value.toString() }));
     }
   }, [inputValue, selectedFormat.value, selectedYear.value]);
 
@@ -137,21 +147,19 @@ function Search() {
                 <span className="font-semibold">Format</span>
                 <Select
                   options={formatSelectOptions}
-                  placeHolder={selectedFormat.label}
                   onChange={setSelectedFormat}
                   defaultValue={formatSelectOptions[0]}
                   className={'rounded-md'}
-                ></Select>
+                />
               </div>
               <div className="flex flex-col gap-1 text-slate-300">
                 <span className="font-semibold">Year</span>
                 <Select
                   options={yearSelectOptions}
-                  placeHolder={selectedYear.label}
                   onChange={setSelectedYear}
                   defaultValue={yearSelectOptions[0]}
                   className={'rounded-md'}
-                ></Select>
+                />
               </div>
             </div>
 
@@ -179,13 +187,17 @@ function Search() {
                 </div>
               )}
             </div>
-            <SearchResults
-              isFetched={isFetched}
-              filteredData={filteredData}
-              searchResults={searchResults}
-              searchTerm={searchTerm}
-              isFetching={isFetching}
-            />
+            <div className="grid grid-cols-3 place-items-center gap-y-6 md:grid-cols-4 lg:grid-cols-6 lg:place-content-center lg:place-items-start lg:gap-10">
+              {isFetching ? (
+                Array.from({ length: 12 }, (_, index) => <CardSkeleton key={index} />)
+              ) : isFetched && searchResults.length !== 0 ? (
+                filteredData.map((result: any) => <Card key={result.id} data={result} />)
+              ) : (
+                <span className="w-max text-2xl font-bold text-slate-400">
+                  No results found for "<span className="text-sky-300">{searchTerm}</span>"
+                </span>
+              )}
+            </div>
           </div>
         </div>
         <Footer></Footer>

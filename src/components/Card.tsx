@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-function Card({ data }) {
+function Card({ data }: { data: any }) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/w220_and_h330_face';
-  const getReleaseYear = (date) => (date != undefined ? date.split('-')[0] : 'Unknown');
-  const [isHovered, setIsHovered] = useState(false);
+
+  const getReleaseYear = (date: string) => (date != undefined ? date.split('-')[0] : 'Unknown');
+
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+
   const imageSrc =
-    data['poster_path'] != undefined
+    data.poster_path != undefined
       ? imageBaseUrl + data.poster_path
       : 'https://placehold.co/250x375';
 
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+
   return (
     <>
       <Link to={`/details/${data.media_type}/${data.id}`}>

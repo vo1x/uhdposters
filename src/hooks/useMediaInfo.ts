@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-export default function useMediaInfo(mediaType, mediaID) {
+export default function useMediaInfo(mediaType: string, mediaID: string) {
   const fetchInfo = async () => {
     try {
       const { data } = await axios.get(`/media/${mediaType}/${mediaID}`);
       // console.log(data);
       return data;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error occurred: ', error);
       return { error };
     }

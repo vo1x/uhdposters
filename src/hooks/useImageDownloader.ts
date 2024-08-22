@@ -2,9 +2,9 @@ import { useState } from 'react';
 import axios from 'axios';
 
 function useImageDownloader() {
-  const [isDownloading, setIsDownloading] = useState(false);
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
 
-  const downloadImage = async (url, fileName) => {
+  const downloadImage = async (url: string, fileName: string) => {
     setIsDownloading(true);
     try {
       const response = await axios.get(url, {

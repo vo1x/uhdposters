@@ -2,13 +2,31 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronDown, FiX } from 'react-icons/fi';
 
-const Select = ({ placeHolder, options, onChange, defaultValue, className }) => {
-  const [showMenu, setShowMenu] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(defaultValue);
-  const inputRef = useRef();
+const Select = ({
+  options,
+  onChange,
+  defaultValue,
+  className
+}: {
+  options: any;
+  onChange: (option: any) => void;
+  defaultValue: {
+    value: string | number;
+    label: string;
+  };
+  className: string;
+}) => {
+  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [selectedValue, setSelectedValue] = useState<{
+    value: string | number;
+    label: string;
+  }>(defaultValue);
+  const [valSelected, setValSelected] = useState<boolean>(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const handler = (e) => {
+    const handler = (e: any) => {
       if (inputRef.current && !inputRef.current.contains(e.target)) {
         setShowMenu(false);
       }
@@ -20,25 +38,15 @@ const Select = ({ placeHolder, options, onChange, defaultValue, className }) => 
     };
   });
 
-  const handleInputClick = (e) => {
+  const handleInputClick = () => {
     setShowMenu(!showMenu);
   };
 
-  const getDisplay = () => {
-    if (!selectedValue || selectedValue.length === 0) {
-      return placeHolder;
-    }
-
-    return selectedValue.label;
-  };
-
-  const onItemClick = (option) => {
+  const onItemClick = (option: any) => {
     setSelectedValue(option);
     setValSelected(true);
     onChange(option);
   };
-
-  const [valSelected, setValSelected] = useState(false);
 
   const onOptionClear = () => {
     setSelectedValue(defaultValue);
@@ -46,7 +54,7 @@ const Select = ({ placeHolder, options, onChange, defaultValue, className }) => 
     onChange(defaultValue);
   };
 
-  const isSelected = (option) => {
+  const isSelected = (option: any) => {
     if (!selectedValue) {
       return false;
     }
@@ -65,7 +73,7 @@ const Select = ({ placeHolder, options, onChange, defaultValue, className }) => 
         onClick={handleInputClick}
         className={`flex w-40 cursor-pointer text-slate-400 shadow-md shadow-slate-950/25 ${showMenu ? 'border-blue-700' : ''} items-center justify-between ${className} bg-slate-800 p-2`}
       >
-        <div className="">{getDisplay()}</div>
+        <div className="">{selectedValue.label}</div>
         <div className="dropdown-tools ">
           <div className="flex items-center justify-between ">
             {selectedValue.value !== defaultValue.value && valSelected ? (
@@ -108,7 +116,7 @@ const Select = ({ placeHolder, options, onChange, defaultValue, className }) => 
             className=""
           >
             <div className="absolute mt-2 h-max max-h-96 w-40 overflow-auto rounded-md border border-slate-700 bg-slate-800 p-2 shadow-sm shadow-black ">
-              {getOptions().map((option) => (
+              {getOptions().map((option: any) => (
                 <div
                   onClick={() => onItemClick(option)}
                   key={option.value}

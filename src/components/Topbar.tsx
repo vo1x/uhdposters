@@ -9,7 +9,7 @@ function Topbar() {
   };
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: any) => {
       if (e.ctrlKey === true && e.key === 'k') {
         e.preventDefault();
         handleShortcut();

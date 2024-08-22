@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, Download, Loader2, ClipboardCheck } from 'lucide-react';
+
 import Select from './Select';
 
 import useImageDownloader from '../hooks/useImageDownloader';
 import useClipboard from '../hooks/useClipboard';
 
-function Poster({ posterData, fileName }) {
+function Poster({ posterData, fileName }: { posterData: any; fileName: string }) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/';
 
   const { downloadImage, isDownloading } = useImageDownloader();
@@ -27,7 +28,9 @@ function Poster({ posterData, fileName }) {
     }
   ];
 
-  const [imageQuality, setImageQuality] = useState(qualitySelectOptions[0]);
+  const [imageQuality, setImageQuality] = useState<{ value: string; label: string }>(
+    qualitySelectOptions[0]
+  );
 
   const handleImageDownload = async () => {
     let downloadUrl = '';
@@ -71,45 +74,43 @@ function Poster({ posterData, fileName }) {
   };
 
   return (
-    <>
-      <div className="flex flex-col items-center gap-4">
-        <img src={`${imageBaseUrl}w200${posterData.file_path}`} alt="" className="h-auto w-full" />
-        {
-          <div className="flex w-full flex-col items-center gap-2 rounded-md ">
-            <div className="flex w-full items-center justify-center gap-2">
-              <AnimatePresence initial={false}>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={handleCopyAction}
-                  initial={{ background: '#0ea5e9' }}
-                  animate={isCopied ? { background: '#22c55e' } : { background: '#0ea5e9' }}
-                  exit={{ background: '#0ea5e9' }}
-                  className={`rounded-md p-2 outline-none`}
-                >
-                  {isCopied ? <ClipboardCheck size={20} /> : <Link size={20} />}
-                </motion.button>
-              </AnimatePresence>
-              <div className="flex">
-                <Select
-                  defaultValue={qualitySelectOptions[0]}
-                  onChange={setImageQuality}
-                  options={qualitySelectOptions}
-                  className="w-24 rounded-l-md"
-                />
-                <button onClick={handleImageDownload} className="rounded-r-md bg-sky-500 px-2">
-                  {isDownloading ? (
-                    <Loader2 className="animate-spin" size={20} />
-                  ) : (
-                    <Download size={20} />
-                  )}
-                </button>
-              </div>
+    <div className="flex flex-col items-center gap-4">
+      <img src={`${imageBaseUrl}w200${posterData.file_path}`} alt="" className="h-auto w-full" />
+      {
+        <div className="flex w-full flex-col items-center gap-2 rounded-md ">
+          <div className="flex w-full items-center justify-center gap-2">
+            <AnimatePresence initial={false}>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handleCopyAction}
+                initial={{ background: '#0ea5e9' }}
+                animate={isCopied ? { background: '#22c55e' } : { background: '#0ea5e9' }}
+                exit={{ background: '#0ea5e9' }}
+                className={`rounded-md p-2 outline-none`}
+              >
+                {isCopied ? <ClipboardCheck size={20} /> : <Link size={20} />}
+              </motion.button>
+            </AnimatePresence>
+            <div className="flex">
+              <Select
+                defaultValue={qualitySelectOptions[0]}
+                onChange={setImageQuality}
+                options={qualitySelectOptions}
+                className="w-24 rounded-l-md"
+              />
+              <button onClick={handleImageDownload} className="rounded-r-md bg-sky-500 px-2">
+                {isDownloading ? (
+                  <Loader2 className="animate-spin" size={20} />
+                ) : (
+                  <Download size={20} />
+                )}
+              </button>
             </div>
           </div>
-        }
-      </div>
-    </>
+        </div>
+      }
+    </div>
   );
 }
 
