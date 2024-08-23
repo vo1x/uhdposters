@@ -181,26 +181,26 @@ function Details() {
                       }
                     />
                   ))}
-            {mediaDetails && mediaDetails?.original_language != 'en' && (
-              <div className="sticky top-20 mt-14 z-20 rounded-md  bg-slate-800/75 p-4 h-max">
-                <span className="flex items-center gap-1 text-slate-300">
-                  <Settings2 size={15}></Settings2>
-                  <span>Preferences</span>
-                </span>
-                <div className="mt-2 pl-2">
-                  <span className="flex items-center gap-2 text-slate-300">
-                    <Languages size={20}></Languages>
-                    <Select
-                      defaultValue={languageSelectOptions[0]}
-                      options={languageSelectOptions}
-                      onChange={setSelectedOption}
-                      className={`rounded-md`}
-                    ></Select>
-                  </span>
-                </div>
-              </div>
-            )}
           </div>
+          {mediaDetails && mediaDetails?.original_language != 'en' && (
+            <div className="sticky top-20 z-20 rounded-md  bg-slate-800/75 p-4 h-max">
+              <span className="flex items-center gap-1 text-slate-300">
+                <Settings2 size={15}></Settings2>
+                <span>Preferences</span>
+              </span>
+              <div className="mt-2 pl-2">
+                <span className="flex items-center gap-2 text-slate-300">
+                  <Languages size={20}></Languages>
+                  <Select
+                    defaultValue={languageSelectOptions[0]}
+                    options={languageSelectOptions}
+                    onChange={setSelectedOption}
+                    className={`rounded-md`}
+                  ></Select>
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <Footer></Footer>
