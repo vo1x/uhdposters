@@ -75,7 +75,7 @@ const Search = () => {
           </div>
 
           <div className="min-w-7xl w-full max-w-7xl place-self-center px-2 md:px-0">
-            <div className="items-centers flex gap-5 ">
+            <div className="items-center flex gap-5 flex-wrap md:flex-row">
               <div className="flex flex-col gap-2 ">
                 <span className="label">Search</span>
                 <SearchBar defaultValue={searchTerm ?? ''} />

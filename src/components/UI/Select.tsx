@@ -67,7 +67,7 @@ const Select = ({
   };
 
   return (
-    <div className={`z-10`}>
+    <div className={`z-20`}>
       <div
         ref={inputRef}
         onClick={handleInputClick}
