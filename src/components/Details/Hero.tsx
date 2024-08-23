@@ -8,9 +8,10 @@ import GradientBackdrop from './GradientBackdrop';
 function Hero({ mediaDetails }: { mediaDetails: any }) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p';
   const { copyToClipboard } = useClipboard();
-  const trailerUrl = mediaDetails.videos[0]
-    ? `https://youtube.com/embed/${mediaDetails?.videos[0].key}`
-    : '';
+  const trailerUrl =
+    mediaDetails && mediaDetails.videos[0]
+      ? `https://youtube.com/embed/${mediaDetails?.videos[0].key}`
+      : '';
   return (
     <>
       <div className={`relative flex overflow-hidden md:h-[500px] md:w-full px-6`}>
