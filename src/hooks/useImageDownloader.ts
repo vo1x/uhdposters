@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-function useImageDownloader() {
+interface UseImgDownloaderReturn {
+  downloadImage: (url: string, fileName: string) => void;
+  isDownloading: boolean;
+}
+
+const useImageDownloader: () => UseImgDownloaderReturn = () => {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
 
   const downloadImage = async (url: string, fileName: string) => {
@@ -29,6 +34,6 @@ function useImageDownloader() {
   };
 
   return { downloadImage, isDownloading };
-}
+};
 
 export default useImageDownloader;

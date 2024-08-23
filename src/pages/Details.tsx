@@ -22,8 +22,9 @@ import useClipboard from '../hooks/useClipboard';
 import useMediaInfo from '../hooks/useMediaInfo';
 
 function Details() {
-  const { mediaType, id } = useParams();
-  const [mediaDetails] = useMediaInfo(mediaType!, id!);
+  const { mediaType, id: mediaID } = useParams();
+
+  const { mediaDetails } = useMediaInfo({ mediaType, mediaID });
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const { copyToClipboard } = useClipboard();

@@ -1,19 +1,26 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-export default function useClipboard() {
+interface CopyToClipboardProps {
+  text: string;
+  item?: string;
+  toastEnabled?: boolean;
+  timeout?: number;
+}
+
+interface UseClipboardProps {
+  copyToClipboard: (props: CopyToClipboardProps) => void;
+  isCopied: boolean;
+}
+
+const useClipboard: () => UseClipboardProps = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const copyToClipboard = ({
     text,
     item = '',
     toastEnabled = true,
     timeout = 1000
-  }: {
-    text: string;
-    item?: string;
-    toastEnabled?: boolean;
-    timeout?: number;
-  }) => {
+  }: CopyToClipboardProps) => {
     try {
       navigator.clipboard.writeText(text).then(() => {
         const notify = () =>
@@ -34,4 +41,6 @@ export default function useClipboard() {
   };
 
   return { copyToClipboard, isCopied };
-}
+};
+
+export default useClipboard;

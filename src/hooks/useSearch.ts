@@ -4,7 +4,17 @@ import { useQuery } from '@tanstack/react-query';
 
 import { SearchResult } from '../types/interfaces';
 
-const useSearch = (searchTerm?: string) => {
+interface UseSearchParams {
+  searchTerm?: string;
+}
+
+interface UseSearchReturn {
+  data: SearchResult[];
+  isFetched: boolean;
+  isFetching: boolean;
+}
+
+const useSearch: (params: UseSearchParams) => UseSearchReturn = ({ searchTerm }) => {
   const fetchTrending = async (): Promise<SearchResult[]> => {
     try {
       const { data } = await axios.get<SearchResult[]>(`/trending`);

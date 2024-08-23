@@ -17,7 +17,7 @@ import { FilterState, SearchResult, SelectOption } from '../types/interfaces';
 const Search = () => {
   const { searchTerm } = useParams<{ searchTerm: string | undefined }>();
 
-  const { data: searchResults, isFetching, isFetched } = useSearch(searchTerm);
+  const { data: searchResults, isFetching, isFetched } = useSearch({ searchTerm });
 
   const formatSelectOptions = [
     { value: 'all', label: 'Any' },
