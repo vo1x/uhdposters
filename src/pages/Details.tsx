@@ -74,14 +74,14 @@ function Details() {
         <Topbar></Topbar>
         <div className="flex flex-col items-center md:items-start">
           <Hero mediaDetails={mediaDetails} />
-          <div className="mx-2 mt-8 flex w-fit flex-col gap-16 overflow-hidden rounded-md bg-slate-800 p-4 text-slate-200 md:mx-10 md:mt-4 md:w-full md:max-w-screen-xl md:flex-row">
-            <div className="flex min-w-96 flex-col gap-2">
-              <span className="text-2xl font-bold">Details</span>
-              <div className="grid grid-cols-3 gap-6">
+
+          <div className="flex mx-10 mt-8 gap-10">
+            <div className="flex w-72 flex-col gap-4 h-max p-4 rounded-md bg-slate-800/75">
+              <div className="flex flex-col gap-1">
                 <span className="label">Release Date</span>
                 <motion.div
                   whileHover={{ color: '#7DD3FC' }}
-                  className="col-span-2 cursor-pointer"
+                  className="col-span-2 cursor-pointer text-slate-400 text-sm"
                   onClick={(e: any) =>
                     copyToClipboard({
                       text: e.target.innerText.trim().split('-')[0],
@@ -92,27 +92,27 @@ function Details() {
                   {mediaDetails?.release_date}
                 </motion.div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="flex flex-col gap-1">
                 <span className="label">Genres</span>
                 <motion.div
                   whileHover={{ color: '#7DD3FC' }}
-                  className="col-span-2 flex cursor-pointer gap-2"
+                  className="flex flex-col cursor-pointer text-slate-400"
                   onClick={() =>
                     copyToClipboard({ text: mediaDetails?.genres.join(', '), item: 'Genres' })
                   }
                 >
                   {mediaDetails?.genres &&
                     mediaDetails.genres.map((genre: string, index: number) => (
-                      <span key={index} className="rounded-md bg-slate-700 p-1 text-sm ">
+                      <span key={index} className="text-inherit text-sm">
                         {genre}
                       </span>
                     ))}
                 </motion.div>
               </div>
-              <div className="grid grid-cols-3 gap-4 ">
+              <div className="flex flex-col gap-1">
                 <span className="label">Runtime{mediaType === 'tv' && <span> (Avg)</span>}</span>
                 <motion.div
-                  className="col-span-2 flex cursor-pointer gap-2"
+                  className="text-slate-400 text-sm"
                   whileHover={{ color: '#7DD3FC' }}
                   onClick={(e: any) =>
                     copyToClipboard({ text: e.target.innerText.trim(), item: 'Runtime' })
@@ -127,10 +127,10 @@ function Details() {
                   )}
                 </motion.div>
               </div>
-              <div className="grid grid-cols-3 gap-4 ">
+              <div className="flex flex-col gap-1">
                 <span className="label">IMDB ID</span>
                 <motion.div
-                  className="col-span-2 flex cursor-pointer gap-2"
+                  className="text-slate-400 text-sm cursor-pointer"
                   whileHover={{ color: '#7DD3FC' }}
                   onClick={(e: any) =>
                     copyToClipboard({ text: e.target.innerText.trim(), item: 'IMDB ID' })
@@ -139,10 +139,10 @@ function Details() {
                   {mediaDetails?.external_ids.imdb_id}
                 </motion.div>
               </div>
-              <div className="grid grid-cols-3 gap-4 ">
+              <div className="flex flex-col gap-1">
                 <span className="label">IMDB URL</span>
                 <motion.div
-                  className="col-span-2 flex cursor-pointer gap-2"
+                  className="text-slate-400 text-sm cursor-pointer"
                   whileHover={{ color: '#7DD3FC' }}
                   onClick={(e: any) =>
                     copyToClipboard({ text: e.target.innerText.trim(), item: 'IMDB URL' })
@@ -151,32 +151,29 @@ function Details() {
                   https://imdb.com/title/{mediaDetails?.external_ids.imdb_id}
                 </motion.div>
               </div>
+
+              {mediaType === 'tv' && (
+                <div className="flex flex-col gap-1">
+                  <span className="label">Season Info</span>
+
+                  <motion.div className="flex flex-col gap-4">
+                    {mediaDetails?.seasons.map((season: any, index: number) => (
+                      <div key={index} className="text-sm text-slate-400 flex flex-col">
+                        <span className="font-semibold truncate overflow-hidden whitespace-nowrap">
+                          {season.name}
+                        </span>
+                        <span>{season.episode_count} episodes</span>
+                      </div>
+                    ))}
+                  </motion.div>
+                </div>
+              )}
             </div>
-
-            {mediaType === 'tv' && (
-              <div className="min-w-80">
-                <span className="col-span-3 text-2xl font-bold">Season Info</span>
-
-                <motion.div className="col-span-2 mt-1 flex cursor-pointer flex-wrap gap-2">
-                  {mediaDetails?.seasons.map((season: any, index: number) => (
-                    <div
-                      key={index}
-                      className="flex flex-col rounded-lg border border-slate-600 bg-slate-700/50 p-1 px-2"
-                    >
-                      <span className="text-lg font-bold">{season.name}</span>
-                      <span>{season.episode_count} episodes</span>
-                    </div>
-                  ))}
-                </motion.div>
-              </div>
-            )}
-          </div>
-          <div className="min-h-screen  bg-slate-900 pb-5 text-slate-100">
-            <Tabs className="mx-10 my-5 flex flex-col gap-5 rounded-md   p-2 md:flex-row">
-              <div className="sticky top-20 z-20 h-max w-96 bg-slate-900  md:w-full md:min-w-60 md:max-w-60">
-                <TabList className=" flex w-full flex-col self-start rounded-md border border-slate-700 bg-slate-800 p-1">
+            <div className="min-h-screen flex bg-slate-900 pb-5 text-slate-100 gap-10">
+              <Tabs>
+                <TabList className="flex rounded-md border border-slate-700 bg-slate-800 p-1 w-48 mb-2">
                   <Tab
-                    className={` h-max ${activeTabIndex === 0 ? 'bg-sky-500' : ''} cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-2 outline-none`}
+                    className={` h-max ${activeTabIndex === 0 ? 'bg-sky-500' : ''} cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] w-24 px-2 py-2 outline-none`}
                     onClick={() => {
                       if (activeTabIndex !== 0) {
                         handleTabClick();
@@ -190,7 +187,7 @@ function Details() {
                     </span>
                   </Tab>
                   <Tab
-                    className={`relative cursor-pointer ${activeTabIndex === 1 ? 'bg-sky-500' : ''} rounded-[calc(theme(borderRadius.md)-4px)] px-2 py-2 outline-none`}
+                    className={`relative cursor-pointer ${activeTabIndex === 1 ? 'bg-sky-500' : ''} rounded-[calc(theme(borderRadius.md)-4px)] w-24 px-2 py-2 outline-none`}
                     onClick={() => {
                       if (activeTabIndex !== 1) {
                         handleTabClick();
@@ -204,50 +201,49 @@ function Details() {
                     </span>
                   </Tab>
                 </TabList>
-
-                {activeTabIndex === 0 && (
-                  <div className="mt-5 rounded-md border border-slate-600 bg-slate-800 p-2">
-                    <span className="flex items-center gap-1 text-slate-300">
-                      <Settings2 size={15}></Settings2>
-                      <span>Preferences</span>
-                    </span>
-                    <div className="mt-2 pl-2">
-                      <span className="flex items-center gap-2 text-slate-300">
-                        <Languages size={20}></Languages>
-                        <Select
-                          defaultValue={languageSelectOptions[0]}
-                          options={languageSelectOptions}
-                          onChange={setSelectedOption}
-                          className={`rounded-md bg-slate-700/50`}
-                        ></Select>
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <TabPanel className="flex flex-wrap place-items-start gap-10">
-                {mediaDetails?.posters &&
-                  mediaDetails?.posters
-                    .filter((poster: any) => poster.iso_639_1 === selectedOption.value)
-                    .map((poster: any, index: number) => (
-                      <Poster
-                        key={index}
-                        posterData={poster}
-                        fileName={
-                          mediaDetails && mediaDetails.title
-                            ? 'Download ' + mediaDetails.title.replace(/[^a-zA-Z0-9\s]/g, '')
-                            : ''
-                        }
-                      />
+                <TabPanel className="grid grid-cols-4 place-items-start gap-10">
+                  {mediaDetails?.posters &&
+                    mediaDetails?.posters
+                      .filter((poster: any) => poster.iso_639_1 === selectedOption.value)
+                      .map((poster: any, index: number) => (
+                        <Poster
+                          key={index}
+                          posterData={poster}
+                          fileName={
+                            mediaDetails && mediaDetails.title
+                              ? 'Download ' + mediaDetails.title.replace(/[^a-zA-Z0-9\s]/g, '')
+                              : ''
+                          }
+                        />
+                      ))}
+                </TabPanel>
+                <TabPanel className="flex flex-wrap place-content-center gap-x-2 gap-y-6">
+                  {mediaDetails?.videos &&
+                    mediaDetails?.videos.map((trailer: any, index: number) => (
+                      <Trailer data={trailer} key={index} />
                     ))}
-              </TabPanel>
-              <TabPanel className="flex flex-wrap place-content-center gap-x-2 gap-y-6">
-                {mediaDetails?.videos &&
-                  mediaDetails?.videos.map((trailer: any, index: number) => (
-                    <Trailer data={trailer} key={index} />
-                  ))}
-              </TabPanel>
-            </Tabs>
+                </TabPanel>
+              </Tabs>
+              {activeTabIndex === 0 && (
+                <div className="sticky top-20 mt-14 z-20 rounded-md border border-slate-600 bg-slate-800 p-2 h-max">
+                  <span className="flex items-center gap-1 text-slate-300">
+                    <Settings2 size={15}></Settings2>
+                    <span>Preferences</span>
+                  </span>
+                  <div className="mt-2 pl-2">
+                    <span className="flex items-center gap-2 text-slate-300">
+                      <Languages size={20}></Languages>
+                      <Select
+                        defaultValue={languageSelectOptions[0]}
+                        options={languageSelectOptions}
+                        onChange={setSelectedOption}
+                        className={`rounded-md bg-slate-700/50`}
+                      ></Select>
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <Footer></Footer>
