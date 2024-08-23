@@ -173,7 +173,7 @@ function Details() {
             )}
           </div>
 
-          <div className="grid grid-cols-1 place-items-center md:grid-cols-4 lg:grid-cols-5 gap-10">
+          <div className="grid grid-cols-1 place-items-center md:place-items-start md:grid-cols-4 lg:grid-cols-5 gap-10">
             {!mediaDetails?.posters
               ? Array.from({ length: 6 }, (_, index) => <PosterSkeleton key={index} />)
               : mediaDetails?.posters
