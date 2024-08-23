@@ -108,7 +108,7 @@ const Poster = memo(function Poster({
           animate={imgLoaded ? 'visible' : 'hidden'}
           className="flex w-full flex-col items-center gap-2 rounded-md "
         >
-          <div className="flex w-full items-center justify-center gap-2">
+          <div className="flex w-full items-center justify-center gap-2 text-slate-100">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
