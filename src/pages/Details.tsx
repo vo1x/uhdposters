@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Settings2, Languages } from 'lucide-react';
 
 import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
-
+import PosterSkeleton from '../components/UI/PosterSkeleton';
 import langCodes from '../utils/langCodes.json';
 
 import Topbar from '../components/UI/Topbar';
@@ -202,20 +202,22 @@ function Details() {
                   </Tab>
                 </TabList>
                 <TabPanel className="grid grid-cols-4 place-items-start gap-10">
-                  {mediaDetails?.posters &&
-                    mediaDetails?.posters
-                      .filter((poster: any) => poster.iso_639_1 === selectedOption.value)
-                      .map((poster: any, index: number) => (
-                        <Poster
-                          key={index}
-                          posterData={poster}
-                          fileName={
-                            mediaDetails && mediaDetails.title
-                              ? 'Download ' + mediaDetails.title.replace(/[^a-zA-Z0-9\s]/g, '')
-                              : ''
-                          }
-                        />
-                      ))}
+                  {!mediaDetails?.posters
+                    ? Array.from({ length: 6 }, (_, index) => <PosterSkeleton key={index} />)
+                    : mediaDetails?.posters &&
+                      mediaDetails?.posters
+                        .filter((poster: any) => poster.iso_639_1 === selectedOption.value)
+                        .map((poster: any, index: number) => (
+                          <Poster
+                            key={index}
+                            posterData={poster}
+                            fileName={
+                              mediaDetails && mediaDetails.title
+                                ? 'Download ' + mediaDetails.title.replace(/[^a-zA-Z0-9\s]/g, '')
+                                : ''
+                            }
+                          />
+                        ))}
                 </TabPanel>
                 <TabPanel className="flex flex-wrap place-content-center gap-x-2 gap-y-6">
                   {mediaDetails?.videos &&
@@ -224,25 +226,27 @@ function Details() {
                     ))}
                 </TabPanel>
               </Tabs>
-              {activeTabIndex === 0 && mediaDetails?.posters.length > 0 && (
-                <div className="sticky top-20 mt-14 z-20 rounded-md  bg-slate-800/75 p-4 h-max">
-                  <span className="flex items-center gap-1 text-slate-300">
-                    <Settings2 size={15}></Settings2>
-                    <span>Preferences</span>
-                  </span>
-                  <div className="mt-2 pl-2">
-                    <span className="flex items-center gap-2 text-slate-300">
-                      <Languages size={20}></Languages>
-                      <Select
-                        defaultValue={languageSelectOptions[0]}
-                        options={languageSelectOptions}
-                        onChange={setSelectedOption}
-                        className={`rounded-md bg-slate-700/50`}
-                      ></Select>
+              {activeTabIndex === 0 &&
+                mediaDetails?.posters.length > 0 &&
+                mediaDetails?.original_language != 'en' && (
+                  <div className="sticky top-20 mt-14 z-20 rounded-md  bg-slate-800/75 p-4 h-max">
+                    <span className="flex items-center gap-1 text-slate-300">
+                      <Settings2 size={15}></Settings2>
+                      <span>Preferences</span>
                     </span>
+                    <div className="mt-2 pl-2">
+                      <span className="flex items-center gap-2 text-slate-300">
+                        <Languages size={20}></Languages>
+                        <Select
+                          defaultValue={languageSelectOptions[0]}
+                          options={languageSelectOptions}
+                          onChange={setSelectedOption}
+                          className={`rounded-md`}
+                        ></Select>
+                      </span>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
           </div>
         </div>
