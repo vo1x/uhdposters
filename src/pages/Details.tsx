@@ -171,9 +171,9 @@ function Details() {
             </div>
             <div className="min-h-screen flex bg-slate-900 pb-5 text-slate-100 gap-10">
               <Tabs>
-                <TabList className="flex rounded-md border border-slate-700 bg-slate-800 p-1 w-48 mb-2">
+                <TabList className="flex rounded-md border border-slate-700 bg-slate-800 p-1 w-48 h-12 mb-2">
                   <Tab
-                    className={` h-max ${activeTabIndex === 0 ? 'bg-sky-500' : ''} cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] w-24 px-2 py-2 outline-none`}
+                    className={`${activeTabIndex === 0 ? 'bg-sky-500' : ''} cursor-pointer rounded-[calc(theme(borderRadius.md)-4px)] w-24 outline-none flex items-center justify-center`}
                     onClick={() => {
                       if (activeTabIndex !== 0) {
                         handleTabClick();
@@ -181,13 +181,13 @@ function Details() {
                     }}
                   >
                     <span
-                      className={`relative z-10 text-base ${activeTabIndex === 0 ? 'text-white' : 'text-slate-400'}`}
+                      className={`relative z-10 ${activeTabIndex === 0 ? 'text-white' : 'text-slate-400'}`}
                     >
                       Posters
                     </span>
                   </Tab>
                   <Tab
-                    className={`relative cursor-pointer ${activeTabIndex === 1 ? 'bg-sky-500' : ''} rounded-[calc(theme(borderRadius.md)-4px)] w-24 px-2 py-2 outline-none`}
+                    className={`relative cursor-pointer ${activeTabIndex === 1 ? 'bg-sky-500' : ''} rounded-[calc(theme(borderRadius.md)-4px)] w-24 outline-none flex items-center justify-center`}
                     onClick={() => {
                       if (activeTabIndex !== 1) {
                         handleTabClick();
@@ -224,8 +224,8 @@ function Details() {
                     ))}
                 </TabPanel>
               </Tabs>
-              {activeTabIndex === 0 && (
-                <div className="sticky top-20 mt-14 z-20 rounded-md border border-slate-600 bg-slate-800 p-2 h-max">
+              {activeTabIndex === 0 && mediaDetails?.posters.length > 0 && (
+                <div className="sticky top-20 mt-14 z-20 rounded-md  bg-slate-800/75 p-4 h-max">
                   <span className="flex items-center gap-1 text-slate-300">
                     <Settings2 size={15}></Settings2>
                     <span>Preferences</span>
