@@ -151,18 +151,7 @@ function Details() {
                 </motion.div>
               </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <span className="text-2xl font-bold">Overview</span>
-              <motion.div
-                className="flex cursor-pointer gap-2"
-                whileHover={{ color: '#7DD3FC' }}
-                onClick={(e: any) =>
-                  copyToClipboard({ text: e.target.innerText.trim(), item: 'Overview' })
-                }
-              >
-                {mediaDetails?.overview}
-              </motion.div>
-            </div>
+
             {mediaType === 'tv' && (
               <div className="min-w-80">
                 <span className="col-span-3 text-2xl font-bold">Season Info</span>

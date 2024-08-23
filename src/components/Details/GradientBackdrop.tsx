@@ -8,7 +8,7 @@ export default function GradientBackdrop({ url }: { url: string }) {
         <img
           src={url}
           alt=""
-          className="absolute inset-0 -z-20 block w-screen object-cover object-center opacity-50"
+          className="absolute inset-0 -z-20 block w-screen object-cover object-center opacity-35"
         />
       </div>
     </div>

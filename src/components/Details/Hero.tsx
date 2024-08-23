@@ -37,19 +37,27 @@ function Hero({ mediaDetails }: { mediaDetails: any }) {
           <div className="flex flex-col justify-center gap-4 ">
             <div className="flex  flex-col justify-center gap-2">
               {mediaDetails && (
-                <div className="flex flex-col items-center text-2xl md:items-start md:text-3xl ">
-                  <div
-                    className="flex items-start  gap-1 font-bold text-slate-100  hover:cursor-pointer"
+                <div className="flex flex-col gap-2">
+                  <motion.span
+                    className="text-2xl md:items-start md:text-3xl font-bold text-slate-100"
+                    whileHover={{ color: '#7DD3FC' }}
                     onClick={() => copyToClipboard({ text: mediaDetails.title, item: 'Title' })}
                   >
-                    <motion.span whileHover={{ color: '#7DD3FC' }}>
-                      {mediaDetails.title}
-                    </motion.span>
-                  </div>
+                    {mediaDetails.title}
+                  </motion.span>
+                  <motion.span
+                    className="text-slate-300 cursor-pointer max-w-4xl [text-shadow:_0_0_5px_rgb(0_0_0_/_75%)]"
+                    whileHover={{ color: '#7DD3FC' }}
+                    onClick={() =>
+                      copyToClipboard({ text: mediaDetails.overview, item: 'Overview' })
+                    }
+                  >
+                    {mediaDetails.overview}
+                  </motion.span>
                 </div>
               )}
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 mt-2">
               <Link
                 to={`https://www.imdb.com/title/${mediaDetails?.external_ids.imdb_id}`}
                 target="_blank"
