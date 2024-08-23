@@ -72,6 +72,29 @@ function Details() {
 
         <div className="flex mx-10 mt-8 gap-10">
           <div className="flex w-72 flex-col gap-4 h-max p-4 rounded-md bg-slate-800/75">
+            {mediaDetails && mediaDetails?.original_language != 'en' && (
+              <>
+                <div>
+                  <span className="flex items-center gap-1 text-slate-300">
+                    <Settings2 size={15}></Settings2>
+                    <span>Preferences</span>
+                  </span>
+                  <div className="mt-2 pl-2">
+                    <span className="flex items-center gap-2 text-slate-300">
+                      <Languages size={20}></Languages>
+                      <Select
+                        defaultValue={languageSelectOptions[0]}
+                        options={languageSelectOptions}
+                        onChange={setSelectedOption}
+                        className={`rounded-md`}
+                      ></Select>
+                    </span>
+                  </div>
+                </div>
+                <div className="my-4 border-b-2 border-slate-700" />
+              </>
+            )}
+
             <div className="flex flex-col gap-1">
               <span className="label">Release Date</span>
               <motion.div
@@ -164,7 +187,7 @@ function Details() {
               </div>
             )}
           </div>
-          <div className="grid grid-cols-4 place-items-start gap-10">
+          <div className="grid grid-cols-5 place-items-start gap-10">
             {!mediaDetails?.posters
               ? Array.from({ length: 6 }, (_, index) => <PosterSkeleton key={index} />)
               : mediaDetails?.posters &&
@@ -182,25 +205,6 @@ function Details() {
                     />
                   ))}
           </div>
-          {mediaDetails && mediaDetails?.original_language != 'en' && (
-            <div className="sticky top-20 z-20 rounded-md  bg-slate-800/75 p-4 h-max">
-              <span className="flex items-center gap-1 text-slate-300">
-                <Settings2 size={15}></Settings2>
-                <span>Preferences</span>
-              </span>
-              <div className="mt-2 pl-2">
-                <span className="flex items-center gap-2 text-slate-300">
-                  <Languages size={20}></Languages>
-                  <Select
-                    defaultValue={languageSelectOptions[0]}
-                    options={languageSelectOptions}
-                    onChange={setSelectedOption}
-                    className={`rounded-md`}
-                  ></Select>
-                </span>
-              </div>
-            </div>
-          )}
         </div>
       </div>
       <Footer></Footer>
