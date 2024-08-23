@@ -2,9 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
 
-import { SearchResult } from '../types/interfaces';
-
-import { UseSearchParams, UseSearchReturn } from '../types/interfaces';
+import { SearchResult, UseSearchParams, UseSearchReturn } from '../types/interfaces';
 
 const useSearch: (params: UseSearchParams) => UseSearchReturn = ({ searchTerm }) => {
   const fetchTrending = async (): Promise<SearchResult[]> => {
