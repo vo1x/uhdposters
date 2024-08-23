@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FiExternalLink } from 'react-icons/fi';
+import { Video } from 'lucide-react';
 import useClipboard from '../../hooks/useClipboard';
 import { motion } from 'framer-motion';
 import GradientBackdrop from './GradientBackdrop';
@@ -7,7 +8,7 @@ import GradientBackdrop from './GradientBackdrop';
 function Hero({ mediaDetails }: { mediaDetails: any }) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p';
   const { copyToClipboard } = useClipboard();
-
+  const trailerUrl = `https://youtube.com/embed/${mediaDetails?.videos[0].key}`;
   return (
     <>
       <div className={`relative flex overflow-hidden md:h-[500px] md:w-full`}>
@@ -57,16 +58,34 @@ function Hero({ mediaDetails }: { mediaDetails: any }) {
                 </div>
               )}
             </div>
-            <div className="flex gap-2 mt-2">
-              <Link
-                to={`https://www.imdb.com/title/${mediaDetails?.external_ids.imdb_id}`}
-                target="_blank"
-              >
-                <button className="flex items-start gap-1 rounded-md bg-sky-400 p-2 font-semibold text-neutral-900">
-                  <span>View on IMDB</span>
-                  <FiExternalLink />
-                </button>
-              </Link>
+            <div className="flex items-center gap-2 mt-4">
+              <div className="flex gap-2">
+                <Link to={trailerUrl} target="_blank">
+                  <button
+                    disabled={!trailerUrl || trailerUrl === ''}
+                    className={`flex items-center gap-2 rounded-md p-3 font-semibold text-white shadow-md transition-colors ${
+                      !trailerUrl || trailerUrl === ''
+                        ? 'bg-gray-400 cursor-not-allowed'
+                        : 'bg-blue-500 hover:bg-blue-600'
+                    }`}
+                  >
+                    <Video fill="#FFFFFF" stroke="none" />
+                    <span>Trailer</span>
+                  </button>
+                </Link>
+              </div>
+
+              <div className="flex gap-2">
+                <Link
+                  to={`https://www.imdb.com/title/${mediaDetails?.external_ids.imdb_id}`}
+                  target="_blank"
+                >
+                  <button className="flex items-start w-40 justify-center gap-1 rounded-md bg-[#F5B042] py-3 font-semibold text-neutral-900">
+                    <span>View on IMDB</span>
+                    <FiExternalLink />
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
