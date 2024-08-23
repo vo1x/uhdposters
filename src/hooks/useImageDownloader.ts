@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-interface UseImgDownloaderReturn {
-  downloadImage: (url: string, fileName: string) => void;
-  isDownloading: boolean;
-}
+import { UseImgDownloaderReturn } from '../types/interfaces';
 
 const useImageDownloader: () => UseImgDownloaderReturn = () => {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);

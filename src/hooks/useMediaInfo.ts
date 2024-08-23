@@ -1,15 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-interface UseMediaInfoParams {
-  mediaType: string | undefined;
-  mediaID: string | undefined;
-}
-
-interface UseMediaInfoReturn {
-  mediaDetails: any;
-  isError: boolean;
-}
+import { UseMediaInfoReturn, UseMediaInfoParams } from '../types/interfaces';
 
 const useMediaInfo: (params: UseMediaInfoParams) => UseMediaInfoReturn = ({
   mediaType,

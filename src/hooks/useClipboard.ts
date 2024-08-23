@@ -1,17 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-interface CopyToClipboardProps {
-  text: string;
-  item?: string;
-  toastEnabled?: boolean;
-  timeout?: number;
-}
-
-interface UseClipboardProps {
-  copyToClipboard: (props: CopyToClipboardProps) => void;
-  isCopied: boolean;
-}
+import { CopyToClipboardProps, UseClipboardProps } from '../types/interfaces';
 
 const useClipboard: () => UseClipboardProps = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
