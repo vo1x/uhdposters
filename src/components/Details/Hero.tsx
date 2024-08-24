@@ -4,6 +4,7 @@ import { Video } from 'lucide-react';
 import useClipboard from '../../hooks/useClipboard';
 import { motion } from 'framer-motion';
 import GradientBackdrop from './GradientBackdrop';
+import PosterSkeleton from '../UI/PosterSkeleton';
 
 function Hero({ mediaDetails }: { mediaDetails: any }) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p';
@@ -17,12 +18,18 @@ function Hero({ mediaDetails }: { mediaDetails: any }) {
       <div className={`relative flex overflow-hidden md:h-[500px] md:w-full px-6`}>
         <GradientBackdrop url={`${imageBaseUrl}/original${mediaDetails?.backdrop_path}`} />
         <div className="mt-4 flex w-full flex-col items-center px-10 md:mt-0 md:flex-row md:gap-5 md:place-self-end">
+          {!mediaDetails && (
+            <div className="flex flex-col items-center gap-2 mb-8">
+              <PosterSkeleton enableAnimation={false} />
+            </div>
+          )}
+
           {mediaDetails && (
             <div className="flex flex-col items-center gap-2 mb-4 md:mb-0">
               <img
                 src={`${imageBaseUrl}/w400${mediaDetails.poster_path}`}
                 alt="cover img"
-                className={`w-48 md:w-64 rounded-md shadow-2xl shadow-slate-950 transition-opacity duration-300`}
+                className={`w-48 md:w-60 aspect-[2/3] rounded-md shadow-2xl shadow-slate-950 transition-opacity duration-300`}
               />
               <motion.span
                 whileHover={{ color: '#7DD3FC' }}

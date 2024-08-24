@@ -2,9 +2,9 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function PosterSkeleton() {
+export default function PosterSkeleton({ enableAnimation = true }) {
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={enableAnimation}>
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

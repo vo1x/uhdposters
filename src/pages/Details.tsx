@@ -79,7 +79,7 @@ function Details() {
               </>
             )}
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col">
               <span className="label text-sm md:text-base">Release Date</span>
               <motion.div
                 whileHover={{ color: '#7DD3FC' }}
@@ -94,7 +94,7 @@ function Details() {
                 {mediaDetails?.release_date}
               </motion.div>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col">
               <span className="label text-sm md:text-base">Genres</span>
               <motion.div
                 whileHover={{ color: '#7DD3FC' }}
@@ -111,7 +111,7 @@ function Details() {
                   ))}
               </motion.div>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col">
               <span className="label text-sm md:text-base">
                 Runtime{mediaType === 'tv' && <span> (Avg)</span>}
               </span>
@@ -131,7 +131,7 @@ function Details() {
                 )}
               </motion.div>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col">
               <span className="label text-sm md:text-base">IMDB ID</span>
               <motion.div
                 className="text-slate-400 text-sm md:text-base cursor-pointer"
@@ -143,7 +143,7 @@ function Details() {
                 {mediaDetails?.external_ids.imdb_id}
               </motion.div>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col">
               <span className="label text-sm md:text-base">IMDB URL</span>
               <motion.div
                 className="text-slate-400 text-sm md:text-base cursor-pointer"
@@ -157,7 +157,7 @@ function Details() {
             </div>
 
             {mediaType === 'tv' && (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col">
                 <span className="label text-sm md:text-base">Season Info</span>
                 <motion.div className="flex flex-col gap-4">
                   {mediaDetails?.seasons.map((season: any, index: number) => (

@@ -21,7 +21,7 @@ function AutoSearchBar({ defaultValue }: { defaultValue: string }) {
   }, [defaultValue]);
 
   return (
-    <div className={'flex items-center justify-center shadow-md shadow-slate-950/25 '}>
+    <div className={'flex items-center justify-center shadow-md shadow-slate-950/25'}>
       <input
         type="text"
         placeholder="Search movie or series"
