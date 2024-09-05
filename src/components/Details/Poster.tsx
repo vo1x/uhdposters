@@ -59,7 +59,6 @@ const Poster = memo(function Poster({
   const [imgLoaded, setImageLoaded] = useState(false);
   const { downloadImage, isDownloading } = useImageDownloader();
   const { copyToClipboard, isCopied } = useClipboard();
-  console.log(posterData)
   const randomColor = useMemo(() => {
     return DARK_PASTEL_COLORS[Math.floor(Math.random() * DARK_PASTEL_COLORS.length)];
   }, []);
