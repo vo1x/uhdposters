@@ -74,7 +74,7 @@ const Search = () => {
             <Header></Header>
           </div>
 
-          <div className="min-w-7xl w-full max-w-[70%] place-self-center px-2">
+          <div className="min-w-7xl w-full max-w-[70%] lg:max-w-[75%] place-self-center px-2">
             <div className="items-center flex gap-5 flex-wrap md:flex-row">
               <div className="flex flex-col gap-2 ">
                 <span className="label">Search</span>
