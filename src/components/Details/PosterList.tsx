@@ -2,23 +2,9 @@ import React, { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import PosterSkeleton from '../UI/PosterSkeleton';
-import Poster from './Poster';
+import PosterCard from './Poster';
 
-interface Poster {
-  aspect_ratio: number;
-  file_path: string;
-  height: number;
-  iso_639_1: string;
-  vote_average: number;
-  vote_count: number;
-  width: number;
-}
-
-interface PosterListProps {
-  fileName: string;
-  posters: Poster[];
-  selectedOption: { value: string };
-}
+import { Poster, PosterListProps } from '../../types/posterListInterface';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -66,7 +52,7 @@ const PosterList: React.FC<PosterListProps> = ({ fileName, posters, selectedOpti
       {data?.pages.map((page, pageIndex) => (
         <React.Fragment key={pageIndex}>
           {page.map((poster: Poster, index: number) => (
-            <Poster key={`${pageIndex}-${index}`} posterData={poster} fileName={fileName} />
+            <PosterCard key={`${pageIndex}-${index}`} posterData={poster} fileName={fileName} />
           ))}
         </React.Fragment>
       ))}
