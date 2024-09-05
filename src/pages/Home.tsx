@@ -74,7 +74,7 @@ const Search = () => {
             <Header></Header>
           </div>
 
-          <div className="min-w-7xl w-full max-w-7xl place-self-center px-2 md:px-0">
+          <div className="min-w-7xl w-full max-w-[70%] place-self-center px-2">
             <div className="items-center flex gap-5 flex-wrap md:flex-row">
               <div className="flex flex-col gap-2 ">
                 <span className="label">Search</span>
@@ -132,7 +132,7 @@ const Search = () => {
             </div>
 
             {/* Search Results */}
-            <div className="grid grid-cols-3 place-items-center gap-y-6 md:grid-cols-4 lg:grid-cols-6 lg:place-content-center lg:place-items-start lg:gap-10">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-6 md:gap-8 lg:gap-10">
               {isFetching ? (
                 Array.from({ length: 12 }, (_, index) => <CardSkeleton key={index} />)
               ) : isFetched && searchResults.length !== 0 ? (
