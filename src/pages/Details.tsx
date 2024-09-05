@@ -4,11 +4,10 @@ import { motion } from 'framer-motion';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Settings2, Languages } from 'lucide-react';
-import PosterSkeleton from '../components/UI/PosterSkeleton';
 import langCodes from '../utils/langCodes.json';
 import Topbar from '../components/UI/Topbar';
 import Hero from '../components/Details/Hero';
-import Poster from '../components/Details/Poster';
+import PosterList from '../components/Details/PosterList';
 import Select from '../components/UI/Select';
 import Footer from '../components/UI/Footer';
 import useClipboard from '../hooks/useClipboard';
@@ -173,23 +172,15 @@ function Details() {
             )}
           </div>
 
-          <div className="grid grid-cols-1 place-items-center md:flex md:flex-wrap gap-10">
-            {!mediaDetails?.posters
-              ? Array.from({ length: 6 }, (_, index) => <PosterSkeleton key={index} />)
-              : mediaDetails?.posters
-                  .filter((poster: any) => poster.iso_639_1 === selectedOption.value)
-                  .map((poster: any, index: number) => (
-                    <Poster
-                      key={index}
-                      posterData={poster}
-                      fileName={
-                        mediaDetails && mediaDetails.title
-                          ? 'Download ' + mediaDetails.title.replace(/[^a-zA-Z0-9\s]/g, '')
-                          : ''
-                      }
-                    />
-                  ))}
-          </div>
+          <PosterList
+            fileName={
+              mediaDetails && mediaDetails.title
+                ? 'Download ' + mediaDetails.title.replace(/[^a-zA-Z0-9\s]/g, '')
+                : ''
+            }
+            posters={mediaDetails?.posters}
+            selectedOption={selectedOption}
+          ></PosterList>
         </div>
       </div>
       <Footer />
