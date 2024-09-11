@@ -56,8 +56,14 @@ const Search = () => {
     let filteredResults = searchResults ?? [];
 
     const filteredList = filteredResults.filter((result: SearchResult) => {
-      const yearMatches =
-        filters.year === 'all' || parseInt(result.release_date.split('-')[0]) === filters.year;
+      let yearMatches;
+      if (result.release_date) {
+        yearMatches = parseInt(result.release_date.split('-')[0]) === filters.year;
+      }
+
+      if (filters.year === 'all') {
+        yearMatches = true;
+      }
       const formatMatches = filters.format === 'all' || result.media_type === filters.format;
 
       return yearMatches && formatMatches;
