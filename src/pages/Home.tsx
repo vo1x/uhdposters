@@ -57,6 +57,7 @@ const Search = () => {
 
     const filteredList = filteredResults.filter((result: SearchResult) => {
       let yearMatches;
+
       if (result.release_date) {
         yearMatches = parseInt(result.release_date.split('-')[0]) === filters.year;
       }
@@ -77,7 +78,7 @@ const Search = () => {
       <div className="flex flex-col">
         <div className="flex min-h-screen flex-col gap-10 bg-slate-900 pb-6 pt-2">
           <div className="place-self-center pt-2">
-            <Header></Header>
+            <Header />
           </div>
 
           <div className="min-w-7xl w-full max-w-[70%] lg:max-w-[75%] place-self-center px-2">
