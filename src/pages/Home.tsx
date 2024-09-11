@@ -57,7 +57,7 @@ const Search = () => {
 
     const filteredList = filteredResults.filter((result: SearchResult) => {
       const yearMatches =
-        filters.year === 'all' || result.release_date.split('-')[0] === filters.year;
+        filters.year === 'all' || parseInt(result.release_date.split('-')[0]) === filters.year;
       const formatMatches = filters.format === 'all' || result.media_type === filters.format;
 
       return yearMatches && formatMatches;
