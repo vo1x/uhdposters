@@ -67,9 +67,9 @@ function Hero({ mediaDetails }: { mediaDetails: any }) {
               <div className="flex gap-2">
                 <Link to={mediaDetails?.trailer} target="_blank">
                   <button
-                    disabled={!mediaDetails?.trailer || mediaDetails?.trailer === ''}
+                    disabled={!mediaDetails?.trailer}
                     className={`flex items-center gap-2 rounded-md p-3 font-semibold text-white shadow-md transition-colors ${
-                      !mediaDetails?.trailer || mediaDetails?.trailer === ''
+                      !mediaDetails?.trailer
                         ? 'bg-gray-400 cursor-not-allowed'
                         : 'bg-blue-500 hover:bg-blue-600'
                     }`}
