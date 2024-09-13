@@ -155,6 +155,34 @@ function Details() {
               </motion.div>
             </div>
 
+            {mediaDetails && mediaDetails.providers && mediaDetails.providers.length !== 0 && (
+              <div className="flex flex-col">
+                <span className="label text-sm md:text-base">Providers (US Only)</span>
+                <motion.div
+                  className="text-slate-400 text-sm md:text-base cursor-pointer flex flex-col gap-4"
+                  whileHover={{ color: '#7DD3FC' }}
+                  // onClick={(e: any) =>
+                  //   copyToClipboard({ text: e.target.innerText.trim(), item: 'IMDB URL' })
+                  // }
+                >
+                  {/* {JSON.stringify(mediaDetails?.providers, null, 2)} */}
+
+                  {mediaDetails &&
+                    mediaDetails.providers &&
+                    (mediaDetails?.providers).map((provider: any) => (
+                      <div className="flex flex-col gap-2">
+                        <span className="font-semibold ">For {provider.ownershipType}</span>
+                        <div className="flex flex-col gap-1">
+                          {provider.providers.map((provider: any) => (
+                            <span className="text-sm">{provider.name}</span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                </motion.div>
+              </div>
+            )}
+
             {mediaType === 'tv' && (
               <div className="flex flex-col">
                 <span className="label text-sm md:text-base">Season Info</span>
