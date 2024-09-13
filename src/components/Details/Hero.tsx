@@ -9,7 +9,6 @@ import PosterSkeleton from '../UI/PosterSkeleton';
 function Hero({ mediaDetails }: { mediaDetails: any }) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p';
   const { copyToClipboard } = useClipboard();
-
   return (
     <>
       <div className={`relative flex overflow-hidden md:h-[500px] md:w-full px-6`}>
@@ -63,7 +62,10 @@ function Hero({ mediaDetails }: { mediaDetails: any }) {
                 </div>
               )}
             </div>
+
             <div className="flex items-center justify-center md:justify-start gap-2 mt-4">
+              {/* TrailerButton */}
+
               <div className="flex gap-2">
                 <Link to={mediaDetails?.trailer} target="_blank">
                   <button
