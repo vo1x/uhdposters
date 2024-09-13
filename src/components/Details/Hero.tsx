@@ -9,10 +9,7 @@ import PosterSkeleton from '../UI/PosterSkeleton';
 function Hero({ mediaDetails }: { mediaDetails: any }) {
   const imageBaseUrl = 'https://image.tmdb.org/t/p';
   const { copyToClipboard } = useClipboard();
-  const trailerUrl =
-    mediaDetails && mediaDetails.videos[0]
-      ? `https://youtube.com/embed/${mediaDetails?.videos[0].key}`
-      : '';
+
   return (
     <>
       <div className={`relative flex overflow-hidden md:h-[500px] md:w-full px-6`}>
@@ -68,11 +65,11 @@ function Hero({ mediaDetails }: { mediaDetails: any }) {
             </div>
             <div className="flex items-center justify-center md:justify-start gap-2 mt-4">
               <div className="flex gap-2">
-                <Link to={trailerUrl} target="_blank">
+                <Link to={mediaDetails?.trailer} target="_blank">
                   <button
-                    disabled={!trailerUrl || trailerUrl === ''}
+                    disabled={!mediaDetails?.trailer || mediaDetails?.trailer === ''}
                     className={`flex items-center gap-2 rounded-md p-3 font-semibold text-white shadow-md transition-colors ${
-                      !trailerUrl || trailerUrl === ''
+                      !mediaDetails?.trailer || mediaDetails?.trailer === ''
                         ? 'bg-gray-400 cursor-not-allowed'
                         : 'bg-blue-500 hover:bg-blue-600'
                     }`}
