@@ -6,7 +6,7 @@ import { FaTags } from 'react-icons/fa';
 import Header from '../components/UI/Header';
 import Footer from '../components/UI/Footer';
 import Select from '../components/UI/Select';
-import SearchBar from '../components/Home/AutoSearchBar';
+import SearchBar from '../components/Home/Searchbar';
 import Card from '../components/Home/Card';
 import CardSkeleton from '../components/UI/CardSkeleton';
 

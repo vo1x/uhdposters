@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDebounce } from 'use-debounce';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDebounce } from "use-debounce";
 
 function AutoSearchBar({ defaultValue }: { defaultValue: string }) {
   const navigate = useNavigate();
@@ -9,8 +9,8 @@ function AutoSearchBar({ defaultValue }: { defaultValue: string }) {
   const [value] = useDebounce(inputText, 1000);
 
   useEffect(() => {
-    if (!inputText || inputText.trim() === '') {
-      navigate('/');
+    if (!inputText || inputText.trim() === "") {
+      navigate("/");
     } else {
       navigate(`/search/${inputText}`);
     }
@@ -21,7 +21,11 @@ function AutoSearchBar({ defaultValue }: { defaultValue: string }) {
   }, [defaultValue]);
 
   return (
-    <div className={'flex items-center justify-center shadow-md shadow-slate-950/25'}>
+    <div
+      className={
+        "flex items-center justify-center shadow-md shadow-slate-950/25"
+      }
+    >
       <input
         type="text"
         placeholder="Search movie or series"

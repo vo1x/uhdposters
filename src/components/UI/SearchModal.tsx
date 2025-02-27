@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
-import { Search } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState } from "react";
+import { Search } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-import { SetStateAction, Dispatch } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { SetStateAction, Dispatch } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SearchModal: React.FC<{
-  onChange: ((value: string | boolean) => void) | Dispatch<SetStateAction<boolean>>;
+  onChange:
+    | ((value: string | boolean) => void)
+    | Dispatch<SetStateAction<boolean>>;
 }> = ({ onChange }) => {
   const navigate = useNavigate();
 
-  const [inputText, setInputText] = useState<string>('');
+  const [inputText, setInputText] = useState<string>("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -20,16 +22,16 @@ const SearchModal: React.FC<{
 
   useEffect(() => {
     const handleKeyDown = (e: any) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         handleEscButton();
       }
     };
     if (inputRef.current) {
       inputRef.current.focus();
     }
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -40,7 +42,7 @@ const SearchModal: React.FC<{
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         key="search-modal"
-        className="fixed inset-0 z-50 flex h-screen items-start justify-center overflow-hidden bg-black bg-opacity-50 backdrop-blur-md  backdrop-filter"
+        className="fixed inset-0 z-50 flex h-screen items-start justify-center overflow-hidden bg-black/50 backdrop-blur-md  backdrop-filter"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
@@ -68,8 +70,8 @@ const SearchModal: React.FC<{
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  if (inputText.trim() !== '') {
+                if (e.key === "Enter") {
+                  if (inputText.trim() !== "") {
                     navigate(`/search/${inputText}`);
                   }
                 }

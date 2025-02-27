@@ -1,28 +1,28 @@
-import { useState, useCallback, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import CardTag from '../UI/CardTag';
+import { useState, useCallback, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import CardTag from "../UI/CardTag";
 
-import { lightPastelColors } from '../../utils/colorHexCodes.json';
+import { lightPastelColors } from "../../constants/colorHexCodes.json";
 const imageVariants = {
   initial: {
-    opacity: 0
+    opacity: 0,
   },
   animate: {
     opacity: 1,
-    transition: { duration: 0.5 }
+    transition: { duration: 0.5 },
   },
   hover: {
     translateY: -5,
-    transition: { duration: 0.2 }
-  }
+    transition: { duration: 0.2 },
+  },
 };
 function Card({ data }: { data: any }) {
-  const imageBaseUrl = 'https://image.tmdb.org/t/p/w220_and_h330_face';
+  const imageBaseUrl = "https://image.tmdb.org/t/p/w220_and_h330_face";
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
-  const [randomLightPastelColor, setRandomLightPastelColor] = useState('');
+  const [randomLightPastelColor, setRandomLightPastelColor] = useState("");
 
   const generateRandomLightPastelColor = useCallback(() => {
     setRandomLightPastelColor(
@@ -33,11 +33,14 @@ function Card({ data }: { data: any }) {
   useEffect(() => {
     generateRandomLightPastelColor();
   }, []);
-  const getReleaseYear = useCallback((date: string) => (date ? date.split('-')[0] : 'Unknown'), []);
+  const getReleaseYear = useCallback(
+    (date: string) => (date ? date.split("-")[0] : "Unknown"),
+    []
+  );
 
   const imageSrc = data.poster_path
     ? `${imageBaseUrl}${data.poster_path}`
-    : 'https://placehold.co/250x375';
+    : "https://placehold.co/250x375";
 
   return (
     <Link to={`/details/${data.media_type}/${data.id}`}>
@@ -61,11 +64,11 @@ function Card({ data }: { data: any }) {
           <motion.img
             variants={imageVariants}
             initial="initial"
-            animate={imageLoaded ? 'animate' : 'initial'}
-            whileHover={'hover'}
+            animate={imageLoaded ? "animate" : "initial"}
+            whileHover={"hover"}
             className="absolute inset-0 h-full w-full rounded-md object-cover"
             src={imageSrc}
-            alt={data.title || 'Media poster'}
+            alt={data.title || "Media poster"}
             onLoad={() => setImageLoaded(true)}
           />
         </div>
@@ -75,7 +78,7 @@ function Card({ data }: { data: any }) {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
             className="text-xs font-semibold md:text-sm truncate "
-            style={{ color: isHovered ? randomLightPastelColor : '#e2e8f0' }}
+            style={{ color: isHovered ? randomLightPastelColor : "#e2e8f0" }}
           >
             {data.title}
           </motion.span>
